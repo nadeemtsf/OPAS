@@ -85,8 +85,15 @@ def _count_threats(candidates, trajectory, target_lat, target_lon, target_alt, t
     return count
 
 
-def _full_check(candidates, trajectory, target_lat, target_lon, target_alt, t):
+def _full_check(candidates, trajectory, target_lat, target_lon, target_alt, t,
+                launch_dt=None):
     threats = []
+
+    if trajectory:
+        r = EARTH_R + target_alt
+        period_sec = 2 * pi * sqrt(r ** 3 / 398600.4418)
+        steps = len(trajectory) - 1
+
     for doc in candidates:
         if t is not None and doc.get("tle_line1"):
             try:
@@ -102,28 +109,42 @@ def _full_check(candidates, trajectory, target_lat, target_lon, target_alt, t):
         if abs(d_alt - target_alt) > 50:
             continue
 
+        closest_idx = 0
         if trajectory:
             min_dist = float("inf")
-            for wp in trajectory:
+            for idx, wp in enumerate(trajectory):
                 d = haversine_km(wp["lat"], wp["lon"], d_lat, d_lon)
                 if d < min_dist:
                     min_dist = d
+                    closest_idx = idx
                 if min_dist < 50:
                     break
         else:
             min_dist = haversine_km(target_lat, target_lon, d_lat, d_lon)
 
         if min_dist < 200:
-            threats.append({
+            threat = {
                 "name": doc["name"],
                 "norad_id": doc["norad_id"],
                 "altitude_km": round(d_alt, 2),
+                "altitude_diff_km": round(abs(d_alt - target_alt), 2),
                 "distance_meters": round(min_dist * 1000, 2),
                 "location": {
                     "type": "Point",
                     "coordinates": [round(d_lon, 4), round(d_lat, 4)],
                 },
-            })
+            }
+
+            if trajectory:
+                threat["approach_location"] = {
+                    "lat": trajectory[closest_idx]["lat"],
+                    "lon": trajectory[closest_idx]["lon"],
+                }
+                if launch_dt and steps > 0:
+                    offset = timedelta(seconds=period_sec * closest_idx / steps)
+                    threat["closest_approach_time"] = (launch_dt + offset).isoformat()
+
+            threats.append(threat)
     return threats
 
 
@@ -152,6 +173,12 @@ def alert(
 
     t = _make_skyfield_time(launch_time) if launch_time else None
 
+    launch_dt = None
+    if launch_time:
+        launch_dt = datetime.fromisoformat(launch_time.replace("Z", "+00:00"))
+        if launch_dt.tzinfo is None:
+            launch_dt = launch_dt.replace(tzinfo=timezone.utc)
+
     if trajectory is None and t is None:
         return _instant_check(target_lat, target_lon, target_alt)
 
@@ -160,7 +187,7 @@ def alert(
         {"_id": 0},
     ))
 
-    threats = _full_check(candidates, trajectory, target_lat, target_lon, target_alt, t)
+    threats = _full_check(candidates, trajectory, target_lat, target_lon, target_alt, t, launch_dt)
 
     result = {
         "status": "danger" if threats else "safe",
