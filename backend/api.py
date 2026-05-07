@@ -1,11 +1,18 @@
 import os
 from dotenv import load_dotenv
 from fastapi import FastAPI, Query
+from fastapi.middleware.cors import CORSMiddleware
 from pymongo import MongoClient
 
 load_dotenv()
 
 app = FastAPI(title="OPAS – Orbital Proximity Alert System")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 client = MongoClient(os.getenv("MONGO_URI"))
 collection = client["opas_db"]["debris"]
