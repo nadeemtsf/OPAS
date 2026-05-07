@@ -3,3 +3,5 @@ python-dotenv
 skyfield
 pymongo
 dnspython
+fastapi
+uvicorn
