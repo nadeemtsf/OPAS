@@ -55,7 +55,7 @@ def generate_trajectory(launch_lat, launch_lon, alt_km, inc_deg, steps=120):
 def _count_threats(candidates, trajectory, target_lat, target_lon, target_alt, t):
     count = 0
     for doc in candidates:
-        if t and doc.get("tle_line1"):
+        if t is not None and doc.get("tle_line1"):
             try:
                 sat = EarthSatellite(doc["tle_line1"], doc["tle_line2"], doc["name"], ts)
                 sub = sat.at(t).subpoint()
@@ -88,7 +88,7 @@ def _count_threats(candidates, trajectory, target_lat, target_lon, target_alt, t
 def _full_check(candidates, trajectory, target_lat, target_lon, target_alt, t):
     threats = []
     for doc in candidates:
-        if t and doc.get("tle_line1"):
+        if t is not None and doc.get("tle_line1"):
             try:
                 sat = EarthSatellite(doc["tle_line1"], doc["tle_line2"], doc["name"], ts)
                 sub = sat.at(t).subpoint()
