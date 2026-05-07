@@ -17,7 +17,6 @@ QUERY_URL = (
     "/DECAY_DATE/null-val"
     "/EPOCH/>now-30"
     "/orderby/NORAD_CAT_ID"
-    "/limit/100"
     "/format/json"
 )
 
@@ -57,6 +56,8 @@ def compute_positions(satellites):
                 "name": name,
                 "norad_id": norad_id,
                 "altitude_km": round(subpoint.elevation.km, 2),
+                "tle_line1": line1,
+                "tle_line2": line2,
                 "location": {
                     "type": "Point",
                     "coordinates": [
@@ -88,7 +89,7 @@ def main():
     session = authenticate()
     print("  Done.")
 
-    print("[2/5] Fetching TLE data (limit=100)...")
+    print("[2/5] Fetching TLE data (full catalog)...")
     satellites = fetch_tle_data(session)
     print(f"  Received {len(satellites)} records.")
 
