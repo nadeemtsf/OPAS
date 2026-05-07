@@ -53,6 +53,8 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [customData, setCustomData] = useState<GlobePoint[]>([]);
   const [trajectory, setTrajectory] = useState<TrajectoryPoint[]>([]);
+  const [safeWindows, setSafeWindows] = useState<{ start: string; end: string; duration_minutes: number }[]>([]);
+  const [findingWindows, setFindingWindows] = useState(false);
 
   const debrisRef = useRef<GlobePoint[]>([]);
   const globeRef = useRef<any>(null);
@@ -96,6 +98,7 @@ export default function App() {
     setStatus(null);
     setThreats([]);
     setCheckedCount(null);
+    setSafeWindows([]);
   }
 
   function rebuildPoints(debris: GlobePoint[], threatList: Threat[]) {
@@ -140,6 +143,7 @@ export default function App() {
       setThreats(data.threats);
       setCheckedCount(data.candidates_checked ?? null);
       setTrajectory(data.trajectory ?? []);
+      setSafeWindows([]);
       rebuildPoints(debrisRef.current, data.threats);
       if (globeRef.current) {
         globeRef.current.pointOfView({ lat: targetLat, lng: targetLon, altitude: 2 }, 1000);
@@ -161,6 +165,30 @@ export default function App() {
         800,
       );
     }
+  }
+
+  async function findSafeWindows() {
+    setFindingWindows(true);
+    try {
+      const { data } = await axios.get("http://localhost:8000/safe-windows", {
+        params: { target_lat: targetLat, target_lon: targetLon, target_alt: targetAlt, inclination },
+      });
+      setSafeWindows(data.windows);
+    } catch (err) {
+      console.error(err);
+      setSafeWindows([]);
+    } finally {
+      setFindingWindows(false);
+    }
+  }
+
+  function applyWindow(iso: string) {
+    const dt = new Date(iso);
+    const local = new Date(dt.getTime() - dt.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+    setLaunchTime(local);
+    setSafeWindows([]);
+    setStatus(null);
+    setThreats([]);
   }
 
   const inputClass =
@@ -264,6 +292,40 @@ export default function App() {
           >
             {loading ? "Checking..." : "Check Collision Risk"}
           </button>
+
+          {status === "danger" && (
+            <button
+              onClick={findSafeWindows}
+              disabled={findingWindows}
+              className="mt-2 w-full rounded bg-blue-600 hover:bg-blue-500 disabled:opacity-50 py-2.5 text-sm font-semibold transition cursor-pointer"
+            >
+              {findingWindows ? "Scanning 24h..." : "Find Safe Launch Windows"}
+            </button>
+          )}
+
+          {safeWindows.length > 0 && (
+            <div className="mt-3">
+              <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
+                Safe Windows
+              </h3>
+              <ul className="space-y-2">
+                {safeWindows.map((w, i) => (
+                  <li
+                    key={i}
+                    onClick={() => applyWindow(w.start)}
+                    className="rounded bg-green-900/30 border border-green-800/40 p-3 cursor-pointer hover:bg-green-900/50 transition"
+                  >
+                    <p className="text-xs text-green-400 font-medium">
+                      {new Date(w.start).toUTCString().slice(0, -4)} UTC
+                    </p>
+                    <p className="text-[10px] text-gray-400 mt-1">
+                      {w.duration_minutes} min window
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
 
         {/* Globe */}

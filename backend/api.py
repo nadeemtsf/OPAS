@@ -1,6 +1,6 @@
 import os
 from math import radians, degrees, sin, cos, asin, atan2, sqrt, pi
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from dotenv import load_dotenv
 from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
@@ -52,42 +52,43 @@ def generate_trajectory(launch_lat, launch_lon, alt_km, inc_deg, steps=120):
     return waypoints
 
 
-@app.get("/debris")
-def get_debris(limit: int = Query(3000, ge=1, le=50000)):
-    docs = list(collection.find({}, {"_id": 0, "tle_line1": 0, "tle_line2": 0}).limit(limit))
-    return {"count": len(docs), "debris": docs}
+def _count_threats(candidates, trajectory, target_lat, target_lon, target_alt, t):
+    count = 0
+    for doc in candidates:
+        if t and doc.get("tle_line1"):
+            try:
+                sat = EarthSatellite(doc["tle_line1"], doc["tle_line2"], doc["name"], ts)
+                sub = sat.at(t).subpoint()
+                d_lat, d_lon, d_alt = sub.latitude.degrees, sub.longitude.degrees, sub.elevation.km
+            except Exception:
+                continue
+        else:
+            coords = doc["location"]["coordinates"]
+            d_lat, d_lon, d_alt = coords[1], coords[0], doc["altitude_km"]
+
+        if abs(d_alt - target_alt) > 50:
+            continue
+
+        if trajectory:
+            min_dist = float("inf")
+            for wp in trajectory:
+                d = haversine_km(wp["lat"], wp["lon"], d_lat, d_lon)
+                if d < min_dist:
+                    min_dist = d
+                if min_dist < 50:
+                    break
+        else:
+            min_dist = haversine_km(target_lat, target_lon, d_lat, d_lon)
+
+        if min_dist < 200:
+            count += 1
+    return count
 
 
-@app.get("/alert")
-def alert(
-    target_lat: float = Query(...),
-    target_lon: float = Query(...),
-    target_alt: float = Query(...),
-    launch_time: str = Query(None),
-    inclination: float = Query(None),
-):
-    trajectory = None
-    if inclination is not None:
-        trajectory = generate_trajectory(target_lat, target_lon, target_alt, inclination)
-
-    use_propagation = False
-    t = None
-    if launch_time:
-        dt = datetime.fromisoformat(launch_time.replace("Z", "+00:00"))
-        t = ts.from_datetime(dt.replace(tzinfo=timezone.utc) if dt.tzinfo is None else dt)
-        use_propagation = True
-
-    if trajectory is None and not use_propagation:
-        return _instant_check(target_lat, target_lon, target_alt)
-
-    candidates = list(collection.find(
-        {"altitude_km": {"$gte": target_alt - 200, "$lte": target_alt + 200}},
-        {"_id": 0},
-    ))
-
+def _full_check(candidates, trajectory, target_lat, target_lon, target_alt, t):
     threats = []
     for doc in candidates:
-        if use_propagation and doc.get("tle_line1"):
+        if t and doc.get("tle_line1"):
             try:
                 sat = EarthSatellite(doc["tle_line1"], doc["tle_line2"], doc["name"], ts)
                 sub = sat.at(t).subpoint()
@@ -123,6 +124,43 @@ def alert(
                     "coordinates": [round(d_lon, 4), round(d_lat, 4)],
                 },
             })
+    return threats
+
+
+def _make_skyfield_time(iso_str):
+    dt = datetime.fromisoformat(iso_str.replace("Z", "+00:00"))
+    return ts.from_datetime(dt.replace(tzinfo=timezone.utc) if dt.tzinfo is None else dt)
+
+
+@app.get("/debris")
+def get_debris(limit: int = Query(3000, ge=1, le=50000)):
+    docs = list(collection.find({}, {"_id": 0, "tle_line1": 0, "tle_line2": 0}).limit(limit))
+    return {"count": len(docs), "debris": docs}
+
+
+@app.get("/alert")
+def alert(
+    target_lat: float = Query(...),
+    target_lon: float = Query(...),
+    target_alt: float = Query(...),
+    launch_time: str = Query(None),
+    inclination: float = Query(None),
+):
+    trajectory = None
+    if inclination is not None:
+        trajectory = generate_trajectory(target_lat, target_lon, target_alt, inclination)
+
+    t = _make_skyfield_time(launch_time) if launch_time else None
+
+    if trajectory is None and t is None:
+        return _instant_check(target_lat, target_lon, target_alt)
+
+    candidates = list(collection.find(
+        {"altitude_km": {"$gte": target_alt - 200, "$lte": target_alt + 200}},
+        {"_id": 0},
+    ))
+
+    threats = _full_check(candidates, trajectory, target_lat, target_lon, target_alt, t)
 
     result = {
         "status": "danger" if threats else "safe",
@@ -138,6 +176,94 @@ def alert(
     if launch_time:
         result["launch_time"] = launch_time
     return result
+
+
+@app.get("/safe-windows")
+def safe_windows(
+    target_lat: float = Query(...),
+    target_lon: float = Query(...),
+    target_alt: float = Query(...),
+    inclination: float = Query(...),
+    search_hours: int = Query(24, ge=1, le=72),
+):
+    trajectory = generate_trajectory(target_lat, target_lon, target_alt, inclination)
+
+    candidates = list(collection.find(
+        {"altitude_km": {"$gte": target_alt - 200, "$lte": target_alt + 200}},
+        {"_id": 0},
+    ))
+
+    now = datetime.now(timezone.utc)
+    coarse_step = timedelta(minutes=30)
+    fine_step = timedelta(minutes=5)
+    end = now + timedelta(hours=search_hours)
+
+    # Coarse scan — 30 min steps
+    coarse_results = []
+    cursor = now
+    while cursor <= end:
+        t = ts.from_datetime(cursor)
+        threat_count = _count_threats(candidates, trajectory, target_lat, target_lon, target_alt, t)
+        coarse_results.append((cursor, threat_count))
+        cursor += coarse_step
+
+    # Build windows from coarse scan
+    raw_windows = []
+    in_window = False
+    window_start = None
+
+    for dt_val, count in coarse_results:
+        if count == 0 and not in_window:
+            window_start = dt_val
+            in_window = True
+        elif count > 0 and in_window:
+            raw_windows.append((window_start, dt_val))
+            in_window = False
+
+    if in_window:
+        raw_windows.append((window_start, end))
+
+    # Refine boundaries — 5 min steps
+    windows = []
+    for raw_start, raw_end in raw_windows[:5]:
+        # Refine start: scan backward from raw_start
+        refined_start = raw_start
+        check = raw_start - coarse_step
+        while check < raw_start:
+            check += fine_step
+            if check >= raw_start:
+                break
+            t = ts.from_datetime(check)
+            if _count_threats(candidates, trajectory, target_lat, target_lon, target_alt, t) == 0:
+                refined_start = check
+                break
+
+        # Refine end: scan forward from raw_end
+        refined_end = raw_end
+        check = raw_end
+        limit = raw_end + coarse_step
+        while check < limit:
+            t = ts.from_datetime(check)
+            if _count_threats(candidates, trajectory, target_lat, target_lon, target_alt, t) > 0:
+                break
+            refined_end = check
+            check += fine_step
+
+        duration = (refined_end - refined_start).total_seconds() / 60
+        if duration >= 15:
+            windows.append({
+                "start": refined_start.isoformat(),
+                "end": refined_end.isoformat(),
+                "duration_minutes": round(duration),
+            })
+
+    windows.sort(key=lambda w: -w["duration_minutes"])
+
+    return {
+        "search_hours": search_hours,
+        "candidates_checked": len(candidates),
+        "windows": windows[:5],
+    }
 
 
 def _instant_check(target_lat, target_lon, target_alt):
