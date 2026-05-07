@@ -55,6 +55,8 @@ export default function App() {
   const [trajectory, setTrajectory] = useState<TrajectoryPoint[]>([]);
   const [safeWindows, setSafeWindows] = useState<{ start: string; end: string; duration_minutes: number }[]>([]);
   const [findingWindows, setFindingWindows] = useState(false);
+  const [windowSearchDone, setWindowSearchDone] = useState(false);
+  const [windowSearchHours, setWindowSearchHours] = useState<number | null>(null);
 
   const debrisRef = useRef<GlobePoint[]>([]);
   const globeRef = useRef<any>(null);
@@ -99,6 +101,8 @@ export default function App() {
     setThreats([]);
     setCheckedCount(null);
     setSafeWindows([]);
+    setWindowSearchDone(false);
+    setWindowSearchHours(null);
   }
 
   function rebuildPoints(debris: GlobePoint[], threatList: Threat[]) {
@@ -169,14 +173,19 @@ export default function App() {
 
   async function findSafeWindows() {
     setFindingWindows(true);
+    setWindowSearchDone(false);
+    setWindowSearchHours(null);
     try {
       const { data } = await axios.get("http://localhost:8000/safe-windows", {
         params: { target_lat: targetLat, target_lon: targetLon, target_alt: targetAlt, inclination },
       });
       setSafeWindows(data.windows);
+      setWindowSearchHours(data.search_hours);
+      setWindowSearchDone(true);
     } catch (err) {
       console.error(err);
       setSafeWindows([]);
+      setWindowSearchDone(true);
     } finally {
       setFindingWindows(false);
     }
@@ -306,7 +315,7 @@ export default function App() {
           {safeWindows.length > 0 && (
             <div className="mt-3">
               <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
-                Safe Windows
+                Safe Windows {windowSearchHours && `(${windowSearchHours}h scan)`}
               </h3>
               <ul className="space-y-2">
                 {safeWindows.map((w, i) => (
@@ -324,6 +333,15 @@ export default function App() {
                   </li>
                 ))}
               </ul>
+            </div>
+          )}
+
+          {windowSearchDone && safeWindows.length === 0 && (
+            <div className="mt-3 rounded bg-yellow-900/30 border border-yellow-800/40 p-3">
+              <p className="text-xs text-yellow-400 font-medium">No safe windows found</p>
+              <p className="text-[10px] text-gray-400 mt-1">
+                Searched up to 72h with 50 km proximity threshold. Consider adjusting altitude or inclination.
+              </p>
             </div>
           )}
         </div>

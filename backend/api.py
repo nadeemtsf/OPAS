@@ -52,7 +52,7 @@ def generate_trajectory(launch_lat, launch_lon, alt_km, inc_deg, steps=120):
     return waypoints
 
 
-def _count_threats(candidates, trajectory, target_lat, target_lon, target_alt, t):
+def _count_threats(candidates, trajectory, target_lat, target_lon, target_alt, t, proximity_km=200):
     count = 0
     for doc in candidates:
         if t is not None and doc.get("tle_line1"):
@@ -75,12 +75,12 @@ def _count_threats(candidates, trajectory, target_lat, target_lon, target_alt, t
                 d = haversine_km(wp["lat"], wp["lon"], d_lat, d_lon)
                 if d < min_dist:
                     min_dist = d
-                if min_dist < 50:
+                if min_dist < proximity_km * 0.25:
                     break
         else:
             min_dist = haversine_km(target_lat, target_lon, d_lat, d_lon)
 
-        if min_dist < 200:
+        if min_dist < proximity_km:
             count += 1
     return count
 
@@ -178,6 +178,77 @@ def alert(
     return result
 
 
+SAFE_WINDOW_PROXIMITY_KM = 50
+
+
+def _scan_windows(candidates, trajectory, target_lat, target_lon, target_alt,
+                  start_dt, end_dt, proximity_km):
+    coarse_step = timedelta(minutes=30)
+    fine_step = timedelta(minutes=5)
+
+    coarse_results = []
+    cursor = start_dt
+    while cursor <= end_dt:
+        t = ts.from_datetime(cursor)
+        threat_count = _count_threats(
+            candidates, trajectory, target_lat, target_lon, target_alt, t,
+            proximity_km=proximity_km,
+        )
+        coarse_results.append((cursor, threat_count))
+        cursor += coarse_step
+
+    raw_windows = []
+    in_window = False
+    window_start = None
+
+    for dt_val, count in coarse_results:
+        if count == 0 and not in_window:
+            window_start = dt_val
+            in_window = True
+        elif count > 0 and in_window:
+            raw_windows.append((window_start, dt_val))
+            in_window = False
+
+    if in_window:
+        raw_windows.append((window_start, end_dt))
+
+    windows = []
+    for raw_start, raw_end in raw_windows[:5]:
+        refined_start = raw_start
+        check = raw_start - coarse_step
+        while check < raw_start:
+            check += fine_step
+            if check >= raw_start:
+                break
+            t = ts.from_datetime(check)
+            if _count_threats(candidates, trajectory, target_lat, target_lon, target_alt, t,
+                              proximity_km=proximity_km) == 0:
+                refined_start = check
+                break
+
+        refined_end = raw_end
+        check = raw_end
+        limit = raw_end + coarse_step
+        while check < limit:
+            t = ts.from_datetime(check)
+            if _count_threats(candidates, trajectory, target_lat, target_lon, target_alt, t,
+                              proximity_km=proximity_km) > 0:
+                break
+            refined_end = check
+            check += fine_step
+
+        duration = (refined_end - refined_start).total_seconds() / 60
+        if duration >= 15:
+            windows.append({
+                "start": refined_start.isoformat(),
+                "end": refined_end.isoformat(),
+                "duration_minutes": round(duration),
+            })
+
+    windows.sort(key=lambda w: -w["duration_minutes"])
+    return windows[:5]
+
+
 @app.get("/safe-windows")
 def safe_windows(
     target_lat: float = Query(...),
@@ -194,75 +265,27 @@ def safe_windows(
     ))
 
     now = datetime.now(timezone.utc)
-    coarse_step = timedelta(minutes=30)
-    fine_step = timedelta(minutes=5)
-    end = now + timedelta(hours=search_hours)
 
-    # Coarse scan — 30 min steps
-    coarse_results = []
-    cursor = now
-    while cursor <= end:
-        t = ts.from_datetime(cursor)
-        threat_count = _count_threats(candidates, trajectory, target_lat, target_lon, target_alt, t)
-        coarse_results.append((cursor, threat_count))
-        cursor += coarse_step
-
-    # Build windows from coarse scan
-    raw_windows = []
-    in_window = False
-    window_start = None
-
-    for dt_val, count in coarse_results:
-        if count == 0 and not in_window:
-            window_start = dt_val
-            in_window = True
-        elif count > 0 and in_window:
-            raw_windows.append((window_start, dt_val))
-            in_window = False
-
-    if in_window:
-        raw_windows.append((window_start, end))
-
-    # Refine boundaries — 5 min steps
-    windows = []
-    for raw_start, raw_end in raw_windows[:5]:
-        # Refine start: scan backward from raw_start
-        refined_start = raw_start
-        check = raw_start - coarse_step
-        while check < raw_start:
-            check += fine_step
-            if check >= raw_start:
-                break
-            t = ts.from_datetime(check)
-            if _count_threats(candidates, trajectory, target_lat, target_lon, target_alt, t) == 0:
-                refined_start = check
-                break
-
-        # Refine end: scan forward from raw_end
-        refined_end = raw_end
-        check = raw_end
-        limit = raw_end + coarse_step
-        while check < limit:
-            t = ts.from_datetime(check)
-            if _count_threats(candidates, trajectory, target_lat, target_lon, target_alt, t) > 0:
-                break
-            refined_end = check
-            check += fine_step
-
-        duration = (refined_end - refined_start).total_seconds() / 60
-        if duration >= 15:
-            windows.append({
-                "start": refined_start.isoformat(),
-                "end": refined_end.isoformat(),
-                "duration_minutes": round(duration),
-            })
-
-    windows.sort(key=lambda w: -w["duration_minutes"])
+    # Progressive search: try initial hours, then extend if nothing found
+    for hours in [search_hours, min(search_hours * 2, 72), 72]:
+        end = now + timedelta(hours=hours)
+        windows = _scan_windows(
+            candidates, trajectory, target_lat, target_lon, target_alt,
+            now, end, SAFE_WINDOW_PROXIMITY_KM,
+        )
+        if windows:
+            return {
+                "search_hours": hours,
+                "candidates_checked": len(candidates),
+                "windows": windows,
+            }
+        if hours >= 72:
+            break
 
     return {
-        "search_hours": search_hours,
+        "search_hours": 72,
         "candidates_checked": len(candidates),
-        "windows": windows[:5],
+        "windows": [],
     }
 
 
