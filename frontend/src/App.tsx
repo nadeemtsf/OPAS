@@ -303,7 +303,7 @@ export default function App() {
     setCustomData(pts);
   }
 
-  async function checkCollision() {
+  async function runCollisionCheck(effectiveTime: string) {
     setLoading(true);
     try {
       const params: Record<string, any> = {
@@ -311,22 +311,15 @@ export default function App() {
         target_lon: targetLon,
         target_alt: targetAlt,
         inclination,
+        launch_time: new Date(effectiveTime).toISOString(),
       };
-      let effectiveTime = launchTime;
-      if (!effectiveTime) {
-        const now = new Date();
-        const pad = (n: number) => String(n).padStart(2, "0");
-        effectiveTime = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
-        setLaunchTime(effectiveTime);
-      }
-      params.launch_time = new Date(effectiveTime).toISOString();
-
       const { data } = await axios.get("http://localhost:8000/alert", { params });
       setStatus(data.status);
       setThreats(data.threats);
       setCheckedCount(data.candidates_checked ?? null);
       setTrajectory(data.trajectory ?? []);
       setSafeWindows([]);
+      setWindowSearchDone(false);
       setSelectedThreat(null);
       rebuildPoints(data.threats);
       if (globeRef.current) {
@@ -340,6 +333,17 @@ export default function App() {
     } finally {
       setLoading(false);
     }
+  }
+
+  async function checkCollision() {
+    let effectiveTime = launchTime;
+    if (!effectiveTime) {
+      const now = new Date();
+      const pad = (n: number) => String(n).padStart(2, "0");
+      effectiveTime = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
+      setLaunchTime(effectiveTime);
+    }
+    await runCollisionCheck(effectiveTime);
   }
 
   function focusThreat(t: Threat) {
@@ -375,9 +379,7 @@ export default function App() {
     const dt = new Date(iso);
     const local = new Date(dt.getTime() - dt.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
     setLaunchTime(local);
-    setSafeWindows([]);
-    setStatus(null);
-    setThreats([]);
+    runCollisionCheck(local);
   }
 
   function generateReport() {
