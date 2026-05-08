@@ -24,6 +24,12 @@ ts = load.timescale()
 EARTH_R = 6371
 
 
+def _propagate_at(doc, t):
+    sat = EarthSatellite(doc["tle_line1"], doc["tle_line2"], doc["name"], ts)
+    sub = sat.at(t).subpoint()
+    return sat, sub.latitude.degrees, sub.longitude.degrees, sub.elevation.km
+
+
 def haversine_km(lat1, lon1, lat2, lon2):
     lat1, lon1, lat2, lon2 = map(radians, [lat1, lon1, lat2, lon2])
     dlat, dlon = lat2 - lat1, lon2 - lon1
@@ -87,9 +93,7 @@ def _count_threats(candidates, trajectory, target_lat, target_lon, target_alt, t
 
         if time_varying and has_tle:
             try:
-                sat = EarthSatellite(doc["tle_line1"], doc["tle_line2"], doc["name"], ts)
-                sub = sat.at(t_samples).subpoint()
-                lats, lons, alts = sub.latitude.degrees, sub.longitude.degrees, sub.elevation.km
+                _, lats, lons, alts = _propagate_at(doc, t_samples)
             except Exception:
                 continue
 
@@ -106,9 +110,7 @@ def _count_threats(candidates, trajectory, target_lat, target_lon, target_alt, t
 
         elif has_tle:
             try:
-                sat = EarthSatellite(doc["tle_line1"], doc["tle_line2"], doc["name"], ts)
-                sub = sat.at(t).subpoint()
-                d_lat, d_lon, d_alt = sub.latitude.degrees, sub.longitude.degrees, sub.elevation.km
+                _, d_lat, d_lon, d_alt = _propagate_at(doc, t)
             except Exception:
                 continue
             if abs(d_alt - target_alt) > 50:
@@ -204,9 +206,7 @@ def _full_check(candidates, trajectory, target_lat, target_lon, target_alt, t,
 
         if time_varying and has_tle:
             try:
-                sat = EarthSatellite(doc["tle_line1"], doc["tle_line2"], doc["name"], ts)
-                sub = sat.at(t_coarse).subpoint()
-                lats, lons, alts = sub.latitude.degrees, sub.longitude.degrees, sub.elevation.km
+                sat, lats, lons, alts = _propagate_at(doc, t_coarse)
             except Exception:
                 continue
 
@@ -264,9 +264,7 @@ def _full_check(candidates, trajectory, target_lat, target_lon, target_alt, t,
 
         elif has_tle:
             try:
-                sat = EarthSatellite(doc["tle_line1"], doc["tle_line2"], doc["name"], ts)
-                sub = sat.at(t).subpoint()
-                d_lat, d_lon, d_alt = sub.latitude.degrees, sub.longitude.degrees, sub.elevation.km
+                _, d_lat, d_lon, d_alt = _propagate_at(doc, t)
             except Exception:
                 continue
             if abs(d_alt - target_alt) > 50:
@@ -423,6 +421,7 @@ def _scan_windows(candidates, trajectory, target_lat, target_lon, target_alt,
             except Exception:
                 pass
         scan_items.append((sat, doc))
+
 
     coarse_results = []
     cursor = start_dt
