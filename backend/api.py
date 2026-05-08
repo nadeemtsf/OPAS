@@ -10,9 +10,11 @@ from skyfield.api import load, EarthSatellite
 load_dotenv()
 
 app = FastAPI(title="OPAS – Orbital Proximity Alert System")
+
+ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "http://localhost:5173").split(",")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=ALLOWED_ORIGINS,
     allow_methods=["*"],
     allow_headers=["*"],
 )
