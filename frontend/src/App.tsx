@@ -575,7 +575,7 @@ export default function App() {
                     className="rounded bg-green-900/30 border border-green-800/40 p-3 cursor-pointer hover:bg-green-900/50 transition"
                   >
                     <p className="text-xs text-green-400 font-medium">
-                      {new Date(w.start).toUTCString().slice(0, -4)} UTC
+                      {new Date(w.start).toLocaleString()}
                     </p>
                     <p className="text-[10px] text-gray-400 mt-1">
                       {w.duration_minutes} min window
@@ -672,7 +672,7 @@ export default function App() {
                         <div>
                           <span className="text-[10px] text-gray-500">Closest Approach Time</span>
                           <p className="text-[11px] text-white">
-                            {new Date(t.closest_approach_time).toUTCString().slice(0, -4)} UTC
+                            {new Date(t.closest_approach_time).toLocaleString()}
                           </p>
                         </div>
                       )}
