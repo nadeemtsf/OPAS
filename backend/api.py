@@ -138,6 +138,50 @@ def _count_threats(candidates, trajectory, target_lat, target_lon, target_alt, t
     return count
 
 
+def _count_threats_fast(scan_items, trajectory, target_alt, t, proximity_km):
+    """Optimized for safe-window scanning: pre-built sats, fewer samples, skips ascent."""
+    count = 0
+    steps = len(trajectory) - 1
+    if steps < 1:
+        return 0
+    r = EARTH_R + target_alt
+    period_sec = 2 * pi * sqrt(r ** 3 / 398600.4418)
+    step_sec = period_sec / steps
+    ascent_steps = min(steps, max(1, round(600 / step_sec)))
+    stride = max(1, (steps - ascent_steps) // 6)
+    sample_indices = list(range(ascent_steps, steps + 1, stride))
+    if not sample_indices:
+        sample_indices = [steps]
+    sample_wps = [trajectory[idx] for idx in sample_indices]
+    t_samples = ts.tt_jd([t.tt + period_sec * idx / (steps * 86400.0)
+                          for idx in sample_indices])
+
+    for sat, doc in scan_items:
+        if sat is not None:
+            try:
+                sub = sat.at(t_samples).subpoint()
+                lats, lons, alts = sub.latitude.degrees, sub.longitude.degrees, sub.elevation.km
+            except Exception:
+                continue
+            for i, wp in enumerate(sample_wps):
+                if abs(float(alts[i]) - target_alt) > 50:
+                    continue
+                if haversine_km(wp["lat"], wp["lon"], float(lats[i]), float(lons[i])) < proximity_km:
+                    count += 1
+                    break
+        else:
+            coords = doc["location"]["coordinates"]
+            d_lat, d_lon, d_alt = coords[1], coords[0], doc["altitude_km"]
+            if abs(d_alt - target_alt) > 50:
+                continue
+            for wp in sample_wps:
+                if haversine_km(wp["lat"], wp["lon"], d_lat, d_lon) < proximity_km:
+                    count += 1
+                    break
+
+    return count
+
+
 def _full_check(candidates, trajectory, target_lat, target_lon, target_alt, t,
                 launch_dt=None):
     threats = []
@@ -369,14 +413,22 @@ def _scan_windows(candidates, trajectory, target_lat, target_lon, target_alt,
     coarse_step = timedelta(minutes=30)
     fine_step = timedelta(minutes=5)
 
+    # Pre-build satellite objects once (avoids repeated construction per time-step)
+    scan_items = []
+    for doc in candidates:
+        sat = None
+        if doc.get("tle_line1"):
+            try:
+                sat = EarthSatellite(doc["tle_line1"], doc["tle_line2"], doc["name"], ts)
+            except Exception:
+                pass
+        scan_items.append((sat, doc))
+
     coarse_results = []
     cursor = start_dt
     while cursor <= end_dt:
         t = ts.from_datetime(cursor)
-        threat_count = _count_threats(
-            candidates, trajectory, target_lat, target_lon, target_alt, t,
-            proximity_km=proximity_km,
-        )
+        threat_count = _count_threats_fast(scan_items, trajectory, target_alt, t, proximity_km)
         coarse_results.append((cursor, threat_count))
         cursor += coarse_step
 
@@ -404,8 +456,7 @@ def _scan_windows(candidates, trajectory, target_lat, target_lon, target_alt,
             if check >= raw_start:
                 break
             t = ts.from_datetime(check)
-            if _count_threats(candidates, trajectory, target_lat, target_lon, target_alt, t,
-                              proximity_km=proximity_km) == 0:
+            if _count_threats_fast(scan_items, trajectory, target_alt, t, proximity_km) == 0:
                 refined_start = check
                 break
 
@@ -414,8 +465,7 @@ def _scan_windows(candidates, trajectory, target_lat, target_lon, target_alt,
         limit = raw_end + coarse_step
         while check < limit:
             t = ts.from_datetime(check)
-            if _count_threats(candidates, trajectory, target_lat, target_lon, target_alt, t,
-                              proximity_km=proximity_km) > 0:
+            if _count_threats_fast(scan_items, trajectory, target_alt, t, proximity_km) > 0:
                 break
             refined_end = check
             check += fine_step
@@ -424,8 +474,7 @@ def _scan_windows(candidates, trajectory, target_lat, target_lon, target_alt,
         verify_cursor = refined_start + fine_step
         while verify_cursor < refined_end:
             t = ts.from_datetime(verify_cursor)
-            if _count_threats(candidates, trajectory, target_lat, target_lon, target_alt, t,
-                              proximity_km=proximity_km) > 0:
+            if _count_threats_fast(scan_items, trajectory, target_alt, t, proximity_km) > 0:
                 refined_end = verify_cursor
                 break
             verify_cursor += fine_step
@@ -453,7 +502,7 @@ def safe_windows(
     trajectory = generate_trajectory(target_lat, target_lon, target_alt, inclination)
 
     candidates = list(collection.find(
-        {"altitude_km": {"$gte": 0, "$lte": target_alt + 200}},
+        {"altitude_km": {"$gte": target_alt - 200, "$lte": target_alt + 200}},
         {"_id": 0},
     ))
 
