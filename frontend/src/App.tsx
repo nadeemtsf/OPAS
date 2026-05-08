@@ -15,6 +15,8 @@ interface Threat extends Debris {
   altitude_diff_km?: number;
   closest_approach_time?: string;
   approach_location?: { lat: number; lon: number };
+  tle_age_days?: number;
+  confidence?: string;
 }
 
 interface GlobePoint {
@@ -24,6 +26,7 @@ interface GlobePoint {
   color: string;
   label: string;
   radius: number;
+  opacity?: number;
 }
 
 interface TrajectoryPoint {
@@ -252,20 +255,33 @@ export default function App() {
     const pts: GlobePoint[] = [];
 
     for (const t of threatList) {
+      const threatLabel = `
+        <div style="background: rgba(15,23,42,0.95); color: white; padding: 8px 12px; border-radius: 6px; font-size: 11px; line-height: 1.6; border: 1px solid rgba(239,68,68,0.5); font-family: ui-monospace, monospace; white-space: nowrap;">
+          <div style="font-weight: 600; color: #fca5a5; margin-bottom: 4px;">⚠ ${t.name}</div>
+          <div style="color: #9ca3af;">NORAD ${t.norad_id}</div>
+          <div>Altitude: <span style="color: #fff;">${t.altitude_km.toFixed(1)} km</span></div>
+          <div>Miss distance: <span style="color: #fca5a5;">${(t.distance_meters / 1000).toFixed(1)} km</span></div>
+          ${t.confidence ? `<div>Confidence: <span style="color: ${t.confidence === "high" ? "#6ee7b7" : t.confidence === "medium" ? "#fde68a" : "#fca5a5"};">${t.confidence}</span></div>` : ""}
+        </div>
+      `;
+
       pts.push({
         lat: t.location.coordinates[1],
         lng: t.location.coordinates[0],
         alt: t.altitude_km / EARTH_RADIUS_KM,
         color: "#ef4444",
-        label: `
-          <div style="background: rgba(15,23,42,0.95); color: white; padding: 8px 12px; border-radius: 6px; font-size: 11px; line-height: 1.6; border: 1px solid rgba(239,68,68,0.5); font-family: ui-monospace, monospace; white-space: nowrap;">
-            <div style="font-weight: 600; color: #fca5a5; margin-bottom: 4px;">⚠ ${t.name}</div>
-            <div style="color: #9ca3af;">NORAD ${t.norad_id}</div>
-            <div>Altitude: <span style="color: #fff;">${t.altitude_km.toFixed(1)} km</span></div>
-            <div>Miss distance: <span style="color: #fca5a5;">${(t.distance_meters / 1000).toFixed(1)} km</span></div>
-          </div>
-        `,
+        label: threatLabel,
         radius: 0.6,
+      });
+
+      pts.push({
+        lat: t.location.coordinates[1],
+        lng: t.location.coordinates[0],
+        alt: t.altitude_km / EARTH_RADIUS_KM,
+        color: "#ef4444",
+        label: threatLabel,
+        radius: 2.0,
+        opacity: 0.12,
       });
     }
 
@@ -421,7 +437,8 @@ export default function App() {
     const mat = new THREE.MeshBasicMaterial({
       color: d.color,
       transparent: true,
-      opacity: d.color.includes("rgba") ? 0.7 : 1,
+      opacity: d.opacity ?? 1,
+      depthWrite: (d.opacity ?? 1) > 0.5,
     });
     return new THREE.Mesh(geo, mat);
   }, []);
@@ -636,6 +653,18 @@ export default function App() {
                       {(t.distance_meters / 1000).toFixed(1)} km away
                     </span>
                   </div>
+
+                  {t.confidence && (
+                    <span className={`mt-1 inline-block text-[9px] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded ${
+                      t.confidence === "high" ? "bg-green-900/50 text-green-400" :
+                      t.confidence === "medium" ? "bg-yellow-900/50 text-yellow-400" :
+                      t.confidence === "low" ? "bg-orange-900/50 text-orange-400" :
+                      "bg-red-900/50 text-red-400"
+                    }`}>
+                      {t.confidence} confidence
+                      {t.tle_age_days != null && ` · ${t.tle_age_days}d old`}
+                    </span>
+                  )}
 
                   {selectedThreat === t.norad_id && (
                     <div className="mt-2 pt-2 border-t border-gray-700/50 space-y-2">

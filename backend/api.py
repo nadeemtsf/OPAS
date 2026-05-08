@@ -42,46 +42,99 @@ def generate_trajectory(launch_lat, launch_lon, alt_km, inc_deg, steps=120):
     u0 = asin(max(-1.0, min(1.0, sin_lat / sin_inc)))
     lon0 = degrees(atan2(cos(inc) * sin(u0), cos(u0)))
 
+    # ~600 s ascent from ground to target altitude
+    step_sec = (period * 60) / steps
+    ascent_steps = min(steps, max(1, round(600 / step_sec)))
+
     waypoints = []
     for i in range(steps + 1):
         u = u0 + (i / steps) * 2 * pi
         wlat = degrees(asin(sin_inc * sin(u)))
         wlon = launch_lon + degrees(atan2(cos(inc) * sin(u), cos(u))) - lon0 - drift * period * i / steps
         wlon = ((wlon + 540) % 360) - 180
-        waypoints.append({"lat": round(wlat, 4), "lon": round(wlon, 4)})
+        wp_alt = alt_km * min(1.0, i / ascent_steps) if ascent_steps > 0 else alt_km
+        waypoints.append({"lat": round(wlat, 4), "lon": round(wlon, 4), "alt": round(wp_alt, 2)})
     return waypoints
+
+
+def _tle_epoch_age_days(tle_line1):
+    try:
+        yr2 = int(tle_line1[18:20])
+        day_frac = float(tle_line1[20:32])
+        year = yr2 + (1900 if yr2 >= 57 else 2000)
+        epoch = datetime(year, 1, 1, tzinfo=timezone.utc) + timedelta(days=day_frac - 1)
+        return (datetime.now(timezone.utc) - epoch).total_seconds() / 86400.0
+    except Exception:
+        return None
 
 
 def _count_threats(candidates, trajectory, target_lat, target_lon, target_alt, t, proximity_km=200):
     count = 0
+
+    time_varying = trajectory is not None and t is not None and len(trajectory) > 1
+    if time_varying:
+        steps = len(trajectory) - 1
+        r = EARTH_R + target_alt
+        period_sec = 2 * pi * sqrt(r ** 3 / 398600.4418)
+        stride = max(1, steps // 12)
+        sample_indices = list(range(0, steps + 1, stride))
+        sample_wps = [trajectory[idx] for idx in sample_indices]
+        t_samples = ts.tt_jd([t.tt + period_sec * idx / (steps * 86400.0)
+                              for idx in sample_indices])
+
     for doc in candidates:
-        if t is not None and doc.get("tle_line1"):
+        has_tle = t is not None and doc.get("tle_line1")
+
+        if time_varying and has_tle:
+            try:
+                sat = EarthSatellite(doc["tle_line1"], doc["tle_line2"], doc["name"], ts)
+                sub = sat.at(t_samples).subpoint()
+                lats, lons, alts = sub.latitude.degrees, sub.longitude.degrees, sub.elevation.km
+            except Exception:
+                continue
+
+            threat_found = False
+            for i, wp in enumerate(sample_wps):
+                wp_alt = wp["alt"]
+                if abs(float(alts[i]) - wp_alt) > 50:
+                    continue
+                if haversine_km(wp["lat"], wp["lon"], float(lats[i]), float(lons[i])) < proximity_km:
+                    threat_found = True
+                    break
+            if threat_found:
+                count += 1
+
+        elif has_tle:
             try:
                 sat = EarthSatellite(doc["tle_line1"], doc["tle_line2"], doc["name"], ts)
                 sub = sat.at(t).subpoint()
                 d_lat, d_lon, d_alt = sub.latitude.degrees, sub.longitude.degrees, sub.elevation.km
             except Exception:
                 continue
+            if abs(d_alt - target_alt) > 50:
+                continue
+            min_dist = haversine_km(target_lat, target_lon, d_lat, d_lon)
+            if min_dist < proximity_km:
+                count += 1
+
         else:
             coords = doc["location"]["coordinates"]
             d_lat, d_lon, d_alt = coords[1], coords[0], doc["altitude_km"]
+            if abs(d_alt - target_alt) > 50:
+                continue
+            if trajectory:
+                min_dist = float("inf")
+                for wp in trajectory:
+                    d = haversine_km(wp["lat"], wp["lon"], d_lat, d_lon)
+                    if d < min_dist:
+                        min_dist = d
+                    if min_dist < proximity_km * 0.25:
+                        break
+            else:
+                min_dist = haversine_km(target_lat, target_lon, d_lat, d_lon)
+            if min_dist < proximity_km:
+                count += 1
 
-        if abs(d_alt - target_alt) > 50:
-            continue
-
-        if trajectory:
-            min_dist = float("inf")
-            for wp in trajectory:
-                d = haversine_km(wp["lat"], wp["lon"], d_lat, d_lon)
-                if d < min_dist:
-                    min_dist = d
-                if min_dist < proximity_km * 0.25:
-                    break
-        else:
-            min_dist = haversine_km(target_lat, target_lon, d_lat, d_lon)
-
-        if min_dist < proximity_km:
-            count += 1
     return count
 
 
@@ -89,51 +142,151 @@ def _full_check(candidates, trajectory, target_lat, target_lon, target_alt, t,
                 launch_dt=None):
     threats = []
 
+    time_varying = trajectory is not None and t is not None and len(trajectory) > 1
     if trajectory:
         r = EARTH_R + target_alt
         period_sec = 2 * pi * sqrt(r ** 3 / 398600.4418)
         steps = len(trajectory) - 1
 
+    if time_varying:
+        stride = max(1, steps // 12)
+        coarse_indices = list(range(0, steps + 1, stride))
+        coarse_set = set(coarse_indices)
+        t_coarse = ts.tt_jd([t.tt + period_sec * idx / (steps * 86400.0)
+                             for idx in coarse_indices])
+
     for doc in candidates:
-        if t is not None and doc.get("tle_line1"):
+        has_tle = t is not None and doc.get("tle_line1")
+
+        if time_varying and has_tle:
+            try:
+                sat = EarthSatellite(doc["tle_line1"], doc["tle_line2"], doc["name"], ts)
+                sub = sat.at(t_coarse).subpoint()
+                lats, lons, alts = sub.latitude.degrees, sub.longitude.degrees, sub.elevation.km
+            except Exception:
+                continue
+
+            min_dist = float("inf")
+            best_ci = 0
+            best_d_lat, best_d_lon, best_d_alt = 0.0, 0.0, 0.0
+            for i, ci in enumerate(coarse_indices):
+                d_alt = float(alts[i])
+                wp_alt = trajectory[ci]["alt"]
+                if abs(d_alt - wp_alt) > 50:
+                    continue
+                d_lat, d_lon = float(lats[i]), float(lons[i])
+                d = haversine_km(trajectory[ci]["lat"], trajectory[ci]["lon"], d_lat, d_lon)
+                if d < min_dist:
+                    min_dist = d
+                    best_ci = i
+                    best_d_lat, best_d_lon, best_d_alt = d_lat, d_lon, d_alt
+
+            closest_idx = coarse_indices[best_ci]
+
+            # Refine around closest coarse sample if promising
+            if min_dist < 500:
+                ref_start = max(0, closest_idx - stride)
+                ref_end = min(steps, closest_idx + stride)
+                ref_indices = [j for j in range(ref_start, ref_end + 1)
+                               if j not in coarse_set]
+                if ref_indices:
+                    t_ref = ts.tt_jd([t.tt + period_sec * j / (steps * 86400.0)
+                                      for j in ref_indices])
+                    try:
+                        rsub = sat.at(t_ref).subpoint()
+                        rlats = rsub.latitude.degrees
+                        rlons = rsub.longitude.degrees
+                        ralts = rsub.elevation.km
+                    except Exception:
+                        pass
+                    else:
+                        for i, ri in enumerate(ref_indices):
+                            r_alt = float(ralts[i])
+                            wp_alt = trajectory[ri]["alt"]
+                            if abs(r_alt - wp_alt) > 50:
+                                continue
+                            r_lat, r_lon = float(rlats[i]), float(rlons[i])
+                            d = haversine_km(trajectory[ri]["lat"], trajectory[ri]["lon"],
+                                             r_lat, r_lon)
+                            if d < min_dist:
+                                min_dist = d
+                                closest_idx = ri
+                                best_d_lat, best_d_lon, best_d_alt = r_lat, r_lon, r_alt
+
+            if min_dist >= 200:
+                continue
+            d_lat, d_lon, d_alt = best_d_lat, best_d_lon, best_d_alt
+            alt_ref = trajectory[closest_idx]["alt"]
+
+        elif has_tle:
             try:
                 sat = EarthSatellite(doc["tle_line1"], doc["tle_line2"], doc["name"], ts)
                 sub = sat.at(t).subpoint()
                 d_lat, d_lon, d_alt = sub.latitude.degrees, sub.longitude.degrees, sub.elevation.km
             except Exception:
                 continue
+            if abs(d_alt - target_alt) > 50:
+                continue
+
+            closest_idx = 0
+            alt_ref = target_alt
+            if trajectory:
+                min_dist = float("inf")
+                for idx, wp in enumerate(trajectory):
+                    d = haversine_km(wp["lat"], wp["lon"], d_lat, d_lon)
+                    if d < min_dist:
+                        min_dist = d
+                        closest_idx = idx
+                    if min_dist < 50:
+                        break
+            else:
+                min_dist = haversine_km(target_lat, target_lon, d_lat, d_lon)
+
         else:
             coords = doc["location"]["coordinates"]
             d_lat, d_lon, d_alt = coords[1], coords[0], doc["altitude_km"]
+            if abs(d_alt - target_alt) > 50:
+                continue
 
-        if abs(d_alt - target_alt) > 50:
-            continue
-
-        closest_idx = 0
-        if trajectory:
-            min_dist = float("inf")
-            for idx, wp in enumerate(trajectory):
-                d = haversine_km(wp["lat"], wp["lon"], d_lat, d_lon)
-                if d < min_dist:
-                    min_dist = d
-                    closest_idx = idx
-                if min_dist < 50:
-                    break
-        else:
-            min_dist = haversine_km(target_lat, target_lon, d_lat, d_lon)
+            closest_idx = 0
+            alt_ref = target_alt
+            if trajectory:
+                min_dist = float("inf")
+                for idx, wp in enumerate(trajectory):
+                    d = haversine_km(wp["lat"], wp["lon"], d_lat, d_lon)
+                    if d < min_dist:
+                        min_dist = d
+                        closest_idx = idx
+                    if min_dist < 50:
+                        break
+            else:
+                min_dist = haversine_km(target_lat, target_lon, d_lat, d_lon)
 
         if min_dist < 200:
             threat = {
                 "name": doc["name"],
                 "norad_id": doc["norad_id"],
                 "altitude_km": round(d_alt, 2),
-                "altitude_diff_km": round(abs(d_alt - target_alt), 2),
+                "altitude_diff_km": round(abs(d_alt - alt_ref), 2),
                 "distance_meters": round(min_dist * 1000, 2),
                 "location": {
                     "type": "Point",
                     "coordinates": [round(d_lon, 4), round(d_lat, 4)],
                 },
             }
+
+            if doc.get("tle_line1"):
+                age = _tle_epoch_age_days(doc["tle_line1"])
+                if age is not None:
+                    threat["tle_age_days"] = round(age, 1)
+                    if age < 1:
+                        threat["confidence"] = "high"
+                    elif age < 3:
+                        threat["confidence"] = "medium"
+                    elif age < 7:
+                        threat["confidence"] = "low"
+                    else:
+                        threat["confidence"] = "very_low"
 
             if trajectory:
                 threat["approach_location"] = {
@@ -171,21 +324,25 @@ def alert(
     if inclination is not None:
         trajectory = generate_trajectory(target_lat, target_lon, target_alt, inclination)
 
-    t = _make_skyfield_time(launch_time) if launch_time else None
-
-    launch_dt = None
     if launch_time:
+        t = _make_skyfield_time(launch_time)
         launch_dt = datetime.fromisoformat(launch_time.replace("Z", "+00:00"))
         if launch_dt.tzinfo is None:
             launch_dt = launch_dt.replace(tzinfo=timezone.utc)
+    else:
+        t = ts.now()
+        launch_dt = datetime.now(timezone.utc)
 
-    if trajectory is None and t is None:
-        return _instant_check(target_lat, target_lon, target_alt)
-
-    candidates = list(collection.find(
-        {"altitude_km": {"$gte": target_alt - 200, "$lte": target_alt + 200}},
-        {"_id": 0},
-    ))
+    if trajectory:
+        candidates = list(collection.find(
+            {"altitude_km": {"$gte": 0, "$lte": target_alt + 200}},
+            {"_id": 0},
+        ))
+    else:
+        candidates = list(collection.find(
+            {"altitude_km": {"$gte": target_alt - 200, "$lte": target_alt + 200}},
+            {"_id": 0},
+        ))
 
     threats = _full_check(candidates, trajectory, target_lat, target_lon, target_alt, t, launch_dt)
 
@@ -197,11 +354,10 @@ def alert(
     }
     if trajectory:
         result["trajectory"] = [
-            {"lat": w["lat"], "lng": w["lon"], "alt": target_alt / EARTH_R}
+            {"lat": w["lat"], "lng": w["lon"], "alt": w["alt"] / EARTH_R}
             for w in trajectory
         ]
-    if launch_time:
-        result["launch_time"] = launch_time
+    result["launch_time"] = launch_time or launch_dt.isoformat()
     return result
 
 
@@ -264,6 +420,16 @@ def _scan_windows(candidates, trajectory, target_lat, target_lon, target_alt,
             refined_end = check
             check += fine_step
 
+        # Verify interior — catch fast-movers that slip through the 30-min coarse grid
+        verify_cursor = refined_start + fine_step
+        while verify_cursor < refined_end:
+            t = ts.from_datetime(verify_cursor)
+            if _count_threats(candidates, trajectory, target_lat, target_lon, target_alt, t,
+                              proximity_km=proximity_km) > 0:
+                refined_end = verify_cursor
+                break
+            verify_cursor += fine_step
+
         duration = (refined_end - refined_start).total_seconds() / 60
         if duration >= 15:
             windows.append({
@@ -287,13 +453,12 @@ def safe_windows(
     trajectory = generate_trajectory(target_lat, target_lon, target_alt, inclination)
 
     candidates = list(collection.find(
-        {"altitude_km": {"$gte": target_alt - 200, "$lte": target_alt + 200}},
+        {"altitude_km": {"$gte": 0, "$lte": target_alt + 200}},
         {"_id": 0},
     ))
 
     now = datetime.now(timezone.utc)
 
-    # Progressive search: try initial hours, then extend if nothing found
     for hours in [search_hours, min(search_hours * 2, 72), 72]:
         end = now + timedelta(hours=hours)
         windows = _scan_windows(
@@ -313,33 +478,4 @@ def safe_windows(
         "search_hours": 72,
         "candidates_checked": len(candidates),
         "windows": [],
-    }
-
-
-def _instant_check(target_lat, target_lon, target_alt):
-    pipeline = [
-        {
-            "$geoNear": {
-                "near": {"type": "Point", "coordinates": [target_lon, target_lat]},
-                "distanceField": "distance_meters",
-                "spherical": True,
-            }
-        },
-        {
-            "$match": {
-                "$expr": {
-                    "$lt": [
-                        {"$abs": {"$subtract": ["$altitude_km", target_alt]}},
-                        50,
-                    ]
-                }
-            }
-        },
-        {"$project": {"_id": 0, "tle_line1": 0, "tle_line2": 0}},
-    ]
-    threats = list(collection.aggregate(pipeline))
-    return {
-        "status": "danger" if threats else "safe",
-        "target_coordinates": {"lat": target_lat, "lon": target_lon, "alt_km": target_alt},
-        "threats": threats,
     }
