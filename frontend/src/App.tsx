@@ -560,7 +560,7 @@ export default function App() {
               disabled={findingWindows}
               className="mt-2 w-full rounded bg-blue-600 hover:bg-blue-500 disabled:opacity-50 py-2.5 text-sm font-semibold transition cursor-pointer"
             >
-              {findingWindows ? "Scanning 24h..." : "Find Safe Launch Windows"}
+              {findingWindows ? "Scanning 24h..." : "Find A Safer Launch Window"}
             </button>
           )}
 
