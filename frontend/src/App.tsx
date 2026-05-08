@@ -3,6 +3,8 @@ import axios from "axios";
 import Globe from "react-globe.gl";
 import * as THREE from "three";
 
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
 interface Debris {
   name: string;
   norad_id: number;
@@ -107,7 +109,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    axios.get("http://localhost:8000/debris?limit=5000").then(({ data }) => {
+    axios.get(`${API_BASE}/debris?limit=5000`).then(({ data }) => {
       debrisRef.current = data.debris.map((d: Debris) => ({
         lat: d.location.coordinates[1],
         lng: d.location.coordinates[0],
@@ -313,7 +315,7 @@ export default function App() {
         inclination,
         launch_time: new Date(effectiveTime).toISOString(),
       };
-      const { data } = await axios.get("http://localhost:8000/alert", { params });
+      const { data } = await axios.get(`${API_BASE}/alert`, { params });
       setStatus(data.status);
       setThreats(data.threats);
       setCheckedCount(data.candidates_checked ?? null);
@@ -360,7 +362,7 @@ export default function App() {
     setWindowSearchDone(false);
     setWindowSearchHours(null);
     try {
-      const { data } = await axios.get("http://localhost:8000/safe-windows", {
+      const { data } = await axios.get(`${API_BASE}/safe-windows`, {
         params: { target_lat: targetLat, target_lon: targetLon, target_alt: targetAlt, inclination },
       });
       setSafeWindows(data.windows);
