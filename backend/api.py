@@ -1,4 +1,5 @@
 import os
+import concurrent.futures
 from math import radians, degrees, sin, cos, asin, atan2, sqrt, pi
 from datetime import datetime, timezone, timedelta
 from dotenv import load_dotenv
@@ -426,13 +427,21 @@ def _scan_windows(candidates, trajectory, target_lat, target_lon, target_alt,
 
 
     coarse_results = []
+    
+    time_steps = []
     cursor = start_dt
     while cursor <= end_dt:
-        t = ts.from_datetime(cursor)
-        threat_count = _count_threats_fast(scan_items, trajectory, target_alt, t, proximity_km)
-        coarse_results.append((cursor, threat_count))
+        time_steps.append(cursor)
         cursor += coarse_step
 
+    def check_time(cursor_time):
+        t = ts.from_datetime(cursor_time)
+        return (cursor_time, _count_threats_fast(scan_items, trajectory, target_alt, t, proximity_km))
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=os.cpu_count() or 4) as executor:
+        coarse_results = list(executor.map(check_time, time_steps))
+
+    # Ensure results are sorted by time (map already preserves order)
     raw_windows = []
     in_window = False
     window_start = None
@@ -503,7 +512,7 @@ def safe_windows(
     trajectory = generate_trajectory(target_lat, target_lon, target_alt, inclination)
 
     candidates = list(collection.find(
-        {"altitude_km": {"$gte": target_alt - 200, "$lte": target_alt + 200}},
+        {"altitude_km": {"$gte": target_alt - 50, "$lte": target_alt + 50}},
         {"_id": 0},
     ))
 

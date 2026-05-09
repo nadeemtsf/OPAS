@@ -39,6 +39,13 @@ interface TrajectoryPoint {
 
 const EARTH_RADIUS_KM = 6371;
 
+const DATE_FMT: Intl.DateTimeFormatOptions = {
+  day: "2-digit", month: "2-digit", year: "numeric",
+  hour: "2-digit", minute: "2-digit", second: "2-digit",
+  hour12: false,
+};
+const fmtDate = (iso: string) => new Date(iso).toLocaleString("en-GB", DATE_FMT);
+
 const DEBRIS_GEO = new THREE.SphereGeometry(0.5, 6, 6);
 const DEBRIS_MAT = new THREE.MeshBasicMaterial({
   color: 0x64b4ff,
@@ -109,7 +116,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    axios.get(`${API_BASE}/debris?limit=5000`).then(({ data }) => {
+    axios.get(`${API_BASE}/debris?limit=30000`).then(({ data }) => {
       debrisRef.current = data.debris.map((d: Debris) => ({
         lat: d.location.coordinates[1],
         lng: d.location.coordinates[0],
@@ -542,7 +549,7 @@ export default function App() {
 
             <div>
               <span className="text-xs text-gray-500">Launch Time (UTC)</span>
-              <input type="datetime-local" value={launchTime}
+              <input type="datetime-local" step="1" value={launchTime}
                 onChange={(e) => setLaunchTime(e.target.value)}
                 className={`${inputClass} [color-scheme:dark]`} />
             </div>
@@ -592,7 +599,7 @@ export default function App() {
 
           {windowSearchDone && safeWindows.length === 0 && (
             <div className="mt-3 rounded bg-yellow-900/30 border border-yellow-800/40 p-3">
-              <p className="text-xs text-yellow-400 font-medium">No safe windows found</p>
+              <p className="text-xs text-yellow-400 font-medium">No safer alternatives found. Current selection is the safest within 72h.</p>
               <p className="text-[10px] text-gray-400 mt-1">
                 Searched up to 72h with 50 km proximity threshold. Consider adjusting altitude or inclination.
               </p>

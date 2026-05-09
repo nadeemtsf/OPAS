@@ -2,3 +2,7 @@
 __pycache__/
 *.pyc
 node_modules/
+
+# IDE and Editor folders
+.claude/
+.vscode/
