@@ -39,12 +39,6 @@ interface TrajectoryPoint {
 
 const EARTH_RADIUS_KM = 6371;
 
-const DATE_FMT: Intl.DateTimeFormatOptions = {
-  day: "2-digit", month: "2-digit", year: "numeric",
-  hour: "2-digit", minute: "2-digit", second: "2-digit",
-  hour12: false,
-};
-const fmtDate = (iso: string) => new Date(iso).toLocaleString("en-GB", DATE_FMT);
 
 const DEBRIS_GEO = new THREE.SphereGeometry(0.5, 6, 6);
 const DEBRIS_MAT = new THREE.MeshBasicMaterial({
