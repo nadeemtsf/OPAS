@@ -34,7 +34,7 @@ export default function App() {
   const [searchHoursInput, setSearchHoursInput] = useState(24);
   const [windowElapsed, setWindowElapsed] = useState<number | null>(null);
 
-  const globeRef = useRef<GlobeInstance | null>(null);
+  const globeRef = useRef<GlobeInstance>(undefined);
   const { containerRef, globeSize } = useGlobeSize();
   const { hoveredDebris } = useGlobeDebris(globeRef);
 
@@ -198,22 +198,24 @@ export default function App() {
     [trajectory],
   );
 
-  const customThreeObject = useCallback((d: GlobePoint) => {
-    const geo = new THREE.SphereGeometry(d.radius, 8, 8);
+  const customThreeObject = useCallback((d: object) => {
+    const pt = d as GlobePoint;
+    const geo = new THREE.SphereGeometry(pt.radius, 8, 8);
     const mat = new THREE.MeshBasicMaterial({
-      color: d.color,
+      color: pt.color,
       transparent: true,
-      opacity: d.opacity ?? 1,
-      depthWrite: (d.opacity ?? 1) > 0.5,
+      opacity: pt.opacity ?? 1,
+      depthWrite: (pt.opacity ?? 1) > 0.5,
     });
     return new THREE.Mesh(geo, mat);
   }, []);
 
-  const customThreeObjectUpdate = useCallback((obj: THREE.Mesh, d: GlobePoint) => {
-    Object.assign(obj.position, globeRef.current?.getCoords(d.lat, d.lng, d.alt));
+  const customThreeObjectUpdate = useCallback((obj: THREE.Object3D, d: object) => {
+    const pt = d as GlobePoint;
+    Object.assign(obj.position, globeRef.current?.getCoords(pt.lat, pt.lng, pt.alt));
   }, []);
 
-  const customLayerLabel = useCallback((d: GlobePoint) => d.label, []);
+  const customLayerLabel = useCallback((d: object) => (d as GlobePoint).label, []);
   const pathColor = useCallback(() => "#10b981", []);
 
   return (

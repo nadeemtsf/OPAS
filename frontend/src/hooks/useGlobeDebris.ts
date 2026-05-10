@@ -11,7 +11,7 @@ const DEBRIS_MAT = new THREE.MeshBasicMaterial({
   opacity: 0.7,
 });
 
-export function useGlobeDebris(globeRef: React.RefObject<GlobeInstance | null>) {
+export function useGlobeDebris(globeRef: React.RefObject<GlobeInstance | undefined>) {
   const debrisRef = useRef<DebrisInstance[]>([]);
   const instancedRef = useRef<THREE.InstancedMesh | null>(null);
   const [debrisReady, setDebrisReady] = useState(false);
