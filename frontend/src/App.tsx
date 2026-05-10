@@ -1,9 +1,9 @@
 import { useState, useRef, useCallback, useMemo } from "react";
 import axios from "axios";
-import Globe from "react-globe.gl";
+import Globe, { type GlobeMethods } from "react-globe.gl";
 import * as THREE from "three";
 
-import type { Threat, GlobePoint, TrajectoryPoint, SafeWindow, GlobeInstance } from "./types";
+import type { Threat, GlobePoint, TrajectoryPoint, SafeWindow } from "./types";
 import { API_BASE, EARTH_RADIUS_KM, PRESETS } from "./constants";
 import { generateReport } from "./utils/reportGenerator";
 import { useGlobeSize } from "./hooks/useGlobeSize";
@@ -34,7 +34,7 @@ export default function App() {
   const [searchHoursInput, setSearchHoursInput] = useState(24);
   const [windowElapsed, setWindowElapsed] = useState<number | null>(null);
 
-  const globeRef = useRef<GlobeInstance>(undefined);
+  const globeRef = useRef<GlobeMethods>(undefined);
   const { containerRef, globeSize } = useGlobeSize();
   const { hoveredDebris } = useGlobeDebris(globeRef);
 

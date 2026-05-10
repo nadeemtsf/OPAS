@@ -1,5 +1,3 @@
-import type * as THREE from "three";
-
 export interface Debris {
   name: string;
   norad_id: number;
@@ -56,11 +54,3 @@ export interface SafeWindow {
   duration_minutes: number;
 }
 
-export interface GlobeInstance {
-  pointOfView: (pov: { lat?: number; lng?: number; altitude?: number }, transitionMs?: number) => void;
-  getCoords: (lat: number, lng: number, alt: number) => { x: number; y: number; z: number } | null;
-  scene: () => THREE.Scene;
-  renderer: () => THREE.WebGLRenderer;
-  camera: () => THREE.Camera;
-  controls: () => { autoRotate: boolean; autoRotateSpeed: number } | null;
-}
