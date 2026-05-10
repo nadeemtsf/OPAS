@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import axios from "axios";
-import type { Debris, DebrisInstance, HoveredDebris } from "../types";
+import type { Debris, DebrisInstance, HoveredDebris, GlobeInstance } from "../types";
 import { API_BASE, EARTH_RADIUS_KM } from "../constants";
 
 const DEBRIS_GEO = new THREE.SphereGeometry(0.5, 6, 6);
@@ -11,7 +11,7 @@ const DEBRIS_MAT = new THREE.MeshBasicMaterial({
   opacity: 0.7,
 });
 
-export function useGlobeDebris(globeRef: React.MutableRefObject<any>) {
+export function useGlobeDebris(globeRef: React.RefObject<GlobeInstance | null>) {
   const debrisRef = useRef<DebrisInstance[]>([]);
   const instancedRef = useRef<THREE.InstancedMesh | null>(null);
   const [debrisReady, setDebrisReady] = useState(false);
@@ -65,7 +65,7 @@ export function useGlobeDebris(globeRef: React.MutableRefObject<any>) {
         scene.remove(instancedRef.current);
       }
     };
-  }, [debrisReady]);
+  }, [debrisReady, globeRef]);
 
   useEffect(() => {
     if (!debrisReady || !globeRef.current) return;
@@ -129,7 +129,7 @@ export function useGlobeDebris(globeRef: React.MutableRefObject<any>) {
       canvas.removeEventListener("mouseleave", onMouseLeave);
       if (rafId !== null) cancelAnimationFrame(rafId);
     };
-  }, [debrisReady]);
+  }, [debrisReady, globeRef]);
 
   useEffect(() => {
     function enable() {
@@ -142,7 +142,7 @@ export function useGlobeDebris(globeRef: React.MutableRefObject<any>) {
     enable();
     const timer = setTimeout(enable, 200);
     return () => clearTimeout(timer);
-  }, []);
+  }, [globeRef]);
 
   return { hoveredDebris, debrisReady };
 }

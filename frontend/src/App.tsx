@@ -3,7 +3,7 @@ import axios from "axios";
 import Globe from "react-globe.gl";
 import * as THREE from "three";
 
-import type { Threat, GlobePoint, TrajectoryPoint, SafeWindow } from "./types";
+import type { Threat, GlobePoint, TrajectoryPoint, SafeWindow, GlobeInstance } from "./types";
 import { API_BASE, EARTH_RADIUS_KM, PRESETS } from "./constants";
 import { generateReport } from "./utils/reportGenerator";
 import { useGlobeSize } from "./hooks/useGlobeSize";
@@ -34,7 +34,7 @@ export default function App() {
   const [searchHoursInput, setSearchHoursInput] = useState(24);
   const [windowElapsed, setWindowElapsed] = useState<number | null>(null);
 
-  const globeRef = useRef<any>(null);
+  const globeRef = useRef<GlobeInstance | null>(null);
   const { containerRef, globeSize } = useGlobeSize();
   const { hoveredDebris } = useGlobeDebris(globeRef);
 
@@ -110,7 +110,7 @@ export default function App() {
   async function runCollisionCheck(effectiveTime: string) {
     setLoading(true);
     try {
-      const params: Record<string, any> = {
+      const params: Record<string, string | number> = {
         target_lat: targetLat,
         target_lon: targetLon,
         target_alt: targetAlt,
@@ -198,7 +198,7 @@ export default function App() {
     [trajectory],
   );
 
-  const customThreeObject = useCallback((d: any) => {
+  const customThreeObject = useCallback((d: GlobePoint) => {
     const geo = new THREE.SphereGeometry(d.radius, 8, 8);
     const mat = new THREE.MeshBasicMaterial({
       color: d.color,
@@ -209,11 +209,11 @@ export default function App() {
     return new THREE.Mesh(geo, mat);
   }, []);
 
-  const customThreeObjectUpdate = useCallback((obj: any, d: any) => {
+  const customThreeObjectUpdate = useCallback((obj: THREE.Mesh, d: GlobePoint) => {
     Object.assign(obj.position, globeRef.current?.getCoords(d.lat, d.lng, d.alt));
   }, []);
 
-  const customLayerLabel = useCallback((d: any) => d.label, []);
+  const customLayerLabel = useCallback((d: GlobePoint) => d.label, []);
   const pathColor = useCallback(() => "#10b981", []);
 
   return (
