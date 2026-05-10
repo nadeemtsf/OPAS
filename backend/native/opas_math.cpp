@@ -5,19 +5,30 @@
 
 namespace py = pybind11;
 
-static constexpr double kEarthRadiusKm = 6371.0;
+static constexpr double kWGS84_A = 6378.137;
+static constexpr double kWGS84_E2 = 0.00669437999014;
 
-static inline double haversine_km(double lat1, double lon1, double lat2, double lon2) {
-    const double deg_to_rad = M_PI / 180.0;
-    lat1 *= deg_to_rad;
-    lon1 *= deg_to_rad;
-    lat2 *= deg_to_rad;
-    lon2 *= deg_to_rad;
-    const double dlat = lat2 - lat1;
-    const double dlon = lon2 - lon1;
-    const double a = std::sin(dlat / 2.0) * std::sin(dlat / 2.0) +
-                     std::cos(lat1) * std::cos(lat2) * std::sin(dlon / 2.0) * std::sin(dlon / 2.0);
-    return kEarthRadiusKm * 2.0 * std::atan2(std::sqrt(a), std::sqrt(1.0 - a));
+struct Vec3 { double x, y, z; };
+
+static inline Vec3 geodetic_to_ecef(double lat_deg, double lon_deg, double alt_km) {
+    const double deg = M_PI / 180.0;
+    const double lat = lat_deg * deg;
+    const double lon = lon_deg * deg;
+    const double sin_lat = std::sin(lat);
+    const double cos_lat = std::cos(lat);
+    const double n = kWGS84_A / std::sqrt(1.0 - kWGS84_E2 * sin_lat * sin_lat);
+    return {
+        (n + alt_km) * cos_lat * std::cos(lon),
+        (n + alt_km) * cos_lat * std::sin(lon),
+        (n * (1.0 - kWGS84_E2) + alt_km) * sin_lat
+    };
+}
+
+static inline double dist_3d(const Vec3 &a, const Vec3 &b) {
+    const double dx = b.x - a.x;
+    const double dy = b.y - a.y;
+    const double dz = b.z - a.z;
+    return std::sqrt(dx * dx + dy * dy + dz * dz);
 }
 
 static std::vector<double> to_vec(const py::sequence &seq) {
@@ -30,34 +41,37 @@ static std::vector<double> to_vec(const py::sequence &seq) {
     return out;
 }
 
-bool any_within_km(const py::sequence &wp_lats,
+bool any_within_3d(const py::sequence &wp_lats,
                    const py::sequence &wp_lons,
+                   const py::sequence &wp_alts,
                    double target_lat,
                    double target_lon,
+                   double target_alt,
                    double proximity_km) {
     const auto lats = to_vec(wp_lats);
     const auto lons = to_vec(wp_lons);
+    const auto alts = to_vec(wp_alts);
     const size_t n = lats.size();
-    if (n == 0 || lons.size() != n) {
+    if (n == 0 || lons.size() != n || alts.size() != n) {
         return false;
     }
+    const Vec3 target = geodetic_to_ecef(target_lat, target_lon, target_alt);
     for (size_t i = 0; i < n; ++i) {
-        if (haversine_km(lats[i], lons[i], target_lat, target_lon) < proximity_km) {
+        const Vec3 wp = geodetic_to_ecef(lats[i], lons[i], alts[i]);
+        if (dist_3d(wp, target) < proximity_km) {
             return true;
         }
     }
     return false;
 }
 
-bool any_threat(const py::sequence &wp_lats,
-                const py::sequence &wp_lons,
-                const py::sequence &wp_alts,
-                const py::sequence &sat_lats,
-                const py::sequence &sat_lons,
-                const py::sequence &sat_alts,
-                double target_alt,
-                double proximity_km,
-                double alt_threshold_km) {
+bool any_threat_3d(const py::sequence &wp_lats,
+                   const py::sequence &wp_lons,
+                   const py::sequence &wp_alts,
+                   const py::sequence &sat_lats,
+                   const py::sequence &sat_lons,
+                   const py::sequence &sat_alts,
+                   double proximity_km) {
     const auto w_lats = to_vec(wp_lats);
     const auto w_lons = to_vec(wp_lons);
     const auto w_alts = to_vec(wp_alts);
@@ -74,10 +88,9 @@ bool any_threat(const py::sequence &wp_lats,
     }
 
     for (size_t i = 0; i < n; ++i) {
-        if (std::fabs(s_alts[i] - target_alt) > alt_threshold_km) {
-            continue;
-        }
-        if (haversine_km(w_lats[i], w_lons[i], s_lats[i], s_lons[i]) < proximity_km) {
+        const Vec3 wp = geodetic_to_ecef(w_lats[i], w_lons[i], w_alts[i]);
+        const Vec3 sat = geodetic_to_ecef(s_lats[i], s_lons[i], s_alts[i]);
+        if (dist_3d(wp, sat) < proximity_km) {
             return true;
         }
     }
@@ -85,10 +98,13 @@ bool any_threat(const py::sequence &wp_lats,
 }
 
 PYBIND11_MODULE(opas_math, m) {
-    m.doc() = "OPAS native math helpers";
-    m.def("any_within_km", &any_within_km, "Any waypoint within proximity");
-    m.def("any_threat", &any_threat, "Any threat within proximity with altitude gate",
+    m.doc() = "OPAS native math helpers — 3D ECEF distance";
+    m.def("any_within_3d", &any_within_3d, "Any waypoint within 3D proximity of a target",
+          py::arg("wp_lats"), py::arg("wp_lons"), py::arg("wp_alts"),
+          py::arg("target_lat"), py::arg("target_lon"), py::arg("target_alt"),
+          py::arg("proximity_km"));
+    m.def("any_threat_3d", &any_threat_3d, "Any sat position within 3D proximity of waypoints",
           py::arg("wp_lats"), py::arg("wp_lons"), py::arg("wp_alts"),
           py::arg("sat_lats"), py::arg("sat_lons"), py::arg("sat_alts"),
-          py::arg("target_alt"), py::arg("proximity_km"), py::arg("alt_threshold_km") = 50.0);
+          py::arg("proximity_km"));
 }
