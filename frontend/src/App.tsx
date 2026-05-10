@@ -628,7 +628,7 @@ export default function App() {
 
           {windowSearchDone && safeWindows.length === 0 && (
             <div className="mt-3 rounded bg-yellow-900/30 border border-yellow-800/40 p-3">
-              <p className="text-xs text-yellow-400 font-medium">No safe windows found within {windowSearchHours ?? searchHoursInput}h{windowElapsed != null ? ` (${windowElapsed}s)` : ""}.</p>
+              <p className="text-xs text-yellow-400 font-medium">No safe windows found within {windowSearchHours ?? searchHoursInput}h{windowElapsed != null}.</p>
               <p className="text-[10px] text-gray-400 mt-1">
                 Consider increasing the search window, adjusting altitude, or changing inclination.
               </p>
