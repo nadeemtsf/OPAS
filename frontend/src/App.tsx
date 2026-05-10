@@ -13,12 +13,15 @@ interface Debris {
 }
 
 interface Threat extends Debris {
-  distance_meters: number;
+  distance_km: number;
   altitude_diff_km?: number;
   closest_approach_time?: string;
   approach_location?: { lat: number; lon: number };
   tle_age_days?: number;
-  confidence?: string;
+  severity?: string;
+  collision_probability?: number;
+  threat_level?: string;
+  position_uncertainty_km?: number;
 }
 
 interface GlobePoint {
@@ -89,6 +92,8 @@ export default function App() {
   const [findingWindows, setFindingWindows] = useState(false);
   const [windowSearchDone, setWindowSearchDone] = useState(false);
   const [windowSearchHours, setWindowSearchHours] = useState<number | null>(null);
+  const [searchHoursInput, setSearchHoursInput] = useState(24);
+  const [windowElapsed, setWindowElapsed] = useState<number | null>(null);
 
   const debrisRef = useRef<DebrisInstance[]>([]);
   const instancedRef = useRef<THREE.InstancedMesh | null>(null);
@@ -110,7 +115,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    axios.get(`${API_BASE}/debris?limit=30000`).then(({ data }) => {
+    axios.get(`${API_BASE}/debris`).then(({ data }) => {
       debrisRef.current = data.debris.map((d: Debris) => ({
         lat: d.location.coordinates[1],
         lng: d.location.coordinates[0],
@@ -263,8 +268,8 @@ export default function App() {
           <div style="font-weight: 600; color: #fca5a5; margin-bottom: 4px;">⚠ ${t.name}</div>
           <div style="color: #9ca3af;">NORAD ${t.norad_id}</div>
           <div>Altitude: <span style="color: #fff;">${t.altitude_km.toFixed(1)} km</span></div>
-          <div>Miss distance: <span style="color: #fca5a5;">${(t.distance_meters / 1000).toFixed(1)} km</span></div>
-          ${t.confidence ? `<div>Confidence: <span style="color: ${t.confidence === "high" ? "#6ee7b7" : t.confidence === "medium" ? "#fde68a" : "#fca5a5"};">${t.confidence}</span></div>` : ""}
+          <div>Miss distance: <span style="color: #fca5a5;">${t.distance_km.toFixed(1)} km</span></div>
+          ${t.severity ? `<div>Severity: <span style="color: ${t.severity === "CRITICAL" ? "#fca5a5" : t.severity === "HIGH" ? "#fdba74" : t.severity === "MODERATE" ? "#fde68a" : "#6ee7b7"};">${t.severity}</span></div>` : ""}
         </div>
       `;
 
@@ -362,9 +367,11 @@ export default function App() {
     setFindingWindows(true);
     setWindowSearchDone(false);
     setWindowSearchHours(null);
+    setWindowElapsed(null);
+    const t0 = performance.now();
     try {
       const { data } = await axios.get(`${API_BASE}/safe-windows`, {
-        params: { target_lat: targetLat, target_lon: targetLon, target_alt: targetAlt, inclination },
+        params: { target_lat: targetLat, target_lon: targetLon, target_alt: targetAlt, inclination, search_hours: searchHoursInput },
       });
       setSafeWindows(data.windows);
       setWindowSearchHours(data.search_hours);
@@ -374,6 +381,7 @@ export default function App() {
       setSafeWindows([]);
       setWindowSearchDone(true);
     } finally {
+      setWindowElapsed(Math.round((performance.now() - t0) / 1000));
       setFindingWindows(false);
     }
   }
@@ -408,9 +416,15 @@ export default function App() {
       lines.push("");
       lines.push(`[${i + 1}] ${t.name}`);
       lines.push(`    NORAD ID:          ${t.norad_id}`);
-      lines.push(`    Miss Distance:     ${(t.distance_meters / 1000).toFixed(2)} km (${t.distance_meters.toFixed(0)} m)`);
+      lines.push(`    Miss Distance:     ${t.distance_km.toFixed(3)} km`);
       lines.push(`    Debris Altitude:   ${t.altitude_km.toFixed(1)} km${t.altitude_diff_km != null ? ` (Δ ${t.altitude_diff_km.toFixed(1)} km)` : ""}`);
       lines.push(`    Debris Position:   ${t.location.coordinates[1].toFixed(4)}°, ${t.location.coordinates[0].toFixed(4)}°`);
+      if (t.severity) {
+        lines.push(`    Severity:          ${t.severity}${t.collision_probability != null ? ` (Pc: ${t.collision_probability.toExponential(2)})` : ""}`);
+      }
+      if (t.position_uncertainty_km != null) {
+        lines.push(`    Pos. Uncertainty:  ${t.position_uncertainty_km.toFixed(2)} km`);
+      }
       if (t.closest_approach_time) {
         lines.push(`    Closest Approach:  ${new Date(t.closest_approach_time).toUTCString()}`);
       }
@@ -558,19 +572,40 @@ export default function App() {
           </button>
 
           {status === "danger" && (
-            <button
-              onClick={findSafeWindows}
-              disabled={findingWindows}
-              className="mt-2 w-full rounded bg-blue-600 hover:bg-blue-500 disabled:opacity-50 py-2.5 text-sm font-semibold transition cursor-pointer"
-            >
-              {findingWindows ? "Scanning 24h..." : "Find A Safer Launch Window"}
-            </button>
+            <div className="mt-2 space-y-2">
+              <div className="flex items-center gap-2">
+                <select
+                  value={searchHoursInput}
+                  onChange={(e) => setSearchHoursInput(Number(e.target.value))}
+                  className="flex-1 rounded bg-gray-800 border border-gray-700 text-white text-xs px-2 py-2 focus:outline-none focus:border-blue-500"
+                >
+                  <option value={24}>24 hours</option>
+                  <option value={48}>48 hours</option>
+                  <option value={72}>72 hours</option>
+                  <option value={120}>5 days</option>
+                  <option value={168}>7 days</option>
+                  <option value={336}>14 days</option>
+                </select>
+                <button
+                  onClick={findSafeWindows}
+                  disabled={findingWindows}
+                  className="flex-1 rounded bg-blue-600 hover:bg-blue-500 disabled:opacity-50 py-2 text-xs font-semibold transition cursor-pointer"
+                >
+                  {findingWindows ? `Scanning ${searchHoursInput}h...` : "Find Safe Window"}
+                </button>
+              </div>
+              {searchHoursInput > 72 && (
+                <p className="text-[10px] text-yellow-400/80">
+                  Large search window — this may take a while depending on debris count.
+                </p>
+              )}
+            </div>
           )}
 
           {safeWindows.length > 0 && (
             <div className="mt-3">
               <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
-                Safe Windows {windowSearchHours && `(${windowSearchHours}h scan)`}
+                Safe Windows {windowSearchHours && `(${windowSearchHours}h scan${windowElapsed != null ? ` · ${windowElapsed}s` : ""})`}
               </h3>
               <ul className="space-y-2">
                 {safeWindows.map((w, i) => (
@@ -593,9 +628,9 @@ export default function App() {
 
           {windowSearchDone && safeWindows.length === 0 && (
             <div className="mt-3 rounded bg-yellow-900/30 border border-yellow-800/40 p-3">
-              <p className="text-xs text-yellow-400 font-medium">No safer alternatives found. Current selection is the safest within 72h.</p>
+              <p className="text-xs text-yellow-400 font-medium">No safe windows found within {windowSearchHours ?? searchHoursInput}h{windowElapsed != null ? ` (${windowElapsed}s)` : ""}.</p>
               <p className="text-[10px] text-gray-400 mt-1">
-                Searched up to 72h with 50 km proximity threshold. Consider adjusting altitude or inclination.
+                Consider increasing the search window, adjusting altitude, or changing inclination.
               </p>
             </div>
           )}
@@ -655,19 +690,19 @@ export default function App() {
                     <span className="text-[10px] text-gray-500">NORAD {t.norad_id}</span>
                     <span className="text-[10px] text-gray-500">{t.altitude_km.toFixed(1)} km</span>
                     <span className="text-[10px] text-red-400 font-medium">
-                      {(t.distance_meters / 1000).toFixed(1)} km away
+                      {t.distance_km.toFixed(1)} km away
                     </span>
                   </div>
 
-                  {t.confidence && (
+                  {t.severity && (
                     <span className={`mt-1 inline-block text-[9px] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded ${
-                      t.confidence === "high" ? "bg-green-900/50 text-green-400" :
-                      t.confidence === "medium" ? "bg-yellow-900/50 text-yellow-400" :
-                      t.confidence === "low" ? "bg-orange-900/50 text-orange-400" :
-                      "bg-red-900/50 text-red-400"
+                      t.severity === "CRITICAL" ? "bg-red-900/50 text-red-400" :
+                      t.severity === "HIGH" ? "bg-orange-900/50 text-orange-400" :
+                      t.severity === "MODERATE" ? "bg-yellow-900/50 text-yellow-400" :
+                      "bg-green-900/50 text-green-400"
                     }`}>
-                      {t.confidence} confidence
-                      {t.tle_age_days != null && ` · ${t.tle_age_days}d old`}
+                      {t.severity}
+                      {t.tle_age_days != null && ` · TLE ${t.tle_age_days}d old`}
                     </span>
                   )}
 
@@ -699,7 +734,7 @@ export default function App() {
                         <div>
                           <span className="text-[10px] text-gray-500">Miss Distance</span>
                           <p className="text-[11px] text-white">
-                            {(t.distance_meters / 1000).toFixed(2)} km
+                            {t.distance_km.toFixed(3)} km
                           </p>
                         </div>
                         {t.altitude_diff_km != null && (
