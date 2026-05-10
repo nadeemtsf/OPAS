@@ -4,7 +4,7 @@ services:
     name: opas-backend
     env: python
     rootDir: backend
-    buildCommand: pip install -r requirements.txt
+    buildCommand: pip install -r requirements.txt && cd native && python setup.py build_ext --inplace && cp opas_math*.so .. || echo "Native math build skipped — using Python fallback"
     startCommand: uvicorn api:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: ALLOWED_ORIGINS

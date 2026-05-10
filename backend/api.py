@@ -1,4 +1,7 @@
 import os
+import sys
+import logging
+import concurrent.futures
 from math import radians, degrees, sin, cos, asin, atan2, sqrt, pi
 from datetime import datetime, timezone, timedelta
 from dotenv import load_dotenv
@@ -8,6 +11,9 @@ from pymongo import MongoClient
 from skyfield.api import load, EarthSatellite
 
 load_dotenv()
+
+logging.basicConfig(level=logging.INFO, format="%(levelname)s | %(message)s")
+log = logging.getLogger("opas")
 
 app = FastAPI(title="OPAS – Orbital Proximity Alert System")
 
@@ -19,9 +25,27 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+log.info("CORS origins: %s", ALLOWED_ORIGINS)
+
 client = MongoClient(os.getenv("MONGO_URI"))
 collection = client["opas_db"]["debris"]
 ts = load.timescale()
+
+try:
+    debris_count = collection.estimated_document_count()
+    log.info("MongoDB connected — debris collection: ~%d documents", debris_count)
+except Exception as e:
+    log.warning("MongoDB connection check failed: %s", e)
+
+try:
+    import opas_math
+    HAS_NATIVE_MATH = True
+except Exception:
+    opas_math = None
+    HAS_NATIVE_MATH = False
+
+log.info("Native C++ math (opas_math): %s", "ACTIVE" if HAS_NATIVE_MATH else "FALLBACK to Python")
+log.info("Python %s | Workers: %d", sys.version.split()[0], os.cpu_count() or 4)
 
 EARTH_R = 6371
 
@@ -157,6 +181,9 @@ def _count_threats_fast(scan_items, trajectory, target_alt, t, proximity_km):
     if not sample_indices:
         sample_indices = [steps]
     sample_wps = [trajectory[idx] for idx in sample_indices]
+    sample_lats = [wp["lat"] for wp in sample_wps]
+    sample_lons = [wp["lon"] for wp in sample_wps]
+    sample_alts = [wp["alt"] for wp in sample_wps]
     t_samples = ts.tt_jd([t.tt + period_sec * idx / (steps * 86400.0)
                           for idx in sample_indices])
 
@@ -167,21 +194,38 @@ def _count_threats_fast(scan_items, trajectory, target_alt, t, proximity_km):
                 lats, lons, alts = sub.latitude.degrees, sub.longitude.degrees, sub.elevation.km
             except Exception:
                 continue
-            for i, wp in enumerate(sample_wps):
-                if abs(float(alts[i]) - target_alt) > 50:
-                    continue
-                if haversine_km(wp["lat"], wp["lon"], float(lats[i]), float(lons[i])) < proximity_km:
+            if HAS_NATIVE_MATH:
+                if opas_math.any_threat(
+                    sample_lats,
+                    sample_lons,
+                    sample_alts,
+                    lats,
+                    lons,
+                    alts,
+                    target_alt,
+                    proximity_km,
+                ):
                     count += 1
-                    break
+            else:
+                for i, wp in enumerate(sample_wps):
+                    if abs(float(alts[i]) - target_alt) > 50:
+                        continue
+                    if haversine_km(wp["lat"], wp["lon"], float(lats[i]), float(lons[i])) < proximity_km:
+                        count += 1
+                        break
         else:
             coords = doc["location"]["coordinates"]
             d_lat, d_lon, d_alt = coords[1], coords[0], doc["altitude_km"]
             if abs(d_alt - target_alt) > 50:
                 continue
-            for wp in sample_wps:
-                if haversine_km(wp["lat"], wp["lon"], d_lat, d_lon) < proximity_km:
+            if HAS_NATIVE_MATH:
+                if opas_math.any_within_km(sample_lats, sample_lons, d_lat, d_lon, proximity_km):
                     count += 1
-                    break
+            else:
+                for wp in sample_wps:
+                    if haversine_km(wp["lat"], wp["lon"], d_lat, d_lon) < proximity_km:
+                        count += 1
+                        break
 
     return count
 
@@ -426,13 +470,21 @@ def _scan_windows(candidates, trajectory, target_lat, target_lon, target_alt,
 
 
     coarse_results = []
+    
+    time_steps = []
     cursor = start_dt
     while cursor <= end_dt:
-        t = ts.from_datetime(cursor)
-        threat_count = _count_threats_fast(scan_items, trajectory, target_alt, t, proximity_km)
-        coarse_results.append((cursor, threat_count))
+        time_steps.append(cursor)
         cursor += coarse_step
 
+    def check_time(cursor_time):
+        t = ts.from_datetime(cursor_time)
+        return (cursor_time, _count_threats_fast(scan_items, trajectory, target_alt, t, proximity_km))
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=os.cpu_count() or 4) as executor:
+        coarse_results = list(executor.map(check_time, time_steps))
+
+    # Ensure results are sorted by time (map already preserves order)
     raw_windows = []
     in_window = False
     window_start = None
@@ -503,7 +555,7 @@ def safe_windows(
     trajectory = generate_trajectory(target_lat, target_lon, target_alt, inclination)
 
     candidates = list(collection.find(
-        {"altitude_km": {"$gte": target_alt - 200, "$lte": target_alt + 200}},
+        {"altitude_km": {"$gte": target_alt - 50, "$lte": target_alt + 50}},
         {"_id": 0},
     ))
 
