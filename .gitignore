@@ -3,6 +3,12 @@ __pycache__/
 *.pyc
 node_modules/
 
+# Compiled native extensions
+*.pyd
+*.so
+*.egg-info/
+backend/native/build/
+
 # IDE and Editor folders
 .claude/
 .vscode/
