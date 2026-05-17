@@ -1,59 +1,58 @@
-# OPAS — Orbital Proximity Alert System
+# OPAS - Orbital Proximity Alert System
 
-OPAS is a lightweight toolchain for assessing orbital collision risk for launch trajectories and finding safe launch windows. It combines a Python FastAPI backend that ingests TLEs from Space-Track and computes proximity checks (using Skyfield and MongoDB spatial queries) with a React + Vite frontend that visualizes debris and launch trajectories on an interactive globe.
+OPAS is a lightweight toolchain for assessing orbital collision risk for launch trajectories and scanning for safe launch windows. It combines a Python FastAPI backend (TLE ingestion, proximity checks, optional native math acceleration) with a React + Vite frontend that visualizes debris and trajectories on an interactive globe.
 
-Key ideas
-- Ingest recent TLEs from Space-Track, compute subpoints for each object, and store them in MongoDB (`opas_db.debris`) with a `2dsphere` index.
-- Provide REST endpoints to list debris, run an instantaneous collision check (`/alert`), and scan for safe launch windows (`/safe-windows`).
-- Frontend visualizes debris and allows interactive collision checks and safe-window queries.
-
-Table of contents
+## Contents
 - Features
-- Architecture & components
-- Quickstart — run locally
-- Backend: environment variables & ingestion
+- Project layout
+- Quickstart (local)
+- Configuration
 - API reference
-- Frontend: running & configuration
 - Data model
-- Development notes & troubleshooting
+- Native math extension
+- Deployment
+- Security
+- License
 
-Features
-- FastAPI backend with three main endpoints: `/debris`, `/alert`, `/safe-windows`.
-- Ingestion pipeline (`backend/ingest.py`) that queries Space-Track, computes current subpoints using `skyfield`, and writes GeoJSON `Point` documents into MongoDB.
-- Spatial queries using MongoDB `2dsphere` index for efficient proximity searches.
-- A React + Vite frontend using `react-globe.gl` and Three.js to render debris and launch trajectories.
+## Features
+- FastAPI backend with `/debris`, `/alert`, and `/safe-windows` endpoints.
+- Ingestion pipeline that pulls recent Space-Track TLEs, computes subpoints with Skyfield, and stores GeoJSON points in MongoDB with a `2dsphere` index.
+- Collision checks that compute 3D ECEF distances, plus optional TLE age-based uncertainty and threat scoring.
+- Safe-window scanning with coarse and refined passes to identify low-risk windows.
+- React + Vite UI using `react-globe.gl` and Three.js, with interactive tooltips and report export.
+- Optional native `opas_math` extension (pybind11) for faster proximity checks.
 
-Architecture & components
-- backend/: FastAPI application and ingestion script.
-	- `api.py` — API implementation and collision/safe-window algorithms.
-	- `ingest.py` — Space-Track TLE fetcher → convert to positions → upload to MongoDB (wipes existing collection).
-	- `requirements.txt` — Python dependencies.
-- frontend/: React + TypeScript UI built with Vite.
-	- `src/App.tsx` — main UI, queries backend endpoints and renders globe.
-	- `package.json` — frontend dependencies & scripts.
+## Project layout
+- backend/
+  - api.py: FastAPI app and endpoints.
+  - ingest.py: Space-Track ingestion and MongoDB loader.
+  - db.py: MongoDB connection and Skyfield helpers.
+  - orbital.py, proximity.py, scanner.py: orbital math and scanning logic.
+  - native/: pybind11 extension source and build config.
+- frontend/
+  - src/App.tsx and components: UI and globe visualization.
+  - src/hooks: globe sizing and debris rendering.
+  - src/utils/reportGenerator.ts: text report download.
+  - public/ and src/assets/: app icons and UI assets.
+- render.yaml: Render deployment config.
 
-Quickstart — run locally
+## Quickstart (local)
 
 Prerequisites
 - Python 3.10+ and pip
-- Node.js 18+ and npm/yarn
+- Node.js 18+ and npm
 - MongoDB Atlas connection string or local MongoDB instance
 
-Backend (recommended from a terminal inside `backend/`)
-
-1. Create a virtual environment and install requirements
+Backend
 
 ```bash
 cd backend
 python -m venv .venv
-# Windows
 .venv\Scripts\Activate
-# macOS / Linux
-source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-2. Create a `.env` file (kept out of git). Required variables:
+Create `backend/.env` (kept out of git):
 
 ```
 MONGO_URI="mongodb+srv://<user>:<pass>@cluster.example/?retryWrites=true&w=majority"
@@ -61,26 +60,19 @@ SPACE_TRACK_USER=<your_space-track-username>
 SPACE_TRACK_PASS=<your_space-track-password>
 ```
 
-Note: `backend/ingest.py` will authenticate to Space-Track using these credentials and replace the contents of the `opas_db.debris` collection.
-
-3. Ingest debris (this deletes and repopulates the `debris` collection):
+Ingest debris (this deletes and repopulates `opas_db.debris`):
 
 ```bash
-cd backend
 python ingest.py
 ```
 
-4. Start the API server
+Run the API:
 
 ```bash
 uvicorn api:app --reload --host 0.0.0.0 --port 8000
 ```
 
-The backend serves on port `8000` by default. CORS is configured to allow `http://localhost:5173` (the default Vite dev server).
-
 Frontend
-
-1. Install and run the frontend
 
 ```bash
 cd frontend
@@ -88,76 +80,77 @@ npm install
 npm run dev
 ```
 
-2. Open the Vite dev URL (typically `http://localhost:5173`) and interact with the globe. The frontend calls the backend at `http://localhost:8000` for `/debris`, `/alert`, and `/safe-windows`.
+Open the Vite dev URL (typically `http://localhost:5173`). The frontend calls the backend at `http://localhost:8000`.
 
-Backend — environment variables & important notes
-- `MONGO_URI` — MongoDB connection string (required).
-- `SPACE_TRACK_USER`, `SPACE_TRACK_PASS` — Space-Track credentials used by `ingest.py` (required if you want to run ingestion).
-- The ingestion script deletes existing `opas_db.debris` documents and inserts newly-computed positions; schedule/update as appropriate.
-- The backend uses `python-dotenv` so place the `.env` file in `backend/` (or ensure env vars are loaded from your environment).
+## Configuration
 
-API reference
-- GET `/debris?limit=<n>`
-	- Returns a list of stored debris documents (default `limit=3000`). Response: `{ count, debris }`.
+Backend env vars
+- `MONGO_URI` (required)
+- `SPACE_TRACK_USER`, `SPACE_TRACK_PASS` (required for ingestion)
+- `ALLOWED_ORIGINS` (optional, comma-separated; defaults to `http://localhost:5173`)
 
-- GET `/alert` (query parameters)
-	- `target_lat` (float, required)
-	- `target_lon` (float, required)
-	- `target_alt` (float, km, required)
-	- `inclination` (float, degrees, optional) — when provided triggers a generated trajectory around the target site to simulate a launch orbit.
-	- `launch_time` (ISO 8601 string, optional) — when provided the backend will compute skyfield times from this timestamp.
+Frontend env vars
+- `VITE_API_URL` (optional; defaults to `http://localhost:8000`)
 
-	Response fields
-	- `status`: `safe` or `danger`.
-	- `threats`: list of threat objects (name, `norad_id`, `altitude_km`, `altitude_diff_km`, `distance_meters`, `location` GeoJSON Point). If `inclination`/trajectory are supplied, threats include `approach_location` and `closest_approach_time`.
-	- `candidates_checked`: number of debris objects considered for the check.
-	- `trajectory`: when applicable, an array of trajectory waypoints (for visualization). Note: `alt` in the returned trajectory is normalized for the globe visualization (the frontend divides by Earth radius).
+## API reference
 
-- GET `/safe-windows` (query parameters)
-	- `target_lat`, `target_lon`, `target_alt`, `inclination` (all required for trajectory-based scanning)
-	- `search_hours` (optional; default `24`, allowed `1..72`) — how many hours ahead to scan for safe windows
+GET `/debris`
+- Returns `{ count, debris }` with TLE lines omitted in the response.
 
-	Returns a prioritized list of candidate windows with `start`/`end` ISO timestamps and `duration_minutes`.
+GET `/alert`
+Query parameters:
+- `target_lat`, `target_lon` (float, required)
+- `target_alt` (float, km, required)
+- `inclination` (float, degrees, optional)
+- `launch_time` (ISO 8601 string, optional; defaults to now)
 
-Data model (collection: `opas_db.debris`)
-- Example document shape
+Response fields:
+- `status`: `safe` or `danger`
+- `candidates_checked`
+- `threats`: list of threat objects (see Data model)
+- `trajectory`: optional list of waypoints with `{ lat, lng, alt }` where `alt` is normalized as `alt_km / EARTH_RADIUS_KM` for the globe
+- `launch_time`: resolved ISO timestamp
+
+GET `/safe-windows`
+Query parameters:
+- `target_lat`, `target_lon`, `target_alt`, `inclination` (required)
+- `search_hours` (optional; default `24`, allowed `1..336`)
+
+Returns up to five windows sorted by duration, with `start`, `end`, and `duration_minutes`.
+
+## Data model
+
+Collection: `opas_db.debris`
 
 ```json
 {
-	"name": "OBJECT NAME",
-	"norad_id": 12345,
-	"altitude_km": 412.34,
-	"tle_line1": "1 ...",
-	"tle_line2": "2 ...",
-	"location": { "type": "Point", "coordinates": [lon, lat] }
+  "name": "OBJECT NAME",
+  "norad_id": 12345,
+  "altitude_km": 412.34,
+  "tle_line1": "1 ...",
+  "tle_line2": "2 ...",
+  "location": { "type": "Point", "coordinates": [lon, lat] }
 }
 ```
 
-Development notes & algorithms
-- The backend will attempt to use `tle_line1`/`tle_line2` with Skyfield to compute exact subpoints at requested times. If TLEs are missing, it falls back to stored `location` and `altitude_km` values.
-- Distance computations use a Haversine approximation on the subpoint lat/lon and altitude-based filtering; altitude differences greater than ~50 km are ignored for proximity checks.
-- Safe-window scanning performs a coarse 30-minute sweep and refines candidate windows with 5-minute steps. The default proximity thresholds used in the code are: candidate proximity window 200 km for threat detection, and a `SAFE_WINDOW_PROXIMITY_KM = 50` km used when scanning windows.
+Threat object fields (from `/alert`):
+- `name`, `norad_id`, `altitude_km`, `altitude_diff_km`, `distance_km`, `location`
+- Optional TLE-derived fields: `tle_age_days`, `collision_probability`, `threat_level`, `position_uncertainty_km`
+- Trajectory context: `approach_location`, `closest_approach_time`
 
-Security & operational guidance
-- Do NOT check secrets (`.env`, Space-Track credentials, or `MONGO_URI`) into source control. `.gitignore` already lists `.env`.
-- Consider adding `.claude/` to `.gitignore` if you keep local assistant notes there.
-- Space-Track credentials are subject to Space-Track terms; keep them private and avoid overloading their API (use sensible polling cadence).
+## Native math extension
 
-Troubleshooting
-- If the frontend shows an empty globe or fails to fetch debris, confirm the backend is running on port `8000` and `MONGO_URI` is correct.
-- If ingestion fails, check your Space-Track credentials and network connectivity. The ingest script prints progress and skips TLEs it cannot parse.
+`backend/native/opas_math.cpp` provides optional pybind11 helpers for fast 3D proximity checks. The backend falls back to pure Python if the module is not available.
 
-Next steps & suggestions
-- Add a scheduled job or cron task to run `backend/ingest.py` periodically to keep debris positions current.
-- Add tests for the proximity and safe-window algorithms.
-- Provide optional Dockerfiles or compose files for reproducible local deployment.
+## Deployment
 
-License & authors
-- OPAS — project structure and code provided in this repository. Add a `LICENSE` file if you wish to apply a specific open-source license.
+`render.yaml` defines a Render web service for the backend and a static frontend build. The backend build step attempts to compile the native extension and falls back if it fails.
 
-----
+## Security
 
-Path references
-- Backend: [backend/api.py](backend/api.py#L1)
-- Ingest: [backend/ingest.py](backend/ingest.py#L1)
-- Frontend: [frontend/src/App.tsx](frontend/src/App.tsx#L1)
+- Do not commit secrets (`.env`, Space-Track credentials, or `MONGO_URI`).
+- Space-Track credentials are subject to Space-Track terms; avoid excessive polling.
+
+## License
+
+See [LICENSE](LICENSE).
