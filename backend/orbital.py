@@ -1,16 +1,7 @@
 from math import radians, degrees, sin, cos, asin, atan2, sqrt, pi
 from datetime import datetime, timezone, timedelta
-from skyfield.api import EarthSatellite
-
-from db import ts
 
 EARTH_R = 6371
-
-
-def propagate_at(doc, t):
-    sat = EarthSatellite(doc["tle_line1"], doc["tle_line2"], doc["name"], ts)
-    sub = sat.at(t).subpoint()
-    return sat, sub.latitude.degrees, sub.longitude.degrees, sub.elevation.km
 
 
 def generate_trajectory(launch_lat, launch_lon, alt_km, inc_deg, steps=120):
