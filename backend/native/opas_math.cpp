@@ -97,6 +97,50 @@ bool any_threat_3d(const py::sequence &wp_lats,
     return false;
 }
 
+bool any_threat_ecef(const py::sequence &wp_xs,
+                     const py::sequence &wp_ys,
+                     const py::sequence &wp_zs,
+                     const py::sequence &sat_xs,
+                     const py::sequence &sat_ys,
+                     const py::sequence &sat_zs,
+                     double proximity_km) {
+    const auto wxs = to_vec(wp_xs), wys = to_vec(wp_ys), wzs = to_vec(wp_zs);
+    const auto sxs = to_vec(sat_xs), sys = to_vec(sat_ys), szs = to_vec(sat_zs);
+
+    const size_t n = wxs.size();
+    if (n == 0 || wys.size() != n || wzs.size() != n) return false;
+    if (sxs.size() != n || sys.size() != n || szs.size() != n) return false;
+
+    const double r2 = proximity_km * proximity_km;
+    for (size_t i = 0; i < n; ++i) {
+        const double dx = sxs[i] - wxs[i];
+        const double dy = sys[i] - wys[i];
+        const double dz = szs[i] - wzs[i];
+        if (dx * dx + dy * dy + dz * dz < r2) return true;
+    }
+    return false;
+}
+
+bool any_within_ecef(const py::sequence &wp_xs,
+                     const py::sequence &wp_ys,
+                     const py::sequence &wp_zs,
+                     double tx, double ty, double tz,
+                     double proximity_km) {
+    const auto wxs = to_vec(wp_xs), wys = to_vec(wp_ys), wzs = to_vec(wp_zs);
+
+    const size_t n = wxs.size();
+    if (n == 0 || wys.size() != n || wzs.size() != n) return false;
+
+    const double r2 = proximity_km * proximity_km;
+    for (size_t i = 0; i < n; ++i) {
+        const double dx = wxs[i] - tx;
+        const double dy = wys[i] - ty;
+        const double dz = wzs[i] - tz;
+        if (dx * dx + dy * dy + dz * dz < r2) return true;
+    }
+    return false;
+}
+
 PYBIND11_MODULE(opas_math, m) {
     m.doc() = "OPAS native math helpers — 3D ECEF distance";
     m.def("any_within_3d", &any_within_3d, "Any waypoint within 3D proximity of a target",
@@ -106,5 +150,13 @@ PYBIND11_MODULE(opas_math, m) {
     m.def("any_threat_3d", &any_threat_3d, "Any sat position within 3D proximity of waypoints",
           py::arg("wp_lats"), py::arg("wp_lons"), py::arg("wp_alts"),
           py::arg("sat_lats"), py::arg("sat_lons"), py::arg("sat_alts"),
+          py::arg("proximity_km"));
+    m.def("any_threat_ecef", &any_threat_ecef, "Any pre-computed ECEF sat within proximity of ECEF waypoints",
+          py::arg("wp_xs"), py::arg("wp_ys"), py::arg("wp_zs"),
+          py::arg("sat_xs"), py::arg("sat_ys"), py::arg("sat_zs"),
+          py::arg("proximity_km"));
+    m.def("any_within_ecef", &any_within_ecef, "Any ECEF waypoint within proximity of a single ECEF target",
+          py::arg("wp_xs"), py::arg("wp_ys"), py::arg("wp_zs"),
+          py::arg("tx"), py::arg("ty"), py::arg("tz"),
           py::arg("proximity_km"));
 }

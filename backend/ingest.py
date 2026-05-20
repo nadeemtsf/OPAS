@@ -1,4 +1,5 @@
 import os
+import math
 import requests
 from dotenv import load_dotenv
 from skyfield.api import load, EarthSatellite
@@ -52,17 +53,25 @@ def compute_positions(satellites):
             satellite = EarthSatellite(line1, line2, name, ts)
             subpoint = satellite.at(t).subpoint()
 
+            lat = subpoint.latitude.degrees
+            lon = subpoint.longitude.degrees
+            alt = subpoint.elevation.km
+
+            if not (math.isfinite(lat) and math.isfinite(lon) and math.isfinite(alt)):
+                print(f"  SKIP {name} (NORAD {norad_id}): non-finite position")
+                continue
+
             documents.append({
                 "name": name,
                 "norad_id": norad_id,
-                "altitude_km": round(subpoint.elevation.km, 2),
+                "altitude_km": round(alt, 2),
                 "tle_line1": line1,
                 "tle_line2": line2,
                 "location": {
                     "type": "Point",
                     "coordinates": [
-                        round(subpoint.longitude.degrees, 4),
-                        round(subpoint.latitude.degrees, 4),
+                        round(lon, 4),
+                        round(lat, 4),
                     ],
                 },
             })
