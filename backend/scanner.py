@@ -5,10 +5,12 @@ import os
 from math import pi, sqrt
 from datetime import timedelta
 
+from skyfield.framelib import itrs
+
 from db import ts, get_sat, _sat_cache
 from orbital import EARTH_R, tle_epoch_age_days
 from proximity import (
-    geodetic_to_ecef, dist_3d_km, screening_radius_km,
+    geodetic_to_ecef, screening_radius_km,
     estimate_sigma_m, compute_pc, threat_level_from_pc, proximity_severity,
     HAS_NATIVE_MATH, opas_math,
 )
@@ -18,8 +20,17 @@ log = logging.getLogger("opas")
 SAFE_WINDOW_PROXIMITY_KM = 50
 
 
+def _ecef_dist(ax, ay, az, bx, by, bz):
+    dx, dy, dz = ax - bx, ay - by, az - bz
+    return sqrt(dx * dx + dy * dy + dz * dz)
+
+
 def count_threats(candidates, trajectory, target_lat, target_lon, target_alt, t, proximity_km=200):
     count = 0
+
+    traj_ecef = None
+    if trajectory:
+        traj_ecef = [geodetic_to_ecef(wp["lat"], wp["lon"], wp["alt"]) for wp in trajectory]
 
     time_varying = trajectory is not None and t is not None and len(trajectory) > 1
     if time_varying:
@@ -28,9 +39,11 @@ def count_threats(candidates, trajectory, target_lat, target_lon, target_alt, t,
         period_sec = 2 * pi * sqrt(r ** 3 / 398600.4418)
         stride = max(1, steps // 24)
         sample_indices = list(range(0, steps + 1, stride))
-        sample_wps = [trajectory[idx] for idx in sample_indices]
+        sample_ecef = [traj_ecef[idx] for idx in sample_indices]
         t_samples = ts.tt_jd([t.tt + period_sec * idx / (steps * 86400.0)
                               for idx in sample_indices])
+
+    target_ecef = geodetic_to_ecef(target_lat, target_lon, target_alt)
 
     for doc in candidates:
         has_tle = t is not None and doc.get("tle_line1")
@@ -42,16 +55,14 @@ def count_threats(candidates, trajectory, target_lat, target_lon, target_alt, t,
             if sat is None:
                 continue
             try:
-                sub = sat.at(t_samples).subpoint()
-                lats, lons, alts = sub.latitude.degrees, sub.longitude.degrees, sub.elevation.km
+                xyz = sat.at(t_samples).frame_xyz(itrs).km
             except Exception:
                 continue
 
             threat_found = False
-            for i, wp in enumerate(sample_wps):
-                d = dist_3d_km(wp["lat"], wp["lon"], wp["alt"],
-                               float(lats[i]), float(lons[i]), float(alts[i]))
-                if d < radius:
+            for i, (wx, wy, wz) in enumerate(sample_ecef):
+                if _ecef_dist(float(xyz[0][i]), float(xyz[1][i]), float(xyz[2][i]),
+                              wx, wy, wz) < radius:
                     threat_found = True
                     break
             if threat_found:
@@ -62,27 +73,28 @@ def count_threats(candidates, trajectory, target_lat, target_lon, target_alt, t,
             if sat is None:
                 continue
             try:
-                sub = sat.at(t).subpoint()
-                d_lat, d_lon, d_alt = sub.latitude.degrees, sub.longitude.degrees, sub.elevation.km
+                xyz = sat.at(t).frame_xyz(itrs).km
             except Exception:
                 continue
-            d = dist_3d_km(target_lat, target_lon, target_alt, d_lat, d_lon, d_alt)
-            if d < radius:
+            tx, ty, tz = target_ecef
+            if _ecef_dist(float(xyz[0]), float(xyz[1]), float(xyz[2]),
+                          tx, ty, tz) < radius:
                 count += 1
 
         else:
             coords = doc["location"]["coordinates"]
-            d_lat, d_lon, d_alt = coords[1], coords[0], doc["altitude_km"]
-            if trajectory:
+            d_ecef = geodetic_to_ecef(coords[1], coords[0], doc["altitude_km"])
+            if traj_ecef:
                 min_dist = float("inf")
-                for wp in trajectory:
-                    d = dist_3d_km(wp["lat"], wp["lon"], wp["alt"], d_lat, d_lon, d_alt)
+                for wx, wy, wz in traj_ecef:
+                    d = _ecef_dist(d_ecef[0], d_ecef[1], d_ecef[2], wx, wy, wz)
                     if d < min_dist:
                         min_dist = d
                     if min_dist < proximity_km * 0.25:
                         break
             else:
-                min_dist = dist_3d_km(target_lat, target_lon, target_alt, d_lat, d_lon, d_alt)
+                tx, ty, tz = target_ecef
+                min_dist = _ecef_dist(d_ecef[0], d_ecef[1], d_ecef[2], tx, ty, tz)
             if min_dist < proximity_km:
                 count += 1
 
@@ -103,10 +115,10 @@ def count_threats_fast(scan_items, trajectory, target_alt, t, proximity_km):
     if not sample_indices:
         sample_indices = [steps]
     sample_wps = [trajectory[idx] for idx in sample_indices]
-    sample_lats = [wp["lat"] for wp in sample_wps]
-    sample_lons = [wp["lon"] for wp in sample_wps]
-    sample_alts = [wp["alt"] for wp in sample_wps]
     sample_ecef = [geodetic_to_ecef(wp["lat"], wp["lon"], wp["alt"]) for wp in sample_wps]
+    wp_xs = [e[0] for e in sample_ecef]
+    wp_ys = [e[1] for e in sample_ecef]
+    wp_zs = [e[2] for e in sample_ecef]
     t_samples = ts.tt_jd([t.tt + period_sec * idx / (steps * 86400.0)
                           for idx in sample_indices])
 
@@ -117,36 +129,33 @@ def count_threats_fast(scan_items, trajectory, target_alt, t, proximity_km):
 
         if sat is not None:
             try:
-                sub = sat.at(t_samples).subpoint()
-                lats, lons, alts = sub.latitude.degrees, sub.longitude.degrees, sub.elevation.km
+                xyz = sat.at(t_samples).frame_xyz(itrs).km
             except Exception:
                 continue
             if HAS_NATIVE_MATH:
-                if opas_math.any_threat_3d(
-                    sample_lats, sample_lons, sample_alts,
-                    lats, lons, alts, radius,
+                if opas_math.any_threat_ecef(
+                    wp_xs, wp_ys, wp_zs,
+                    xyz[0], xyz[1], xyz[2], radius,
                 ):
                     count += 1
             else:
                 for i, (wx, wy, wz) in enumerate(sample_ecef):
-                    dx, dy, dz = geodetic_to_ecef(float(lats[i]), float(lons[i]), float(alts[i]))
-                    d = sqrt((dx - wx) ** 2 + (dy - wy) ** 2 + (dz - wz) ** 2)
+                    d = sqrt((float(xyz[0][i]) - wx) ** 2 + (float(xyz[1][i]) - wy) ** 2 + (float(xyz[2][i]) - wz) ** 2)
                     if d < radius:
                         count += 1
                         break
         else:
             coords = doc["location"]["coordinates"]
-            d_lat, d_lon, d_alt = coords[1], coords[0], doc["altitude_km"]
+            d_ecef = geodetic_to_ecef(coords[1], coords[0], doc["altitude_km"])
             if HAS_NATIVE_MATH:
-                if opas_math.any_within_3d(
-                    sample_lats, sample_lons, sample_alts,
-                    d_lat, d_lon, d_alt, radius,
+                if opas_math.any_within_ecef(
+                    wp_xs, wp_ys, wp_zs,
+                    d_ecef[0], d_ecef[1], d_ecef[2], radius,
                 ):
                     count += 1
             else:
-                dx, dy, dz = geodetic_to_ecef(d_lat, d_lon, d_alt)
                 for wx, wy, wz in sample_ecef:
-                    d = sqrt((dx - wx) ** 2 + (dy - wy) ** 2 + (dz - wz) ** 2)
+                    d = sqrt((d_ecef[0] - wx) ** 2 + (d_ecef[1] - wy) ** 2 + (d_ecef[2] - wz) ** 2)
                     if d < radius:
                         count += 1
                         break
@@ -158,18 +167,23 @@ def full_check(candidates, trajectory, target_lat, target_lon, target_alt, t,
                launch_dt=None):
     threats = []
 
-    time_varying = trajectory is not None and t is not None and len(trajectory) > 1
+    traj_ecef = None
     if trajectory:
+        traj_ecef = [geodetic_to_ecef(wp["lat"], wp["lon"], wp["alt"]) for wp in trajectory]
         r = EARTH_R + target_alt
         period_sec = 2 * pi * sqrt(r ** 3 / 398600.4418)
         steps = len(trajectory) - 1
 
+    time_varying = trajectory is not None and t is not None and len(trajectory) > 1
     if time_varying:
         stride = max(1, steps // 24)
         coarse_indices = list(range(0, steps + 1, stride))
         coarse_set = set(coarse_indices)
+        coarse_ecef = [traj_ecef[idx] for idx in coarse_indices]
         t_coarse = ts.tt_jd([t.tt + period_sec * idx / (steps * 86400.0)
                              for idx in coarse_indices])
+
+    target_ecef = geodetic_to_ecef(target_lat, target_lon, target_alt)
 
     for doc in candidates:
         has_tle = t is not None and doc.get("tle_line1")
@@ -181,23 +195,18 @@ def full_check(candidates, trajectory, target_lat, target_lon, target_alt, t,
             if sat is None:
                 continue
             try:
-                sub = sat.at(t_coarse).subpoint()
-                lats, lons, alts = sub.latitude.degrees, sub.longitude.degrees, sub.elevation.km
+                xyz = sat.at(t_coarse).frame_xyz(itrs).km
             except Exception:
                 continue
 
             min_dist = float("inf")
             best_ci = 0
-            best_d_lat, best_d_lon, best_d_alt = 0.0, 0.0, 0.0
-            for i, ci in enumerate(coarse_indices):
-                d_alt = float(alts[i])
-                d_lat, d_lon = float(lats[i]), float(lons[i])
-                d = dist_3d_km(trajectory[ci]["lat"], trajectory[ci]["lon"],
-                               trajectory[ci]["alt"], d_lat, d_lon, d_alt)
+            for i, (wx, wy, wz) in enumerate(coarse_ecef):
+                d = _ecef_dist(float(xyz[0][i]), float(xyz[1][i]), float(xyz[2][i]),
+                               wx, wy, wz)
                 if d < min_dist:
                     min_dist = d
                     best_ci = i
-                    best_d_lat, best_d_lon, best_d_alt = d_lat, d_lon, d_alt
 
             closest_idx = coarse_indices[best_ci]
 
@@ -210,26 +219,29 @@ def full_check(candidates, trajectory, target_lat, target_lon, target_alt, t,
                     t_ref = ts.tt_jd([t.tt + period_sec * j / (steps * 86400.0)
                                       for j in ref_indices])
                     try:
-                        rsub = sat.at(t_ref).subpoint()
-                        rlats = rsub.latitude.degrees
-                        rlons = rsub.longitude.degrees
-                        ralts = rsub.elevation.km
+                        ref_xyz = sat.at(t_ref).frame_xyz(itrs).km
                     except Exception:
                         pass
                     else:
                         for i, ri in enumerate(ref_indices):
-                            r_alt = float(ralts[i])
-                            r_lat, r_lon = float(rlats[i]), float(rlons[i])
-                            d = dist_3d_km(trajectory[ri]["lat"], trajectory[ri]["lon"],
-                                           trajectory[ri]["alt"], r_lat, r_lon, r_alt)
+                            wp_e = traj_ecef[ri]
+                            d = _ecef_dist(float(ref_xyz[0][i]), float(ref_xyz[1][i]), float(ref_xyz[2][i]),
+                                           wp_e[0], wp_e[1], wp_e[2])
                             if d < min_dist:
                                 min_dist = d
                                 closest_idx = ri
-                                best_d_lat, best_d_lon, best_d_alt = r_lat, r_lon, r_alt
 
             if min_dist >= radius:
                 continue
-            d_lat, d_lon, d_alt = best_d_lat, best_d_lon, best_d_alt
+
+            best_jd = t.tt + period_sec * closest_idx / (steps * 86400.0)
+            try:
+                sub = sat.at(ts.tt_jd(best_jd)).subpoint()
+                d_lat = float(sub.latitude.degrees)
+                d_lon = float(sub.longitude.degrees)
+                d_alt = float(sub.elevation.km)
+            except Exception:
+                continue
             alt_ref = trajectory[closest_idx]["alt"]
 
         elif has_tle:
@@ -237,77 +249,92 @@ def full_check(candidates, trajectory, target_lat, target_lon, target_alt, t,
             if sat is None:
                 continue
             try:
-                sub = sat.at(t).subpoint()
-                d_lat, d_lon, d_alt = sub.latitude.degrees, sub.longitude.degrees, sub.elevation.km
+                pos = sat.at(t)
+                xyz = pos.frame_xyz(itrs).km
             except Exception:
                 continue
 
             closest_idx = 0
             alt_ref = target_alt
-            if trajectory:
+            if traj_ecef:
                 min_dist = float("inf")
-                for idx, wp in enumerate(trajectory):
-                    d = dist_3d_km(wp["lat"], wp["lon"], wp["alt"], d_lat, d_lon, d_alt)
+                for idx, (wx, wy, wz) in enumerate(traj_ecef):
+                    d = _ecef_dist(float(xyz[0]), float(xyz[1]), float(xyz[2]),
+                                   wx, wy, wz)
                     if d < min_dist:
                         min_dist = d
                         closest_idx = idx
                     if min_dist < 50:
                         break
             else:
-                min_dist = dist_3d_km(target_lat, target_lon, target_alt, d_lat, d_lon, d_alt)
+                tx, ty, tz = target_ecef
+                min_dist = _ecef_dist(float(xyz[0]), float(xyz[1]), float(xyz[2]),
+                                      tx, ty, tz)
+
+            if min_dist >= radius:
+                continue
+
+            sub = pos.subpoint()
+            d_lat = float(sub.latitude.degrees)
+            d_lon = float(sub.longitude.degrees)
+            d_alt = float(sub.elevation.km)
 
         else:
             coords = doc["location"]["coordinates"]
             d_lat, d_lon, d_alt = coords[1], coords[0], doc["altitude_km"]
+            d_ecef = geodetic_to_ecef(d_lat, d_lon, d_alt)
 
             closest_idx = 0
             alt_ref = target_alt
-            if trajectory:
+            if traj_ecef:
                 min_dist = float("inf")
-                for idx, wp in enumerate(trajectory):
-                    d = dist_3d_km(wp["lat"], wp["lon"], wp["alt"], d_lat, d_lon, d_alt)
+                for idx, (wx, wy, wz) in enumerate(traj_ecef):
+                    d = _ecef_dist(d_ecef[0], d_ecef[1], d_ecef[2], wx, wy, wz)
                     if d < min_dist:
                         min_dist = d
                         closest_idx = idx
                     if min_dist < 50:
                         break
             else:
-                min_dist = dist_3d_km(target_lat, target_lon, target_alt, d_lat, d_lon, d_alt)
+                tx, ty, tz = target_ecef
+                min_dist = _ecef_dist(d_ecef[0], d_ecef[1], d_ecef[2], tx, ty, tz)
 
-        if min_dist < radius:
-            threat = {
-                "name": doc["name"],
-                "norad_id": doc["norad_id"],
-                "altitude_km": round(d_alt, 2),
-                "altitude_diff_km": round(abs(d_alt - alt_ref), 2),
-                "distance_km": round(min_dist, 3),
-                "severity": proximity_severity(min_dist),
-                "location": {
-                    "type": "Point",
-                    "coordinates": [round(d_lon, 4), round(d_lat, 4)],
-                },
+            if min_dist >= radius:
+                continue
+
+        threat = {
+            "name": doc["name"],
+            "norad_id": doc["norad_id"],
+            "altitude_km": round(d_alt, 2),
+            "altitude_diff_km": round(abs(d_alt - alt_ref), 2),
+            "distance_km": round(min_dist, 3),
+            "severity": proximity_severity(min_dist),
+            "location": {
+                "type": "Point",
+                "coordinates": [round(d_lon, 4), round(d_lat, 4)],
+            },
+        }
+
+        if doc.get("tle_line1"):
+            age = tle_epoch_age_days(doc["tle_line1"])
+            if age is not None:
+                threat["tle_age_days"] = round(age, 1)
+                sigma = estimate_sigma_m(age)
+                pc = compute_pc(min_dist * 1000, sigma)
+                threat["collision_probability"] = pc
+                threat["threat_level"] = threat_level_from_pc(pc)
+                threat["position_uncertainty_km"] = round(sigma / 1000, 2)
+
+        if trajectory:
+            threat["approach_location"] = {
+                "lat": trajectory[closest_idx]["lat"],
+                "lon": trajectory[closest_idx]["lon"],
             }
+            if launch_dt and steps > 0:
+                offset = timedelta(seconds=period_sec * closest_idx / steps)
+                threat["closest_approach_time"] = (launch_dt + offset).isoformat()
 
-            if doc.get("tle_line1"):
-                age = tle_epoch_age_days(doc["tle_line1"])
-                if age is not None:
-                    threat["tle_age_days"] = round(age, 1)
-                    sigma = estimate_sigma_m(age)
-                    pc = compute_pc(min_dist * 1000, sigma)
-                    threat["collision_probability"] = pc
-                    threat["threat_level"] = threat_level_from_pc(pc)
-                    threat["position_uncertainty_km"] = round(sigma / 1000, 2)
-
-            if trajectory:
-                threat["approach_location"] = {
-                    "lat": trajectory[closest_idx]["lat"],
-                    "lon": trajectory[closest_idx]["lon"],
-                }
-                if launch_dt and steps > 0:
-                    offset = timedelta(seconds=period_sec * closest_idx / steps)
-                    threat["closest_approach_time"] = (launch_dt + offset).isoformat()
-
-            threats.append(threat)
+        threats.append(threat)
     return threats
 
 
