@@ -6,7 +6,7 @@ from math import pi, sqrt
 from datetime import timedelta
 
 from db import ts, get_sat, _sat_cache
-from orbital import EARTH_R, propagate_at, tle_epoch_age_days
+from orbital import EARTH_R, tle_epoch_age_days
 from proximity import (
     geodetic_to_ecef, dist_3d_km, screening_radius_km,
     estimate_sigma_m, compute_pc, threat_level_from_pc, proximity_severity,
@@ -38,8 +38,12 @@ def count_threats(candidates, trajectory, target_lat, target_lon, target_alt, t,
         radius = screening_radius_km(proximity_km, tle_age)
 
         if time_varying and has_tle:
+            sat = get_sat(doc)
+            if sat is None:
+                continue
             try:
-                _, lats, lons, alts = propagate_at(doc, t_samples)
+                sub = sat.at(t_samples).subpoint()
+                lats, lons, alts = sub.latitude.degrees, sub.longitude.degrees, sub.elevation.km
             except Exception:
                 continue
 
@@ -54,8 +58,12 @@ def count_threats(candidates, trajectory, target_lat, target_lon, target_alt, t,
                 count += 1
 
         elif has_tle:
+            sat = get_sat(doc)
+            if sat is None:
+                continue
             try:
-                _, d_lat, d_lon, d_alt = propagate_at(doc, t)
+                sub = sat.at(t).subpoint()
+                d_lat, d_lon, d_alt = sub.latitude.degrees, sub.longitude.degrees, sub.elevation.km
             except Exception:
                 continue
             d = dist_3d_km(target_lat, target_lon, target_alt, d_lat, d_lon, d_alt)
@@ -169,8 +177,12 @@ def full_check(candidates, trajectory, target_lat, target_lon, target_alt, t,
         radius = screening_radius_km(200, tle_age)
 
         if time_varying and has_tle:
+            sat = get_sat(doc)
+            if sat is None:
+                continue
             try:
-                sat, lats, lons, alts = propagate_at(doc, t_coarse)
+                sub = sat.at(t_coarse).subpoint()
+                lats, lons, alts = sub.latitude.degrees, sub.longitude.degrees, sub.elevation.km
             except Exception:
                 continue
 
@@ -221,8 +233,12 @@ def full_check(candidates, trajectory, target_lat, target_lon, target_alt, t,
             alt_ref = trajectory[closest_idx]["alt"]
 
         elif has_tle:
+            sat = get_sat(doc)
+            if sat is None:
+                continue
             try:
-                _, d_lat, d_lon, d_alt = propagate_at(doc, t)
+                sub = sat.at(t).subpoint()
+                d_lat, d_lon, d_alt = sub.latitude.degrees, sub.longitude.degrees, sub.elevation.km
             except Exception:
                 continue
 
