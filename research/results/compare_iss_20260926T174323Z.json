@@ -1,0 +1,68 @@
+{
+  "baseline_file": "research/results/fixed_iss_20260926T172830Z.json",
+  "reference_file": "research/results/reference_iss_20260921T102002Z.json",
+  "preset": "iss",
+  "requested_range": [
+    "2026-09-21T08:52:54.811735+00:00",
+    "2026-09-21T14:52:54.811735+00:00"
+  ],
+  "reference_overall_unsafe_rate_at_opas_radius": 0.1631578947368421,
+  "windows": [
+    {
+      "window": {
+        "start": "2026-09-21T10:33:54.811735+00:00",
+        "end": "2026-09-21T11:25:54.811735+00:00",
+        "duration_minutes": 52
+      },
+      "raw": {
+        "start": "2026-09-21T10:33:54.811735+00:00",
+        "end": "2026-09-21T11:25:54.811735+00:00",
+        "reference_samples": 52,
+        "marked_unsafe": 5,
+        "false_safe_rate": 0.09615384615384616,
+        "uncovered_minutes": 1,
+        "window_minutes_total": 53,
+        "reference_samples_in_window": 52
+      },
+      "clipped": null,
+      "clipped_to_requested_range": {
+        "start": "2026-09-21T10:33:54.811735+00:00",
+        "end": "2026-09-21T11:25:54.811735+00:00",
+        "reference_samples": 52,
+        "marked_unsafe": 5,
+        "false_safe_rate": 0.09615384615384616,
+        "uncovered_minutes": 1,
+        "window_minutes_total": 53,
+        "reference_samples_in_window": 52
+      }
+    },
+    {
+      "window": {
+        "start": "2026-09-21T13:33:54.811735+00:00",
+        "end": "2026-09-21T14:13:54.811735+00:00",
+        "duration_minutes": 40
+      },
+      "raw": {
+        "start": "2026-09-21T13:33:54.811735+00:00",
+        "end": "2026-09-21T14:13:54.811735+00:00",
+        "reference_samples": 40,
+        "marked_unsafe": 9,
+        "false_safe_rate": 0.225,
+        "uncovered_minutes": 1,
+        "window_minutes_total": 41,
+        "reference_samples_in_window": 40
+      },
+      "clipped": null,
+      "clipped_to_requested_range": {
+        "start": "2026-09-21T13:33:54.811735+00:00",
+        "end": "2026-09-21T14:13:54.811735+00:00",
+        "reference_samples": 40,
+        "marked_unsafe": 9,
+        "false_safe_rate": 0.225,
+        "uncovered_minutes": 1,
+        "window_minutes_total": 41,
+        "reference_samples_in_window": 40
+      }
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "baseline_file": "research/results/baseline_20260921T090905Z.json",
+  "reference_file": "research/results/reference_starlink_20260922T071313Z.json",
+  "preset": "starlink",
+  "requested_range": [
+    "2026-09-21T08:52:54.811735+00:00",
+    "2026-09-21T14:52:54.811735+00:00"
+  ],
+  "reference_overall_unsafe_rate_at_opas_radius": 1.0,
+  "windows": [
+    {
+      "window": {
+        "start": "2026-09-21T09:46:54.811735+00:00",
+        "end": "2026-09-21T10:32:54.811735+00:00",
+        "duration_minutes": 46
+      },
+      "raw": {
+        "start": "2026-09-21T09:46:54.811735+00:00",
+        "end": "2026-09-21T10:32:54.811735+00:00",
+        "reference_samples": 46,
+        "marked_unsafe": 46,
+        "false_safe_rate": 1.0,
+        "uncovered_minutes": 1,
+        "window_minutes_total": 47,
+        "reference_samples_in_window": 46
+      },
+      "clipped": null,
+      "clipped_to_requested_range": {
+        "start": "2026-09-21T09:46:54.811735+00:00",
+        "end": "2026-09-21T10:32:54.811735+00:00",
+        "reference_samples": 46,
+        "marked_unsafe": 46,
+        "false_safe_rate": 1.0,
+        "uncovered_minutes": 1,
+        "window_minutes_total": 47,
+        "reference_samples_in_window": 46
+      }
+    },
+    {
+      "window": {
+        "start": "2026-09-21T11:14:54.811735+00:00",
+        "end": "2026-09-21T11:30:54.811735+00:00",
+        "duration_minutes": 16
+      },
+      "raw": {
+        "start": "2026-09-21T11:14:54.811735+00:00",
+        "end": "2026-09-21T11:30:54.811735+00:00",
+        "reference_samples": 16,
+        "marked_unsafe": 16,
+        "false_safe_rate": 1.0,
+        "uncovered_minutes": 1,
+        "window_minutes_total": 17,
+        "reference_samples_in_window": 16
+      },
+      "clipped": null,
+      "clipped_to_requested_range": {
+        "start": "2026-09-21T11:14:54.811735+00:00",
+        "end": "2026-09-21T11:30:54.811735+00:00",
+        "reference_samples": 16,
+        "marked_unsafe": 16,
+        "false_safe_rate": 1.0,
+        "uncovered_minutes": 1,
+        "window_minutes_total": 17,
+        "reference_samples_in_window": 16
+      }
+    }
+  ]
+}

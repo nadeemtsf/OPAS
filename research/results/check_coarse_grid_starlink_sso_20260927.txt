@@ -1,0 +1,93 @@
+$ python research/check_coarse_grid.py --preset starlink --reference research/results/reference_starlink_20260922T071313Z.json
+[starlink] checking 37 coarse-grid launch times (every 10 min) against the reference
+
+  t0+   0.0 min -> nearest reference sample 0.00s away: safe
+  t0+  10.0 min -> nearest reference sample 0.01s away: UNSAFE
+  t0+  20.0 min -> nearest reference sample 0.03s away: safe
+  t0+  30.0 min -> nearest reference sample 0.04s away: safe
+  t0+  40.0 min -> nearest reference sample 0.05s away: safe
+  t0+  50.0 min -> nearest reference sample 0.07s away: safe
+  t0+  60.0 min -> nearest reference sample 0.08s away: safe
+  t0+  70.0 min -> nearest reference sample 0.09s away: UNSAFE
+  t0+  80.0 min -> nearest reference sample 0.11s away: safe
+  t0+  90.0 min -> nearest reference sample 0.12s away: UNSAFE
+  t0+ 100.0 min -> nearest reference sample 0.13s away: UNSAFE
+  t0+ 110.0 min -> nearest reference sample 0.15s away: safe
+  t0+ 120.0 min -> nearest reference sample 0.16s away: safe
+  t0+ 130.0 min -> nearest reference sample 0.17s away: safe
+  t0+ 140.0 min -> nearest reference sample 0.19s away: safe
+  t0+ 150.0 min -> nearest reference sample 0.20s away: safe
+  t0+ 160.0 min -> nearest reference sample 0.21s away: safe
+  t0+ 170.0 min -> nearest reference sample 0.23s away: safe
+  t0+ 180.0 min -> nearest reference sample 0.24s away: UNSAFE
+  t0+ 190.0 min -> nearest reference sample 0.25s away: safe
+  t0+ 200.0 min -> nearest reference sample 0.27s away: UNSAFE
+  t0+ 210.0 min -> nearest reference sample 0.28s away: UNSAFE
+  t0+ 220.0 min -> nearest reference sample 0.29s away: safe
+  t0+ 230.0 min -> nearest reference sample 0.31s away: safe
+  t0+ 240.0 min -> nearest reference sample 0.32s away: safe
+  t0+ 250.0 min -> nearest reference sample 0.33s away: safe
+  t0+ 260.0 min -> nearest reference sample 0.35s away: safe
+  t0+ 270.0 min -> nearest reference sample 0.36s away: safe
+  t0+ 280.0 min -> nearest reference sample 0.37s away: safe
+  t0+ 290.0 min -> nearest reference sample 0.39s away: safe
+  t0+ 300.0 min -> nearest reference sample 0.40s away: UNSAFE
+  t0+ 310.0 min -> nearest reference sample 0.41s away: UNSAFE
+  t0+ 320.0 min -> nearest reference sample 0.43s away: safe
+  t0+ 330.0 min -> nearest reference sample 0.44s away: safe
+  t0+ 340.0 min -> nearest reference sample 0.45s away: safe
+  t0+ 350.0 min -> nearest reference sample 0.47s away: safe
+  t0+ 360.0 min -> nearest reference sample 0.48s away: UNSAFE
+
+10/37 coarse-grid instants are reference-confirmed unsafe.
+-> At least one coarse-grid instant SHOULD have been safe. scanner_fixed.py returning 0 windows here likely indicates an actual bug -- worth inspecting count_threats_dense for that specific instant.
+
+$ python research/check_coarse_grid.py --preset sso --reference research/results/reference_sso_20260922T072024Z.json
+[sso] checking 37 coarse-grid launch times (every 10 min) against the reference
+
+  t0+   0.0 min -> nearest reference sample 0.00s away: safe
+  t0+  10.0 min -> nearest reference sample 0.03s away: safe
+  t0+  20.0 min -> nearest reference sample 0.06s away: UNSAFE
+  t0+  30.0 min -> nearest reference sample 0.09s away: safe
+  t0+  40.0 min -> nearest reference sample 0.12s away: safe
+  t0+  50.0 min -> nearest reference sample 0.15s away: safe
+  t0+  60.0 min -> nearest reference sample 0.19s away: UNSAFE
+  t0+  70.0 min -> nearest reference sample 0.22s away: safe
+  t0+  80.0 min -> nearest reference sample 0.25s away: safe
+  t0+  90.0 min -> nearest reference sample 0.28s away: safe
+  t0+ 100.0 min -> nearest reference sample 0.31s away: safe
+  t0+ 110.0 min -> nearest reference sample 0.34s away: UNSAFE
+  t0+ 120.0 min -> nearest reference sample 0.37s away: UNSAFE
+  t0+ 130.0 min -> nearest reference sample 0.40s away: safe
+  t0+ 140.0 min -> nearest reference sample 0.43s away: UNSAFE
+  t0+ 150.0 min -> nearest reference sample 0.46s away: UNSAFE
+  t0+ 160.0 min -> nearest reference sample 0.49s away: UNSAFE
+  t0+ 170.0 min -> nearest reference sample 0.52s away: UNSAFE
+  t0+ 180.0 min -> nearest reference sample 0.56s away: safe
+  t0+ 190.0 min -> nearest reference sample 0.59s away: UNSAFE
+  t0+ 200.0 min -> nearest reference sample 0.62s away: UNSAFE
+  t0+ 210.0 min -> nearest reference sample 0.65s away: UNSAFE
+  t0+ 220.0 min -> nearest reference sample 0.68s away: safe
+  t0+ 230.0 min -> nearest reference sample 0.71s away: safe
+  t0+ 240.0 min -> nearest reference sample 0.74s away: UNSAFE
+  t0+ 250.0 min -> nearest reference sample 0.77s away: safe
+  t0+ 260.0 min -> nearest reference sample 0.80s away: UNSAFE
+  t0+ 270.0 min -> nearest reference sample 0.83s away: safe
+  t0+ 280.0 min -> nearest reference sample 0.86s away: safe
+  t0+ 290.0 min -> nearest reference sample 0.89s away: UNSAFE
+  t0+ 300.0 min -> nearest reference sample 0.93s away: safe
+  t0+ 310.0 min -> nearest reference sample 0.96s away: UNSAFE
+  t0+ 320.0 min -> nearest reference sample 0.99s away: UNSAFE
+  t0+ 330.0 min -> nearest reference sample 1.02s away: UNSAFE
+  t0+ 340.0 min -> nearest reference sample 1.05s away: UNSAFE
+  t0+ 350.0 min -> nearest reference sample 1.08s away: UNSAFE
+  t0+ 360.0 min -> nearest reference sample 1.11s away: safe
+
+19/37 coarse-grid instants are reference-confirmed unsafe.
+-> At least one coarse-grid instant SHOULD have been safe. scanner_fixed.py returning 0 windows here likely indicates an actual bug -- worth inspecting count_threats_dense for that specific instant.
+
+NOTE: the 10-minute coarse grid IS mostly clear on-grid for both presets, which is why this
+script flagged "possible bug." But scan_windows_fixed's real algorithm refines every candidate
+run down to 1-minute resolution before accepting a window -- see simulate_ground_truth_scan.py's
+output, which shows every one of these apparent coarse-safe runs collapses below the 15-minute
+cutoff once checked properly. Superseded by that result; see FINDINGS.md F10.

@@ -1,0 +1,72 @@
+{
+  "environment": {
+    "python": "3.13.14",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "processor": "Intel64 Family 6 Model 140 Stepping 1, GenuineIntel",
+    "cpu_count": 8,
+    "numpy": "2.4.4",
+    "skyfield": "1.54",
+    "native_math_active": true,
+    "repo_git_commit": "a89f2e726f08dad71498a091b60d06a80267f07f",
+    "snapshot_file": "debris_snapshot_20260921T085254Z.jsonl.gz",
+    "snapshot_sha256": "c13469e0cee49549504c9de7e45388c926e32ebe5c3b3ec6ccb81855838b1fa8",
+    "snapshot_T0_utc": "2026-09-21T08:52:54.811735+00:00"
+  },
+  "args": {
+    "preset": "geo",
+    "hours": 6.0,
+    "margin_min": 10.0,
+    "dt_s": 1.0,
+    "launch_step_s": 60.0,
+    "store_km": 200.0,
+    "limit": 0,
+    "workers": 8,
+    "include_ascent": false,
+    "validate": 0,
+    "selftest": false
+  },
+  "grid": {
+    "K": 380,
+    "J": 108883,
+    "stride": 60,
+    "dt_s": 1.0000013272669646,
+    "period_s": 86142.11433343086,
+    "flight_scope_start_s": 600.0007963601787
+  },
+  "n_candidates_used": 840,
+  "n_candidates_total": 840,
+  "statuses": {
+    "ok": 840
+  },
+  "elapsed_seconds": 333.0,
+  "n_pairs_stored": 380,
+  "summary": {
+    "launches_in_range": 361,
+    "by_radius_km": {
+      "5": {
+        "frac_launch_times_unsafe": 0.0,
+        "mean_objects_within_R_per_launch": 0.0
+      },
+      "10": {
+        "frac_launch_times_unsafe": 0.0,
+        "mean_objects_within_R_per_launch": 0.0
+      },
+      "25": {
+        "frac_launch_times_unsafe": 0.0,
+        "mean_objects_within_R_per_launch": 0.0
+      },
+      "50": {
+        "frac_launch_times_unsafe": 0.0,
+        "mean_objects_within_R_per_launch": 0.0
+      },
+      "100": {
+        "frac_launch_times_unsafe": 0.0,
+        "mean_objects_within_R_per_launch": 0.0
+      }
+    },
+    "opas_radius": {
+      "frac_launch_times_unsafe": 0.0,
+      "mean_objects_within_radius_per_launch": 0.0
+    }
+  }
+}

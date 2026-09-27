@@ -1,0 +1,96 @@
+{
+  "baseline_file": "research/results/fixed_iss_20260924T184134Z.json",
+  "reference_file": "research/results/reference_iss_20260921T102002Z.json",
+  "preset": "iss",
+  "requested_range": [
+    "2026-09-21T08:52:54.811735+00:00",
+    "2026-09-21T14:52:54.811735+00:00"
+  ],
+  "reference_overall_unsafe_rate_at_opas_radius": 0.3026315789473684,
+  "windows": [
+    {
+      "window": {
+        "start": "2026-09-21T10:34:54.811735+00:00",
+        "end": "2026-09-21T11:54:54.811735+00:00",
+        "duration_minutes": 80
+      },
+      "raw": {
+        "start": "2026-09-21T10:34:54.811735+00:00",
+        "end": "2026-09-21T11:54:54.811735+00:00",
+        "reference_samples": 80,
+        "marked_unsafe": 22,
+        "false_safe_rate": 0.275,
+        "uncovered_minutes": 1,
+        "window_minutes_total": 81,
+        "reference_samples_in_window": 80
+      },
+      "clipped": null,
+      "clipped_to_requested_range": {
+        "start": "2026-09-21T10:34:54.811735+00:00",
+        "end": "2026-09-21T11:54:54.811735+00:00",
+        "reference_samples": 80,
+        "marked_unsafe": 22,
+        "false_safe_rate": 0.275,
+        "uncovered_minutes": 1,
+        "window_minutes_total": 81,
+        "reference_samples_in_window": 80
+      }
+    },
+    {
+      "window": {
+        "start": "2026-09-21T13:34:54.811735+00:00",
+        "end": "2026-09-21T14:34:54.811735+00:00",
+        "duration_minutes": 60
+      },
+      "raw": {
+        "start": "2026-09-21T13:34:54.811735+00:00",
+        "end": "2026-09-21T14:34:54.811735+00:00",
+        "reference_samples": 60,
+        "marked_unsafe": 21,
+        "false_safe_rate": 0.35,
+        "uncovered_minutes": 1,
+        "window_minutes_total": 61,
+        "reference_samples_in_window": 60
+      },
+      "clipped": null,
+      "clipped_to_requested_range": {
+        "start": "2026-09-21T13:34:54.811735+00:00",
+        "end": "2026-09-21T14:34:54.811735+00:00",
+        "reference_samples": 60,
+        "marked_unsafe": 21,
+        "false_safe_rate": 0.35,
+        "uncovered_minutes": 1,
+        "window_minutes_total": 61,
+        "reference_samples_in_window": 60
+      }
+    },
+    {
+      "window": {
+        "start": "2026-09-21T08:54:54.811735+00:00",
+        "end": "2026-09-21T09:20:54.811735+00:00",
+        "duration_minutes": 26
+      },
+      "raw": {
+        "start": "2026-09-21T08:54:54.811735+00:00",
+        "end": "2026-09-21T09:20:54.811735+00:00",
+        "reference_samples": 26,
+        "marked_unsafe": 7,
+        "false_safe_rate": 0.2692307692307692,
+        "uncovered_minutes": 1,
+        "window_minutes_total": 27,
+        "reference_samples_in_window": 26
+      },
+      "clipped": null,
+      "clipped_to_requested_range": {
+        "start": "2026-09-21T08:54:54.811735+00:00",
+        "end": "2026-09-21T09:20:54.811735+00:00",
+        "reference_samples": 26,
+        "marked_unsafe": 7,
+        "false_safe_rate": 0.2692307692307692,
+        "uncovered_minutes": 1,
+        "window_minutes_total": 27,
+        "reference_samples_in_window": 26
+      }
+    }
+  ]
+}

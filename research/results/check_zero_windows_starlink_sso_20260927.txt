@@ -1,0 +1,16 @@
+$ python research/check_zero_windows.py --preset starlink --reference research/results/reference_starlink_20260922T071313Z.json
+[starlink] 13478 candidates | TLE age median=0.8d max=29.2d | 0% saturated at 15km
+Reference-confirmed unsafe rate across 361 launch times in the 6h horizon: 32.1%
+Launch times with NO reference-confirmed threat anywhere in the full flight: 245
+-> 245 launch time(s) SHOULD have been clear. scanner_fixed.py returning 0 windows may indicate a bug worth investigating (check for a swallowed exception, the longitude-wrap prefilter, or an ascent/scope mismatch).
+
+$ python research/check_zero_windows.py --preset sso --reference research/results/reference_sso_20260922T072024Z.json
+[sso] 4753 candidates | TLE age median=0.9d max=29.4d | 1% saturated at 15km
+Reference-confirmed unsafe rate across 361 launch times in the 6h horizon: 49.9%
+Launch times with NO reference-confirmed threat anywhere in the full flight: 181
+-> 181 launch time(s) SHOULD have been clear. scanner_fixed.py returning 0 windows may indicate a bug worth investigating (check for a swallowed exception, the longitude-wrap prefilter, or an ascent/scope mismatch).
+
+NOTE: this "may indicate a bug" flag was the correct thing to check at this stage, but was
+superseded by simulate_ground_truth_scan.py (see simulate_ground_truth_scan_starlink_sso_20260927.txt),
+which confirmed 0 windows is the mathematically correct answer for both presets, not a bug --
+see FINDINGS.md F10.

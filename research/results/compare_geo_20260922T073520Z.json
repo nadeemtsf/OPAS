@@ -1,0 +1,40 @@
+{
+  "baseline_file": "research/results/baseline_20260921T090905Z.json",
+  "reference_file": "research/results/reference_geo_20260922T073419Z.json",
+  "preset": "geo",
+  "requested_range": [
+    "2026-09-21T08:52:54.811735+00:00",
+    "2026-09-21T14:52:54.811735+00:00"
+  ],
+  "reference_overall_unsafe_rate_at_opas_radius": 0.0,
+  "windows": [
+    {
+      "window": {
+        "start": "2026-09-21T08:44:54.811735+00:00",
+        "end": "2026-09-21T15:00:54.811735+00:00",
+        "duration_minutes": 376
+      },
+      "raw": {
+        "start": "2026-09-21T08:44:54.811735+00:00",
+        "end": "2026-09-21T15:00:54.811735+00:00",
+        "reference_samples": 375,
+        "marked_unsafe": 0,
+        "false_safe_rate": 0.0,
+        "uncovered_minutes": 2,
+        "window_minutes_total": 377,
+        "reference_samples_in_window": 375
+      },
+      "clipped": null,
+      "clipped_to_requested_range": {
+        "start": "2026-09-21T08:52:54.811735+00:00",
+        "end": "2026-09-21T14:52:54.811735+00:00",
+        "reference_samples": 360,
+        "marked_unsafe": 0,
+        "false_safe_rate": 0.0,
+        "uncovered_minutes": 1,
+        "window_minutes_total": 361,
+        "reference_samples_in_window": 360
+      }
+    }
+  ]
+}

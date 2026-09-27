@@ -1,0 +1,72 @@
+{
+  "environment": {
+    "python": "3.13.14",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "processor": "Intel64 Family 6 Model 140 Stepping 1, GenuineIntel",
+    "cpu_count": 8,
+    "numpy": "2.4.4",
+    "skyfield": "1.54",
+    "native_math_active": true,
+    "repo_git_commit": "a89f2e726f08dad71498a091b60d06a80267f07f",
+    "snapshot_file": "debris_snapshot_20260921T085254Z.jsonl.gz",
+    "snapshot_sha256": "c13469e0cee49549504c9de7e45388c926e32ebe5c3b3ec6ccb81855838b1fa8",
+    "snapshot_T0_utc": "2026-09-21T08:52:54.811735+00:00"
+  },
+  "args": {
+    "preset": "sso",
+    "hours": 6.0,
+    "margin_min": 10.0,
+    "dt_s": 1.0,
+    "launch_step_s": 60.0,
+    "store_km": 200.0,
+    "limit": 0,
+    "workers": 8,
+    "include_ascent": false,
+    "validate": 0,
+    "selftest": false
+  },
+  "grid": {
+    "K": 381,
+    "J": 28725,
+    "stride": 60,
+    "dt_s": 0.9999485776935696,
+    "period_s": 5923.695374256707,
+    "flight_scope_start_s": 599.9691466161418
+  },
+  "n_candidates_used": 4753,
+  "n_candidates_total": 4753,
+  "statuses": {
+    "ok": 4753
+  },
+  "elapsed_seconds": 156.45,
+  "n_pairs_stored": 47891,
+  "summary": {
+    "launches_in_range": 361,
+    "by_radius_km": {
+      "5": {
+        "frac_launch_times_unsafe": 0.11080332409972299,
+        "mean_objects_within_R_per_launch": 0.12465373961218837
+      },
+      "10": {
+        "frac_launch_times_unsafe": 0.4515235457063712,
+        "mean_objects_within_R_per_launch": 0.5789473684210527
+      },
+      "25": {
+        "frac_launch_times_unsafe": 0.9390581717451524,
+        "mean_objects_within_R_per_launch": 3.2465373961218837
+      },
+      "50": {
+        "frac_launch_times_unsafe": 1.0,
+        "mean_objects_within_R_per_launch": 12.232686980609419
+      },
+      "100": {
+        "frac_launch_times_unsafe": 1.0,
+        "mean_objects_within_R_per_launch": 51.53739612188366
+      }
+    },
+    "opas_radius": {
+      "frac_launch_times_unsafe": 1.0,
+      "mean_objects_within_radius_per_launch": 15.11634349030471
+    }
+  }
+}

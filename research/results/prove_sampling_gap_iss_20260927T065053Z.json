@@ -1,0 +1,186 @@
+{
+  "checked": 18,
+  "confirmed_gap_miss": 15,
+  "cases": [
+    {
+      "launch_offset_s": 7080.560141634717,
+      "norad_id": 54922,
+      "true_dmin_km": 1.9471048658258088,
+      "radius_km": 11.76942066976273,
+      "scanner_sampled_min_km": 22.2709719370719,
+      "true_closest_approach_s_since_launch": 1343.2870742430673,
+      "gap_to_nearest_scanner_sample_s": 2.6610701003278336,
+      "sample_spacing_s": 9.28240099547169
+    },
+    {
+      "launch_offset_s": 7740.612358227783,
+      "norad_id": 55104,
+      "true_dmin_km": 9.056306961112659,
+      "radius_km": 10.219020314762732,
+      "scanner_sampled_min_km": 19.39243248639466,
+      "true_closest_approach_s_since_launch": 948.3772124605479,
+      "gap_to_nearest_scanner_sample_s": 1.572310922435463,
+      "sample_spacing_s": 9.28240099547169
+    },
+    {
+      "launch_offset_s": 7140.5648885977225,
+      "norad_id": 100091,
+      "true_dmin_km": 9.93383167290097,
+      "radius_km": 10.311796159762732,
+      "scanner_sampled_min_km": 37.26323193589346,
+      "true_closest_approach_s_since_launch": 3818.2303000935194,
+      "gap_to_nearest_scanner_sample_s": 3.1634909546546623,
+      "sample_spacing_s": 9.28240099547169
+    },
+    {
+      "launch_offset_s": 6540.517418967662,
+      "norad_id": 100290,
+      "true_dmin_km": 4.031195406251614,
+      "radius_km": 10.204691369762731,
+      "scanner_sampled_min_km": 17.90315120587899,
+      "true_closest_approach_s_since_launch": 2442.731906409647,
+      "gap_to_nearest_scanner_sample_s": 1.460444600592382,
+      "sample_spacing_s": 9.28240099547169
+    },
+    {
+      "launch_offset_s": 8220.650333931831,
+      "norad_id": 100406,
+      "true_dmin_km": 9.689872537603858,
+      "radius_km": 10.383468744762732,
+      "scanner_sampled_min_km": 43.828438615308954,
+      "true_closest_approach_s_since_launch": 2882.759153790346,
+      "gap_to_nearest_scanner_sample_s": 4.067555801349499,
+      "sample_spacing_s": 9.28240099547169
+    },
+    {
+      "launch_offset_s": 18601.471558531885,
+      "norad_id": 33599,
+      "true_dmin_km": 8.96587689154069,
+      "radius_km": 13.254858029762731,
+      "scanner_sampled_min_km": 51.28321522232428,
+      "true_closest_approach_s_since_launch": 2732.4921104964687,
+      "gap_to_nearest_scanner_sample_s": 3.466217827791752,
+      "sample_spacing_s": 9.28240099547169
+    },
+    {
+      "launch_offset_s": 18961.50004030992,
+      "norad_id": 54109,
+      "true_dmin_km": 5.437979977348852,
+      "radius_km": 10.577714764762732,
+      "scanner_sampled_min_km": 12.476102358940503,
+      "true_closest_approach_s_since_launch": 3017.570218103602,
+      "gap_to_nearest_scanner_sample_s": 0.7898945753031512,
+      "sample_spacing_s": 9.28240099547169
+    },
+    {
+      "launch_offset_s": 17761.405101049797,
+      "norad_id": 56747,
+      "true_dmin_km": 9.717297480007371,
+      "radius_km": 10.222443009762731,
+      "scanner_sampled_min_km": 18.8168379810442,
+      "true_closest_approach_s_since_launch": 5325.536420499832,
+      "gap_to_nearest_scanner_sample_s": 2.561750900918014,
+      "sample_spacing_s": 9.28240099547169
+    },
+    {
+      "launch_offset_s": 16981.343390530717,
+      "norad_id": 100011,
+      "true_dmin_km": 5.756533278046547,
+      "radius_km": 10.254238969762731,
+      "scanner_sampled_min_km": 25.549724180967104,
+      "true_closest_approach_s_since_launch": 1090.0725433366,
+      "gap_to_nearest_scanner_sample_s": 4.031626866412125,
+      "sample_spacing_s": 9.28240099547169
+    },
+    {
+      "launch_offset_s": 18241.443076753847,
+      "norad_id": 100019,
+      "true_dmin_km": 3.465507819666877,
+      "radius_km": 10.215491974762731,
+      "scanner_sampled_min_km": 33.83386488953868,
+      "true_closest_approach_s_since_launch": 1044.1591971248388,
+      "gap_to_nearest_scanner_sample_s": 4.530285632009509,
+      "sample_spacing_s": 9.28240099547169
+    },
+    {
+      "launch_offset_s": 16981.343390530717,
+      "norad_id": 100376,
+      "true_dmin_km": 4.792025316836941,
+      "radius_km": 10.25925350976273,
+      "scanner_sampled_min_km": 5.5850238195262145,
+      "true_closest_approach_s_since_launch": 2626.474352276316,
+      "gap_to_nearest_scanner_sample_s": 0.44512944217240147,
+      "sample_spacing_s": 9.28240099547169
+    },
+    {
+      "launch_offset_s": 17281.36712534575,
+      "norad_id": 100388,
+      "true_dmin_km": 5.2395174847673065,
+      "radius_km": 10.193565834762731,
+      "scanner_sampled_min_km": 6.829126002370543,
+      "true_closest_approach_s_since_launch": 5384.480401203545,
+      "gap_to_nearest_scanner_sample_s": 0.6878238299641453,
+      "sample_spacing_s": 9.28240099547169
+    },
+    {
+      "launch_offset_s": 18901.495293346914,
+      "norad_id": 100392,
+      "true_dmin_km": 5.286667138209976,
+      "radius_km": 10.216143034762732,
+      "scanner_sampled_min_km": 7.322424979748403,
+      "true_closest_approach_s_since_launch": 5253.015032416384,
+      "gap_to_nearest_scanner_sample_s": 0.8239310205926813,
+      "sample_spacing_s": 9.28240099547169
+    },
+    {
+      "launch_offset_s": 18181.43832979084,
+      "norad_id": 100415,
+      "true_dmin_km": 2.7315637036061915,
+      "radius_km": 10.395601839762731,
+      "scanner_sampled_min_km": 25.759145870886634,
+      "true_closest_approach_s_since_launch": 5205.041788375671,
+      "gap_to_nearest_scanner_sample_s": 2.385170083946832,
+      "sample_spacing_s": 9.28240099547169
+    },
+    {
+      "launch_offset_s": 18901.495293346914,
+      "norad_id": 100416,
+      "true_dmin_km": 5.482094058298718,
+      "radius_km": 10.198340754762732,
+      "scanner_sampled_min_km": 28.40328658793039,
+      "true_closest_approach_s_since_launch": 5167.880452841016,
+      "gap_to_nearest_scanner_sample_s": 2.4169016367150107,
+      "sample_spacing_s": 9.28240099547169
+    },
+    {
+      "launch_offset_s": 17281.36712534575,
+      "norad_id": 100421,
+      "true_dmin_km": 5.280879517027041,
+      "radius_km": 10.271176249762732,
+      "scanner_sampled_min_km": 43.52322900108115,
+      "true_closest_approach_s_since_launch": 5259.125013377427,
+      "gap_to_nearest_scanner_sample_s": 3.9963510550205683,
+      "sample_spacing_s": 9.28240099547169
+    },
+    {
+      "launch_offset_s": 18961.50004030992,
+      "norad_id": 100420,
+      "true_dmin_km": 5.323877431957418,
+      "radius_km": 10.230288024762732,
+      "scanner_sampled_min_km": 25.593293021124712,
+      "true_closest_approach_s_since_launch": 2383.4936636132597,
+      "gap_to_nearest_scanner_sample_s": 2.0833922229644486,
+      "sample_spacing_s": 9.28240099547169
+    },
+    {
+      "launch_offset_s": 18781.4857994209,
+      "norad_id": 100428,
+      "true_dmin_km": 9.964099166358382,
+      "radius_km": 10.489126804762732,
+      "scanner_sampled_min_km": 38.62960675010267,
+      "true_closest_approach_s_since_launch": 5182.690198870242,
+      "gap_to_nearest_scanner_sample_s": 3.1104433970394894,
+      "sample_spacing_s": 9.28240099547169
+    }
+  ]
+}
