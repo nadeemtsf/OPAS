@@ -4,7 +4,7 @@ from datetime import datetime, timezone, timedelta
 EARTH_R = 6371
 
 
-def generate_trajectory(launch_lat, launch_lon, alt_km, inc_deg, steps=120):
+def generate_trajectory(launch_lat, launch_lon, alt_km, inc_deg, steps=600):
     inc = radians(max(inc_deg, 0.5))
     r = EARTH_R + alt_km
     period = 2 * pi * sqrt(r ** 3 / 398600.4418) / 60

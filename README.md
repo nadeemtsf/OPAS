@@ -18,9 +18,13 @@ OPAS is a lightweight toolchain for assessing orbital collision risk for launch 
 - FastAPI backend with `/debris`, `/alert`, and `/safe-windows` endpoints.
 - Ingestion pipeline that pulls recent Space-Track TLEs, computes subpoints with Skyfield, and stores GeoJSON points in MongoDB with a `2dsphere` index.
 - Collision checks that compute 3D ECEF distances, plus optional TLE age-based uncertainty and threat scoring.
-- Safe-window scanning with coarse and refined passes to identify low-risk windows.
+- Safe-window scanning with dense trajectory sampling (600 waypoints), altitude-dependent screening radii, 1-minute temporal resolution, and boundary clamping.
 - React + Vite UI using `react-globe.gl` and Three.js, with interactive tooltips and report export.
 - Optional native `opas_math` extension (pybind11) for faster proximity checks.
+
+## Research audit
+
+An independent study auditing the `/safe-windows` endpoint's collision-screening accuracy is available on the [`research-branch`](https://github.com/nadeemtsf/OPAS/tree/research-branch/research). The fixes applied in this branch were derived from that study's findings.
 
 ## Project layout
 - backend/

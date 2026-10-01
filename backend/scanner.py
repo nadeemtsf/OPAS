@@ -17,7 +17,11 @@ from proximity import (
 
 log = logging.getLogger("opas")
 
-SAFE_WINDOW_PROXIMITY_KM = 50
+def safe_window_proximity_km(alt_km):
+    """10 km for LEO (alt < 2000 km), 50 km for higher orbits."""
+    return 10.0 if alt_km < 2000 else 50.0
+
+SAFE_WINDOW_PROXIMITY_KM = 50  # legacy default, used by count_threats
 
 
 def _ecef_dist(ax, ay, az, bx, by, bz):
@@ -110,7 +114,7 @@ def count_threats_fast(scan_items, trajectory, target_alt, t, proximity_km):
     period_sec = 2 * pi * sqrt(r ** 3 / 398600.4418)
     step_sec = period_sec / steps
     ascent_steps = min(steps, max(1, round(600 / step_sec)))
-    stride = max(1, (steps - ascent_steps) // 12)
+    stride = 1  # evaluate every waypoint for dense coverage
     sample_indices = list(range(ascent_steps, steps + 1, stride))
     if not sample_indices:
         sample_indices = [steps]
@@ -342,7 +346,7 @@ def scan_windows(candidates, trajectory, target_lat, target_lon, target_alt,
                  start_dt, end_dt, proximity_km):
     t_total = time.perf_counter()
     coarse_step = timedelta(minutes=10)
-    fine_step = timedelta(minutes=2)
+    fine_step = timedelta(minutes=1)
 
     traj_lons = [wp["lon"] for wp in trajectory]
     lon_min, lon_max = min(traj_lons), max(traj_lons)
@@ -450,11 +454,15 @@ def scan_windows(candidates, trajectory, target_lat, target_lon, target_alt,
                 break
             verify_cursor += fine_step
 
-        duration = (refined_end - refined_start).total_seconds() / 60
+        # Clamp boundaries to requested range (fixes F1 overshoot)
+        final_start = max(refined_start, start_dt)
+        final_end = min(refined_end, end_dt)
+
+        duration = (final_end - final_start).total_seconds() / 60
         if duration >= 15:
             windows.append({
-                "start": refined_start.isoformat(),
-                "end": refined_end.isoformat(),
+                "start": final_start.isoformat(),
+                "end": final_end.isoformat(),
                 "duration_minutes": round(duration),
             })
             log.info("safe-windows | window #%d: %s → %s (%dmin)",

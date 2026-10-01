@@ -34,7 +34,7 @@ def dist_3d_km(lat1, lon1, alt1, lat2, lon2, alt2):
 def screening_radius_km(base_km, tle_age_days):
     if tle_age_days is None or tle_age_days <= 0:
         return base_km
-    return min(base_km + 2.0 * tle_age_days ** 1.5, 200.0)
+    return base_km + min(0.5 * tle_age_days, 5.0)
 
 
 def estimate_sigma_m(tle_age_days):
