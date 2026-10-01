@@ -1,76 +1,155 @@
-# research/results/ — file map
+# research/results/ — File Map & Pipeline
 
-Every file follows `<type>_<preset>_<timestamp>.<ext>`. This maps each file to the
-script that produced it and the study phase it belongs to. Superseded files are kept
-for the audit trail (see the chat log for why) — nothing here should be deleted.
+> **Rule of thumb:** if it lives at the top level of this directory, it's **authoritative — cite it**.
+> If it's inside `_stale_unfrozen_age/`, it's **invalidated — do NOT cite**.
 
-## Phase 1 — Snapshot + Baseline
+---
 
-| File | Produced by | Notes |
-|---|---|---|
-| *(not listed here — `.jsonl.gz` in `research/data/`)* | `export_snapshot.py` | The frozen catalog everything else reads from |
-| `baseline_20260921T090905Z.json` | `baseline.py` | Unmodified OPAS, all 5 presets, 6h horizon. Source for F1–F2, F5's baseline windows. |
+## Pipeline overview: which script produces what, and where it feeds
 
-## Phase 2 — Dense reference (ground truth)
+```
+ DATA PREPARATION
+ ════════════════
+ export_snapshot.py
+       │
+       ▼
+ data/debris_snapshot_*.jsonl.gz  ◄── frozen catalog, 32,517 objects at T0
+       │
+       │  (every script below reads from this snapshot)
+       │
+ ══════╪════════════════════════════════════════════════════════════════════
+ PHASE │  SCRIPT                    OUTPUT FILE(s)                 FINDING
+ ══════╪════════════════════════════════════════════════════════════════════
+       │
+  1    │  baseline.py ──────────►  baseline_20260921T090905Z.json   F1,F2
+       │       │                   (all 5 presets, 6h horizon)
+       │       │
+  2    │  reference.py ─────────►  reference_<preset>_*.json/.npz   F3
+       │       │                   (1s-sampled ground truth)
+       │       │
+       │       │  ┌─ compare.py reads baseline + reference ─┐
+  3    │       ▼  ▼                                         │
+       │  compare.py ───────────►  compare_<preset>_*.json ─┼──►   F5
+       │                           ISS   → 100% false-safe  │    TABLE 1
+       │                           SLink → 100% false-safe  │
+       │                           SSO   → 100% false-safe  │
+       │                           GEO   →   0% false-safe  │
+       │                                                    │
+  4    │  scanner_param.py ◄─── (used internally by sweep)  │
+       │       │                                            │
+       │  sweep.py ─────────────►  sweep_<preset>_*.jsonl ──┼──►   F6
+       │                           n_intervals=24 → 0 wins  │
+       │                           loose settings → 100%    │
+       │                                                    │
+  5    │  scanner_fixed.py ─────►  fixed_<preset>_*.json ───┤
+       │       │                   ISS   → 1 win (52 min)   │
+       │       │                   SLink → 1 win (19 min)   │
+       │       │                   SSO   → 0 wins           │
+       │       │                                            │
+       │       │  ┌─ compare_fixed reads fixed + reference ─┤
+  6    │       ▼  ▼                                         │
+       │  compare_fixed.py ─────►  compare_fixed_*.json ────┼──►   F9
+       │                           ISS   →  9.6% false-safe │    TABLE 2
+       │                           SLink → 21.1% false-safe │
+       │                                                    │
+  7    │  prove_sampling_gap.py ►  prove_sampling_gap_*.json┼──►   F9
+       │                           ISS   5/5 = waypoint gap │   mechanism
+       │                           SLink 5/5 = waypoint gap │
+       │                                                    │
+  8    │  longest_clear_runs.py    (terminal output only) ──┼──►   F10
+       │  simulate_ground_truth    (terminal output only) ──┘
+       │  _scan.py
+       │
+ ══════╧════════════════════════════════════════════════════════════════════
+```
 
-| File | Produced by | Notes |
-|---|---|---|
-| `reference_iss_20260921T101207Z.json` / `.npz` | `reference.py --preset iss --limit 100 --hours 1` | Timing test only (100 objects, 1h). Not used in any real finding — kept for the runtime-projection note in the "Reference scanner validation" section. |
-| `reference_iss_20260921T102002Z.json` / `.npz` | `reference.py --preset iss` | **Full ISS reference.** Backs F3, F5, F9, F10-adjacent, and every `compare*_iss_*` file. |
-| `reference_starlink_20260922T071313Z.json` / `.npz` | `reference.py --preset starlink` | Full Starlink reference. Backs F3, F5, F6, F10. |
-| `reference_sso_20260922T072024Z.json` / `.npz` | `reference.py --preset sso` | Full SSO reference. Backs F3, F5, F6, F10. |
-| `reference_geo_20260922T073419Z.json` / `.npz` | `reference.py --preset geo` | Full GEO reference. Backs F3, F5. |
+---
 
-## Phase 3 — Validate the original (unfixed) baseline windows → F5
+## Complete file inventory (authoritative, top-level)
 
-| File | Produced by | Validates | Result |
-|---|---|---|---|
-| `compare_iss_20260922T070022Z.json` | `compare.py` | `baseline_*.json` (ISS) vs `reference_iss_20260921T102002Z` | 24 min window, 100% false-safe |
-| `compare_starlink_20260922T071627Z.json` | `compare.py` | `baseline_*.json` (Starlink) vs `reference_starlink_*` | 46+16 min windows, 100% false-safe |
-| `compare_sso_20260922T072131Z.json` | `compare.py` | `baseline_*.json` (SSO) vs `reference_sso_*` | 20 min window, 100% false-safe |
-| `compare_geo_20260922T073520Z.json` | `compare.py` | `baseline_*.json` (GEO) vs `reference_geo_*` | 376 min window, 0% false-safe (control case) |
+### Phase 1 — Baseline (unmodified OPAS)
 
-**These four are final, not superseded** — F5's cited numbers.
+| File | Script | Purpose |
+|------|--------|---------|
+| `baseline_20260921T090905Z.json` | `baseline.py` | Raw OPAS output for all 5 presets, 6h horizon. Source for Table 1 window durations. |
 
-## Phase 4 — Parameter sweep (original scanner) → F6
+### Phase 2 — Dense reference (ground truth)
 
-| File | Produced by | Notes |
-|---|---|---|
-| `sweep_iss_20260922T141430Z.jsonl` | `sweep.py` (drives `scanner_param.py` internally — no separate output files from that script) | Coarse/fine/n_intervals grid, ISS |
-| `sweep_starlink_20260922T150409Z.jsonl` | `sweep.py` | Same grid, Starlink |
-| `sweep_sso_20260922T151644Z.jsonl` | `sweep.py` | Same grid, SSO |
+| File | Script | Purpose |
+|------|--------|---------|
+| `reference_iss_20260921T101207Z.json/.npz` | `reference.py --preset iss --limit 100 --hours 1` | Timing test only. Not used in any finding. |
+| `reference_iss_20260921T102002Z.json/.npz` | `reference.py --preset iss` | **Full ISS ground truth.** Every compare/fixed/prove file for ISS validates against this. |
+| `reference_starlink_20260922T071313Z.json/.npz` | `reference.py --preset starlink` | Full Starlink ground truth. |
+| `reference_sso_20260922T072024Z.json/.npz` | `reference.py --preset sso` | Full SSO ground truth. |
+| `reference_geo_20260922T073419Z.json/.npz` | `reference.py --preset geo` | Full GEO ground truth (control case — 0% encounters). |
 
-## Phase 5 — Fixed scanner raw output
+### Phase 3 — Baseline validation → **Table 1 / F5**
 
-| File | Produced by | Notes |
-|---|---|---|
-| `fixed_iss_20260922T160812Z.json` | `scanner_fixed.py --preset iss` | **Superseded.** First attempt, before FIX 4 — 0 windows (blocked by the old exponential TLE-age radius inflation). Kept as evidence for F7. |
-| `fixed_iss_20260924T184134Z.json` | `scanner_fixed.py --preset iss` | **Superseded.** After FIX 4, `fine_step` still 2 min — 3 windows (80/60/26 min). Kept as evidence for F7/F8. |
-| `fixed_iss_20260926T172830Z.json` | `scanner_fixed.py --preset iss` | **Final, authoritative ISS fixed run** — FIX 4 + 1-min `fine_step` — 2 windows (52/40 min). Everything in Phase 7/8 validates *this* file. |
-| `fixed_starlink_20260927T071252Z.json` | `scanner_fixed.py --preset starlink` | 0 windows — confirmed correct, F10 |
-| `fixed_sso_20260927T071644Z.json` | `scanner_fixed.py --preset sso` | 0 windows — confirmed correct, F10 |
+| File | Script | Result |
+|------|--------|--------|
+| `compare_iss_20260922T070022Z.json` | `compare.py` | ISS 24 min → **100% false-safe** |
+| `compare_starlink_20260922T071627Z.json` | `compare.py` | Starlink 46+16 min → **100% false-safe** |
+| `compare_sso_20260922T072131Z.json` | `compare.py` | SSO 20 min → **100% false-safe** |
+| `compare_geo_20260922T073520Z.json` | `compare.py` | GEO 376 min → **0% false-safe** ✓ |
 
-## Phase 6/7 — Validating the fixed ISS windows → F9
+### Phase 4 — Parameter sweep → **F6**
 
-| File | Produced by | Threshold used | Result | Status |
-|---|---|---|---|---|
-| `compare_iss_20260926T162655Z.json` | `compare.py` (edited: flat `p_d < 15.0`) | flat 15.0 km | 28%/35% false-safe | **Superseded** — overcounts unsafe for fresh-TLE objects whose real radius was only 10km |
-| `compare_iss_20260926T174323Z.json` | `compare.py` (edited: flat `p_d < 10.0`) | flat 10.0 km | 9.6%/22.5% false-safe | **Superseded** — an approximation, numerically identical to the correct answer only because this catalog's TLEs happened to be fresh, not because it was the right method |
-| `compare_fixed_iss_20260927T064155Z.json` | `compare_fixed.py` | exact per-object `10.0 + min(0.5×age, 5.0)` | 9.6%/22.5% false-safe (overall unsafe rate 17.1%) | **Authoritative — this is what F9 cites** |
+| File | Script | Result |
+|------|--------|--------|
+| `sweep_iss_20260928T192528Z.jsonl` | `sweep.py` | n_intervals=24 → 0 windows (all coarse steps) |
+| `sweep_starlink_20260928T190843Z.jsonl` | `sweep.py` | Same pattern |
+| `sweep_sso_20260928T185956Z.jsonl` | `sweep.py` | Same pattern |
 
-## Phase 8 — Proof of causation → F9's mechanism
+### Phase 5 — Fixed scanner output → **Table 2**
 
-| File | Produced by | Notes |
-|---|---|---|
-| `prove_sampling_gap_iss_20260927T065053Z.json` | `prove_sampling_gap.py` | 18 residual false-safe cases traced individually: 15/18 confirmed as the 9-second waypoint gap, 3/18 traced to a distinct reference-grid clock-drift artifact |
+| File | Script | Result |
+|------|--------|--------|
+| `fixed_iss_20260928T125736Z.json` | `scanner_fixed.py` | 1 window, 10:33–11:25 (**52 min**) |
+| `fixed_starlink_20260928T124617Z.json` | `scanner_fixed.py` | 1 window, 10:03–10:22 (**19 min**) |
+| `fixed_sso_20260928T123422Z.json` | `scanner_fixed.py` | **0 windows** |
 
-## Phase 9 — Confirming F10's zero-window result wasn't a bug (Starlink, SSO)
+### Phase 6 — Fixed scanner validation → **Table 2 / F9**
 
-None of these three scripts write output on their own — the terminal transcripts were archived
-directly as `.txt` files instead of being re-run.
+| File | Script | Result |
+|------|--------|--------|
+| `compare_fixed_iss_20260928T185703Z.json` | `compare_fixed.py` | 52 samples, 5 unsafe → **9.6% false-safe** |
+| `compare_fixed_starlink_20260928T185705Z.json` | `compare_fixed.py` | 19 samples, 4 unsafe → **21.1% false-safe** |
 
-| File | Produced by | Notes |
-|---|---|---|
-| `check_zero_windows_starlink_sso_20260927.txt` | `check_zero_windows.py` | First pass: confirms the dense reference shows a much higher per-minute unsafe rate for these two shells (32.1% Starlink, 49.9% SSO) than ISS's ~17% — consistent with, but not yet proof of, zero windows being correct. Flags "possible bug" at this stage — see next file. |
-| `check_coarse_grid_starlink_sso_20260927.txt` | `check_coarse_grid.py` | Second pass: checks the *exact* 10-minute coarse-grid instants `scan_windows_fixed` samples. Still flags "possible bug," because most on-grid 10-minute points look clear — misleading, since the real algorithm refines to 1-minute resolution before accepting a window. Superseded by the next file. |
-| `simulate_ground_truth_scan_starlink_sso_20260927.txt` | `simulate_ground_truth_scan.py` | **Decisive.** Reproduces `scan_windows_fixed`'s exact coarse-to-refined algorithm fed perfect dense-reference lookups instead of live scanner calls. Every candidate coarse-safe run (up to 80 min at coarse resolution) collapses below the 15-minute cutoff once refined to 1-minute checks. Confirms 0 windows is mathematically correct for both presets, not a bug. **This is F10's cited evidence.** |
+### Phase 7 — Root cause proof → **F9 mechanism**
+
+| File | Script | Result |
+|------|--------|--------|
+| `prove_sampling_gap_iss_20260928T185708Z.json` | `prove_sampling_gap.py` | 5/5 = **100% waypoint-gap cause** |
+| `prove_sampling_gap_starlink_20260928T185711Z.json` | `prove_sampling_gap.py` | 5/5 = **100% waypoint-gap cause** |
+
+### Phase 8 — Zero-window verification → **F10**
+
+These scripts write to **terminal only** (no output files):
+
+| Script | What it confirms |
+|--------|------------------|
+| `longest_clear_runs.py` | ISS: 5 clear runs ≥15 min (longest 19 min). Starlink: longest 14 min (<15). SSO: longest 6 min. |
+| `simulate_ground_truth_scan.py` | 0 windows for Starlink/SSO is mathematically correct, not a bug. |
+
+---
+
+## `_stale_unfrozen_age/` — invalidated files (audit trail only)
+
+**Why they're stale:** `scanner_param.py` and `scanner_fixed.py` computed TLE
+age from wall-clock time instead of frozen T0 for all runs 09-22 through 09-27.
+This inflated ages by 3–8 days (true median = 0.8 days). Bug discovered 09-28,
+fixed via `patch_age.py`, everything re-run.
+
+| Stale file | Why it's wrong |
+|------------|----------------|
+| `fixed_iss_20260922T160812Z.json` | Pre-FIX4 (old radius formula, separate issue) |
+| `fixed_iss_20260924T184134Z.json` | FIX4 applied but TLE age unfrozen |
+| `fixed_iss_20260926T172830Z.json` | Showed phantom 2nd window (40 min) that doesn't exist |
+| `fixed_starlink_20260927T071252Z.json` | Showed 0 windows; corrected = 1 window |
+| `fixed_sso_20260927T071644Z.json` | Showed 0 windows; coincidentally matches (lucky) |
+| `compare_fixed_iss_20260927T064155Z.json` | Wrong age → wrong false-safe breakdown |
+| `prove_sampling_gap_iss_20260927T065053Z.json` | 3/18 "drift" cases = stale-run artifact, not real |
+| `compare_iss_20260926T162655Z.json` | Flat 15km threshold experiment, superseded |
+| `compare_iss_20260926T174323Z.json` | Flat 10km threshold experiment, superseded |
+| `sweep_*_20260922T*.jsonl` | Original stale sweeps |
+| `*.txt` files | Stale terminal captures (script logic fine, age was wrong) |

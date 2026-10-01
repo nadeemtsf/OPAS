@@ -1,8 +1,10 @@
 """
 Prints every specific number the LaTeX Results section cites, read directly
 from the actual result files, so you can eyeball-diff against the draft
-before it's considered final. Run after filling in the actual filenames
-below to match what's in your results/ directory right now.
+before it's considered final.
+
+Run from the repo root:
+    python research/verify_report_numbers.py
 """
 import json
 from pathlib import Path
@@ -73,9 +75,10 @@ print("=" * 60)
 print("Sweep result (prose: 'tightening to 24 reduced windows to zero')")
 print("=" * 60)
 
-for label, path in [("ISS", "sweep_iss_20260922T141430Z.jsonl"),
-                    ("Starlink", "sweep_starlink_20260922T150409Z.jsonl"),
-                    ("SSO", "sweep_sso_20260922T151644Z.jsonl")]:
+# Post-fix sweep files (2026-09-28)
+for label, path in [("ISS", "sweep_iss_20260928T192528Z.jsonl"),
+                    ("Starlink", "sweep_starlink_20260928T190843Z.jsonl"),
+                    ("SSO", "sweep_sso_20260928T185956Z.jsonl")]:
     p = RESULTS / path
     if not p.exists():
         print(f"[MISSING] {label}: {path}")
@@ -88,10 +91,18 @@ for label, path in [("ISS", "sweep_iss_20260922T141430Z.jsonl"),
     print()
 
 print("=" * 60)
-print("TABLE 2 -- Fixed ISS scanner (F9) -- FILL IN YOUR ACTUAL FILENAME")
+print("TABLE 2 -- Fixed scanner (F9)")
 print("=" * 60)
 
-show("Fixed ISS validation", "compare_fixed_iss_20260927T064155Z.json", lambda d: [
+show("Fixed ISS validation", "compare_fixed_iss_20260928T185703Z.json", lambda d: [
+    print(f"  {w['window']['duration_minutes']} min | "
+          f"samples={w['raw']['reference_samples']} | "
+          f"unsafe={w['raw']['marked_unsafe']} | "
+          f"rate={w['raw']['false_safe_rate']:.1%}")
+    for w in d["windows"]
+])
+
+show("Fixed Starlink validation", "compare_fixed_starlink_20260928T185705Z.json", lambda d: [
     print(f"  {w['window']['duration_minutes']} min | "
           f"samples={w['raw']['reference_samples']} | "
           f"unsafe={w['raw']['marked_unsafe']} | "
@@ -100,22 +111,21 @@ show("Fixed ISS validation", "compare_fixed_iss_20260927T064155Z.json", lambda d
 ])
 
 print("=" * 60)
-print("F9 mechanism proof -- 15/18 sampling gap claim")
+print("F9 mechanism proof -- 5/5 sampling gap per preset (ISS + Starlink)")
 print("=" * 60)
 
-p = RESULTS / "prove_sampling_gap_iss_20260927T065053Z.json"
-if p.exists():
-    d = json.loads(p.read_text())
-    print(f"  checked={d['checked']} | confirmed_gap_miss={d['confirmed_gap_miss']} "
-          f"({d['confirmed_gap_miss']/d['checked']:.0%})")
-else:
-    print(f"[MISSING] {p.name}")
+for label, path in [("ISS", "prove_sampling_gap_iss_20260928T185708Z.json"),
+                    ("Starlink", "prove_sampling_gap_starlink_20260928T185711Z.json")]:
+    p = RESULTS / path
+    if p.exists():
+        d = json.loads(p.read_text())
+        print(f"[{label}] {path}")
+        print(f"  checked={d['checked']} | confirmed_gap_miss={d['confirmed_gap_miss']} "
+              f"({d['confirmed_gap_miss']/d['checked']:.0%})")
+    else:
+        print(f"[MISSING] {label}: {path}")
 
 print()
 print("=" * 60)
-print("F10 -- Starlink/SSO unsafe rates (32%/50% claim)")
+print("Done. Compare every number above against the LaTeX draft.")
 print("=" * 60)
-print("NOTE: these came from check_zero_windows.py's terminal output, archived as")
-print("check_zero_windows_starlink_sso_20260927.txt -- open that file and confirm")
-print("the '32.1%' and '49.9%' lines manually; it's plain text, not JSON, so this")
-print("script can't grep it automatically without you telling me its exact format.")
