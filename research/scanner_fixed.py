@@ -35,8 +35,15 @@ sys.path.insert(0, str(REPO / "backend"))
 
 import baseline
 from db import ts, get_sat, _sat_cache
-from orbital import EARTH_R, tle_epoch_age_days, generate_trajectory
+import scanner
+from orbital import EARTH_R, generate_trajectory
 from proximity import geodetic_to_ecef, screening_radius_km, HAS_NATIVE_MATH, opas_math
+
+
+def tle_epoch_age_days(tle_line1):
+    # resolved at call time so baseline.freeze_tle_age(t0) takes effect
+    return scanner.tle_epoch_age_days(tle_line1)
+
 
 log = logging.getLogger("opas")
 

@@ -1,0 +1,503 @@
+\documentclass[11pt,a4paper]{article}
+
+% --- Packages ---
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage[T1]{fontenc}
+\usepackage{authblk}
+
+\title{Auditing the OPAS Orbital Proximity Alert System's Safe-Window Scanner}
+\author[1]{Nadim Baboun}
+\affil[1]{Al-Quds University}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+The Orbital Proximity Alert System (OPAS) is a web-based collision avoidance tool that estimates safe launch windows from two-line element (TLE) sets and the SGP4 propagation model. This study audits its \texttt{/safe-windows} endpoint against a dense, independently validated reference calculation. Every window the original scanner reported as safe in three crowded low Earth orbit shells (ISS, Starlink, and sun-synchronous) was, per the reference, unsafe for its entire duration, while a geostationary transfer control case was correct. The failure is traced to insufficient discrete trajectory sampling relative to object density. A corrected scanner---dense 600-point sampling, an age-scaled 10--15~km screening radius, and one-minute temporal verification---returns one window each for ISS (9.6\% false-safe) and Starlink (21.1\% false-safe), with all ten residual close approaches traced to the corrected scanner's finite waypoint spacing, and no window for SSO. Direct enumeration of clear launch-time intervals in the dense reference, independent of the scanner's own window-forming algorithm, confirms that no interval of at least 15 minutes exists for Starlink or SSO at the corrected radius --- so the reported Starlink window is itself false-safe, and SSO's absence of any window is correct --- while showing that the same algorithm can also miss genuinely clear ISS windows that do exist. We compare these choices with documented NASA conjunction-assessment practice and propose anisotropic, continuous swept-volume screening as future work.
+\end{abstract}
+
+\section{Introduction}
+
+The Orbital Proximity Alert System (OPAS) is a lightweight web tool for assessing
+collision risk during satellite and rocket launches. Given a launch site, target
+orbit, and inclination, its \texttt{/safe-windows} endpoint scans forward in time
+and returns time intervals during which, according to the tool, the planned
+trajectory stays clear of tracked orbital debris and satellites\footnote{Source
+code: \url{https://github.com/nadeemtsf/OPAS}.}. The system ingests two-line
+element (TLE) sets from Space-Track, propagates object positions using the SGP4
+model via the Skyfield library, and screens a simplified circular-orbit vehicle
+trajectory against a catalog of tracked objects near the target altitude.
+
+OPAS was developed through rapid, AI-assisted prototyping rather than a formal
+aerospace engineering process. Its core output --- a claimed ``safe launch
+window'' --- is precisely the kind of claim that should not be trusted without
+independent verification, particularly given that the tool's internal screening
+logic relies on coarse temporal and spatial sampling to keep response times
+practical for a web API. This report presents an empirical audit of that
+screening logic: whether the windows OPAS reports as safe are, in fact, free of
+close approaches, and if not, why.
+
+To answer this, we built a dense, independently-implemented reference
+calculation that estimates the true minimum distance between the launch
+vehicle and every tracked object at one-second resolution, using the same
+underlying orbital data and propagation model as OPAS itself, so that any
+disagreement between the two can be attributed to sampling density rather than
+a difference in orbital mechanics. We then validated OPAS's actual returned
+safe windows against this reference across five representative launch
+scenarios spanning low Earth orbit (LEO), a sun-synchronous orbit, and a
+geostationary transfer orbit.
+
+The remainder of this report is organized as follows. Section~\ref{sec:background}
+reviews relevant literature on TLE/SGP4 propagation accuracy and documented
+conjunction-screening practice. Section~\ref{sec:methodology} describes the
+frozen data snapshot, reference implementation, and validation harness.
+Section~\ref{sec:results} presents the audit's findings: the original
+scanner's false-safe rate, the design flaws responsible for it, an engineered
+fix, and a direct, case-by-case analysis of the fix's remaining limitation.
+Section~\ref{sec:discussion} interprets these results against documented
+real-world practice, Section~\ref{sec:limitations} states the study's scope
+boundaries, and Section~\ref{sec:conclusion} summarizes findings and proposes
+future work.
+
+\section{Background}
+\label{sec:background}
+
+\subsection{TLE/SGP4 propagation accuracy}
+
+OPAS propagates object positions from two-line element (TLE) sets using the
+SGP4 model. TLE/SGP4 accuracy degrades with time since the TLE's epoch: a
+commonly cited heuristic places initial error around 1~km at epoch, growing by
+an additional 1--3~km per day thereafter for low Earth orbit (LEO)
+objects~\cite{jaxsgp4}. An empirical comparison against a numerical
+integrator found SGP4-propagated position error for a real LEO object stayed
+within 1~km for roughly the first week from epoch, with error growing
+super-linearly afterward and dominated by the in-track (along-orbit)
+component rather than the radial or cross-track directions~\cite{afit_sgp4}.
+This distinction --- error growing much faster along-track than radially ---
+is directly relevant to how a screening radius should be shaped, discussed
+further in Section~\ref{sec:discussion}.
+
+\subsection{Documented conjunction-screening practice}
+
+NASA's Conjunction Assessment and Collision Avoidance Best Practices Handbook
+states that screening volumes are assigned per protected asset and orbit
+regime rather than fixed~\cite{nasa_handbook}. One documented coarse-screening
+pass, used across a six-month operational dataset, applied a volume of
+approximately 50~km (radial) by 250~km (in-track) by 250~km (cross-track),
+looking several days ahead~\cite{nasa_screening}. A separate documented
+operational example, for a near-Earth-orbit protected asset, instead uses a
+much tighter 0.5~km~$\times$~17~km~$\times$~20~km ellipsoid, reported
+independently in both sources~\cite{nasa_screening,nasa_handbook}. A related
+NASA presentation states that TLE-based tracking accuracy --- on the order
+of 1--2~km within a few days of epoch --- is not considered sufficient for
+official conjunction assessment by the 18th Space Control Squadron, and that
+operators requiring rigorous collision avoidance instead submit their own
+ephemerides for direct screening~\cite{nasa_cospar}.
+
+Two points from this practice inform the present study. First, real
+screening volumes are anisotropic ellipsoids, not spheres: even the
+tightest documented example (0.5~km radial) uses a substantially larger
+in-track and cross-track extent (17--20~km), reflecting the
+in-track-dominated error behavior discussed above. Second, screening
+volumes are assigned per mission rather than fixed, and even the largest
+documented example (50~km radial) was used only as an initial coarse
+filter within one study, not applied universally as a final safety
+threshold --- a distinction relevant to evaluating OPAS's single, final,
+universally-applied 50~km spherical radius (Section~\ref{sec:results}).
+
+\section{Methodology}
+\label{sec:methodology}
+
+\subsection{Frozen data snapshot}
+
+To ensure every experiment in this study ran against identical data, the
+live \texttt{opas\_db.debris} MongoDB collection was exported once to a
+static, checksummed snapshot (32{,}517 objects, SHA-256 verified before every
+subsequent script run). TLE age was computed relative to this snapshot's
+export time throughout, rather than the wall clock, so that results are
+reproducible independent of when the analysis scripts are actually executed.
+All measurements below ran against this single snapshot and the unmodified
+OPAS source at git commit \texttt{a89f2e72}\footnote{Python 3.13.14, NumPy
+2.4.4, Skyfield 1.54; OPAS's optional native C++ distance-check extension
+was active for all runs.}.
+
+\subsection{Baseline measurement}
+
+The unmodified \texttt{scan\_windows} function was run against five launch
+presets spanning a range of orbital regimes: an ISS resupply orbit (420~km,
+51.6\textdegree{} inclination), a Starlink deployment orbit (550~km,
+53.0\textdegree{}), a sun-synchronous orbit (705~km, 98.2\textdegree{}), a
+polar orbit (800~km, 90\textdegree{}), and a geostationary transfer orbit
+(35{,}786~km, 6.0\textdegree{}), each scanned over a 6-hour horizon. This
+produced, for each preset, the exact set of ``safe windows'' OPAS itself would
+report to a user.
+
+\subsection{Dense reference implementation}
+
+To evaluate whether those reported windows were actually free of close
+approaches, we built an independent reference calculation using the same
+orbital data, propagation model (SGP4 via Skyfield), and simplified
+circular-orbit vehicle trajectory as OPAS, differing only in sampling
+density and closest-approach interpolation: object and vehicle positions were
+sampled at approximately 1-second resolution (versus OPAS's coarser internal
+sampling, detailed in Section~\ref{sec:results}), and the true closest-approach
+distance between sample points was recovered via parabolic interpolation of
+the three nearest samples --- exact for locally straight-line relative
+motion. Because both OPAS and the reference share the same underlying
+orbital mechanics, any disagreement between them is attributable to how
+finely closest approach is resolved rather than a difference in physics.
+
+The reference implementation was validated before use: a self-test using
+two planted objects with known closest-approach geometry recovered the
+correct minimum distance to within 0.02~km after parabolic refinement, and
+an independent comparison of 1-second versus 2-second sampling across
+38{,}000 object-launch pairs showed a median disagreement of 0.5~m with zero
+classification flips at any of four candidate screening radii (5, 10, 25, and
+50~km), confirming that 1-second sampling is dense enough to serve as ground
+truth at the distances relevant to this study.
+
+\subsection{Validating OPAS's reported windows}
+
+For each preset, every window OPAS's baseline run reported as safe was
+checked minute-by-minute against the dense reference at OPAS's own
+per-object screening radius, yielding a \emph{false-safe rate}: the
+fraction of a reported window's duration during which the reference showed
+at least one tracked object inside that same radius. A parameter sweep
+across OPAS's internal sampling settings (coarse step, fine step, and
+inner-orbit sample count) was additionally run to test whether the
+false-safe rate was attributable to sampling density specifically, as
+opposed to some other property of the scanning algorithm. The parameterized
+scanner used for this sweep was confirmed to reproduce \texttt{scan\_windows}'s
+baseline output exactly (identical windows and evaluation counts) for the
+three presets it was run against (ISS, Starlink, SSO) before its results were
+used.
+
+\subsection{Engineered fix and validation}
+
+Based on the findings in Section~\ref{sec:results}, a corrected scanner was
+implemented with four changes: (i) trajectory sampling density increased
+from roughly a dozen to 600 points per orbit, (ii) the per-object screening
+radius rescaled from a flat 50~km with an exponential TLE-age penalty to a
+10~km base with a capped linear age penalty (Section~\ref{sec:discussion}),
+(iii) temporal verification tightened from 2-minute to 1-minute resolution,
+and (iv) returned windows clamped to the requested scan range. This
+corrected scanner's output was validated against the dense reference using
+the exact per-object radius formula it applies internally --- rather than an
+approximate flat radius --- so that the reported false-safe rate reflects the
+scanner's own actual decision criterion precisely. Where a non-zero
+false-safe rate remained, its cause was examined directly: for each
+reference-confirmed close approach inside a corrected-scanner ``safe''
+window, the scanner's own sampled positions at that exact launch time were
+recomputed to confirm whether its own math, run on its own inputs, indeed
+reported no threat. Separately, every contiguous stretch of reference-confirmed
+clear one-minute launch times was enumerated directly from the reference data,
+independent of the scanner's own window-forming algorithm, to test whether a
+genuinely clear window of useful length exists regardless of whether the
+scanner itself located it.
+
+\section{Results}
+\label{sec:results}
+
+\subsection{Baseline: reported safe windows were false-safe in crowded shells}
+
+Table~\ref{tab:baseline} summarizes every window OPAS's unmodified
+\texttt{scan\_windows} reported across the five presets, and what fraction of
+each window's duration the dense reference showed was actually within OPAS's
+own screening radius of a tracked object.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lrrr}
+\toprule
+Preset & Window duration & Reference samples & False-safe rate \\
+\midrule
+ISS (420~km)        & 24~min & 24 & 100\% \\
+Starlink (550~km)   & 46~min & 46 & 100\% \\
+Starlink (550~km)   & 16~min & 16 & 100\% \\
+SSO (705~km)        & 20~min & 20 & 100\% \\
+GEO transfer        & 360~min (clipped) & 360 & 0\% \\
+\bottomrule
+\end{tabular}
+\caption{Baseline false-safe rate for every window OPAS reported as safe,
+across a 6-hour scan horizon. Polar orbit reported no windows and is
+omitted.}
+\label{tab:baseline}
+\end{table}
+
+Every window reported in the three crowded low-Earth-orbit shells (ISS,
+Starlink, SSO) was, per the dense reference, within OPAS's own danger radius
+for the entirety of its reported duration. GEO is the control case: with only
+840 tracked objects spread across a far larger volume, OPAS's claim of safety
+there was correct.
+
+\subsection{Root cause: coarse sampling, not incorrect physics}
+
+Three properties of the unmodified scanner jointly explain
+Table~\ref{tab:baseline}. First, \texttt{scan\_windows}' inner check samples
+each orbit at only 12 intervals (about 14 points, roughly one every
+6~minutes), against a 50~km screening radius; the dense reference showed that
+at this radius, 100\% of one-minute launch times across the scan horizon had
+at least one object within range for ISS, Starlink, and SSO alike (mean
+8.8--12.2 objects per launch), meaning a real encounter has only a small
+chance of landing on one of the sampled points. Second, a parameter sweep
+across the coarse step, fine step, and inner-orbit sample count is consistent
+with this: doubling the inner sample count from 12 to 24 reduced the reported
+window count to zero for all three crowded shells at every coarse step tested,
+rather than producing narrower but genuinely safe windows. Third, an
+independent boundary-handling defect was identified: the refinement loop that
+trims a candidate window's start and end does not clamp to the originally
+requested scan range, occasionally extending a reported window several
+minutes beyond what was actually evaluated.
+
+\subsection{Engineered fix and its residual limitation}
+
+A corrected scanner was implemented with four changes
+(Section~\ref{sec:methodology}): 600-point trajectory sampling (versus
+roughly a dozen points), a screening radius of 10--15~km scaled by TLE age
+(versus a flat 50~km with an uncapped exponential age penalty reaching up to
+200~km), 1-minute temporal verification (versus 2-minute), and clamping of
+returned windows to the requested horizon. Applied to the ISS and Starlink
+presets, this replaced each preset's single, entirely false-safe window with
+one new window per preset (Table~\ref{tab:fixed}); SSO returned no windows,
+addressed directly below.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{llrrr}
+\toprule
+Preset & Window & Reference samples & Marked unsafe & False-safe rate \\
+\midrule
+ISS       & 10:33--11:25 (52~min) & 52 & 5 & 9.6\% \\
+Starlink  & 10:03--10:22 (19~min) & 19 & 4 & 21.1\% \\
+\bottomrule
+\end{tabular}
+\caption{Corrected scanner's reported windows, validated at the scanner's
+exact per-object radius formula (10--15~km by TLE age). SSO returned no
+window.}
+\label{tab:fixed}
+\end{table}
+
+The residual false-safe rate in both windows was examined case by case. For
+each of the 10 reference-confirmed object--launch-time pairs within these
+two windows' combined 9 unsafe launch minutes (5 for ISS, 4 for Starlink),
+the corrected scanner's own 600-point sampled positions were recomputed at
+the exact launch instant the reference flagged. All ten (100\%) were
+confirmed to be genuinely invisible to the scanner's own math: its sampled
+minimum distance at that launch time remained well outside its radius even
+though the reference's interpolation-refined minimum was inside it ---
+consistent with the scanner's $\sim$9.3--9.6-second waypoint spacing (which
+varies slightly with each preset's orbital period) versus LEO relative
+velocities of up to $\sim$15~km/s, which can move two objects up to
+$\sim$135--145~km between consecutive samples.
+
+\subsection{Direct verification of clear-window existence}
+
+The corrected scanner's coarse-to-refined algorithm examines at most five
+candidate coarse-safe runs per scan (Section~\ref{sec:methodology}), and, as
+shown above, a window it does report is not guaranteed to be genuinely
+clear. To test both possibilities independently of the scanner's own
+algorithm, every contiguous stretch of reference-confirmed clear one-minute
+launch times was directly enumerated across the full 6-hour horizon at the
+corrected radius, for all three crowded shells.
+
+No stretch of at least 15 minutes exists for Starlink (longest 14~min) or
+SSO (longest 6~min): no interval of the reported Starlink window's own
+length (19~min) is genuinely clear anywhere in the horizon, consistent with
+its 21.1\% false-safe measurement in Table~\ref{tab:fixed}, and SSO's
+absence of any reported window is correct. ISS, by contrast, contains five
+genuinely clear stretches of 15--19~minutes across the horizon; only part of
+one overlaps the corrected scanner's single reported window, which is
+itself only partially clear (Table~\ref{tab:fixed}). The corrected
+scanner's five-run cap is therefore not guaranteed to locate every genuine
+clear interval that exists, independent of its residual false-safe rate.
+
+\section{Discussion}
+\label{sec:discussion}
+
+\subsection{The original 50~km radius was never meant to be a final threshold}
+
+OPAS's original screening radius (50~km, before TLE-age inflation) is
+coincidentally close in magnitude to the 50~km radial extent of one
+documented NASA coarse-screening volume~\cite{nasa_screening}. The critical
+difference is that NASA's screening volumes are explicitly assigned per
+protected asset and orbit regime rather than fixed, and even this large
+example was used only as an initial filter within a six-month study, not
+applied universally as a final safety threshold; a separate documented
+operational example for a near-Earth-orbit asset uses a radius of just
+0.5~km~\cite{nasa_screening,nasa_handbook}. OPAS instead applies a single
+50~km radius universally, as the sole and final safety criterion,
+regardless of orbit regime or mission. This reframes
+Section~\ref{sec:results}'s finding: the radius itself was not
+unreasonable as one possible coarse filter, but using it as a final,
+one-size-fits-all decision threshold --- combined with under-sampling that
+never properly evaluated even that generous radius --- produced a tool
+that reported safety where none existed.
+
+\subsection{The corrected radius is an assumption, not literature-derived}
+
+The corrected scanner's screening radius (a 10~km base plus 0.5~km per day of
+TLE age, capped at 5~km) was chosen for tractability, not derived from
+measured SGP4 error rates or from the screening volumes in
+Section~\ref{sec:background}. Because the median TLE age in the snapshot is
+under one day, the operative radius for most objects is close to the 10~km
+base. Its relationship to the literature is not one-directional: the
+1--3~km/day heuristic~\cite{jaxsgp4} implies a steeper age penalty than the
+0.5~km/day used here, whereas the single-object measurement
+in~\cite{afit_sgp4} and the 0.5~km radial extent of a documented NASA
+operational volume~\cite{nasa_screening,nasa_handbook} suggest a 10~km sphere is generous in the radial
+direction. The Starlink and SSO result is correspondingly radius-sensitive: in
+this study's reference data, the fraction of launch times with at least one
+object inside a flat radius rises from about 10--11\% at 5~km to 29--45\% at
+10~km for those two shells. We therefore present the results in
+Section~\ref{sec:results} as a property of the corrected radius, not of any
+documented operational threshold, whereas the baseline finding, measured at
+OPAS's own radius, does not depend on it.
+
+\subsection{An isotropic radius is itself a simplification}
+
+Both OPAS's original scanner and the corrected version in this study use a
+single spherical radius around each tracked object. Documented practice uses an anisotropic ellipsoid instead --- far tighter in the radial direction than along-track or cross-track~\cite{nasa_screening,nasa_handbook} --- because,
+as shown in Section~\ref{sec:background}, SGP4/TLE position error is
+dominated by in-track drift rather than radial displacement. A sphere large
+enough to cover realistic in-track error will therefore be much larger than
+necessary in the radial direction, over-restricting some genuinely safe
+launch times, while a sphere sized to radial error would under-cover the
+in-track direction. This is a structural limitation of OPAS's design, not
+something the parameter changes made in this study could resolve, and is
+proposed as future work in Section~\ref{sec:conclusion}.
+
+\subsection{The residual false-safe rate has one confirmed cause}
+
+Section~\ref{sec:results} traced the corrected scanner's remaining
+9.6--21.1\% false-safe rate, in both windows it reported, entirely to finite
+waypoint spacing: every one of the ten reference-confirmed close approaches
+examined was invisible to the scanner's own sampled positions at the exact
+launch instant the reference flagged, consistent with $\sim$9.3--9.6-second
+sample spacing against LEO relative velocities of up to $\sim$15~km/s. No
+fixed sampling interval can guarantee catching every possible close approach
+at these velocities without approaching the computational cost of
+continuous collision detection.
+
+\section{Limitations}
+\label{sec:limitations}
+
+\textbf{Scope.} This study evaluates only OPAS's \texttt{/safe-windows}
+screening-radius logic (\texttt{scan\_windows} and its inner threat check).
+OPAS's separate probability-of-collision scoring, used by its
+\texttt{/alert} endpoint, was not evaluated and is outside this study's
+scope.
+
+\textbf{Trajectory model.} Both OPAS and this study's reference
+implementation model the launch vehicle's path as a simplified circular
+orbit derived from launch site, target altitude, and inclination. Real
+launch trajectories --- particularly the ascent phase, deliberately
+excluded from both OPAS's inner check and this study's reference to keep
+the comparison like-for-like --- follow a more complex path shaped by
+vehicle performance and guidance constraints. Findings in this report
+characterize OPAS's own model, not real-world launch trajectories.
+
+\textbf{Single data snapshot.} All measurements ran against one frozen
+catalog snapshot (Section~\ref{sec:methodology}). Debris populations and TLE
+freshness vary over time; the specific false-safe rates reported here are a
+measurement at one point in time, not a permanent property of OPAS
+independent of catalog state. The qualitative finding --- that coarse
+sampling can hide close approaches regardless of catalog density --- is
+expected to generalize, but the specific percentages in
+Table~\ref{tab:baseline} and Table~\ref{tab:fixed} should not be read as
+universal constants.
+
+\textbf{Screening radius.} As discussed in Section~\ref{sec:discussion}, the
+corrected scanner's 10~km base radius and TLE-age scaling are engineering
+choices, not values derived from measured propagation error, and the
+Starlink and SSO results are sensitive to them.
+
+\textbf{Candidate-run cap.} \texttt{scan\_windows}, and the corrected
+scanner which inherits its structure, examines at most five raw
+coarse-safe candidate runs per scan. Section~\ref{sec:results} shows this
+can cause a genuinely clear window to go unreported even where one exists
+elsewhere in the scanned horizon, independent of the false-safe rate
+discussed above.
+
+\textbf{Reference implementation precision.} The dense reference
+implementation's launch-time grid is built from an actual floating-point
+sample spacing rather than exact clock time, and could in principle drift
+from true clock time over a multi-hour scan; no such drift was found to
+affect any of the ten residual cases examined in Section~\ref{sec:results},
+though this was not independently checked across the reference's full
+coverage. Confidence in the reference as ground truth is otherwise
+supported by its independent validation (Section~\ref{sec:methodology}).
+
+\section{Conclusion and Future Work}
+\label{sec:conclusion}
+
+This study audited OPAS's \texttt{/safe-windows} scanner against an
+independently-implemented, validated dense reference, and found that every
+window reported as safe in three of five tested orbital regimes was, in
+fact, unsafe for its entire reported duration. This was traced to
+insufficient trajectory sampling relative to the object density in crowded
+low-Earth-orbit shells, not to an error in the underlying orbital
+mechanics. A corrected scanner --- denser sampling, a rescaled screening
+radius, and finer temporal verification --- eliminated the false-safe
+problem's dominant cause. Applied to the three crowded shells, it returned
+one window each for ISS and Starlink, with a residual false-safe rate (9.6\%
+and 21.1\% respectively) traced entirely to finite waypoint spacing, and no
+window for SSO. Direct enumeration of clear intervals in the dense
+reference, independent of the scanner's own algorithm, confirmed that
+Starlink and SSO genuinely have no clear stretch of at least 15 minutes at
+the corrected radius --- so the reported Starlink window is itself
+false-safe --- while also showing that the scanner's five-candidate-run cap
+can cause it to miss genuinely clear ISS windows that do exist.
+
+Three directions follow directly from the limitations discussed in
+Section~\ref{sec:limitations}. First, replacing the isotropic screening
+radius with an anisotropic ellipsoid --- tighter radially than along-track,
+consistent with documented SGP4 error behavior and real conjunction-screening
+practice --- would likely change which launch times are flagged unsafe.
+Second, tying the TLE-age radius penalty to measured propagation-error rates,
+rather than the tractability-driven formula used here, would ground the
+corrected scanner's radius in evidence; its effect on the number of safe
+windows cannot be predicted from this study's data alone. Third, the
+9-second waypoint gap identified as the corrected scanner's sole confirmed
+residual failure mode is a fundamental limit of discrete point-sampling;
+closing it fully would require either continuous swept-volume collision
+detection or a sampling density approaching the reference implementation's
+own computational cost --- a genuine engineering trade-off between accuracy
+and the response-time constraints of a live web API, rather than a simple
+parameter change.
+
+\begin{thebibliography}{9}
+
+\bibitem{jaxsgp4}
+C. Priestley and W. Handley,
+``jaxsgp4: GPU-accelerated mega-constellation propagation with batch parallelism,''
+\emph{arXiv preprint arXiv:2603.27830}, 2026.
+
+\bibitem{afit_sgp4}
+A. T. Rich,
+``Investigating Analytical and Numerical Methods to Predict Satellite Orbits Using Two-Line Element Sets,''
+thesis, Air Force Institute of Technology, 2017.
+
+\bibitem{nasa_screening}
+M. D. Hejduk and D. A. Pachura,
+``Conjunction assessment screening volume sizing and event filtering in light of natural conjunction event development behaviors,''
+\emph{AAS/AIAA Astrodynamics Specialist Conference}, Stevenson, WA, Aug. 2017.
+
+\bibitem{nasa_handbook}
+NASA Office of the Chief Engineer,
+``NASA Spacecraft Conjunction Assessment and Collision Avoidance Best Practices Handbook,''
+NASA/SP-20230002470, Rev.~1, Feb. 2023.
+
+\bibitem{nasa_cospar}
+A. Mashiku,
+``NASA spacecraft conjunction assessment and collision avoidance best practices: The history, evolution and opportunities,''
+presentation, \emph{44th COSPAR Scientific Assembly}, Athens, Greece, July 2022.
+
+\end{thebibliography}
+
+\end{document}

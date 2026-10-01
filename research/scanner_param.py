@@ -36,8 +36,15 @@ from skyfield.framelib import itrs
 import baseline
 from baseline import PRESETS, load_snapshot, freeze_tle_age, ALT_BAND_KM
 import scanner  # for ts, get_sat, _sat_cache, SAFE_WINDOW_PROXIMITY_KM (shared, unmodified)
-from orbital import EARTH_R, tle_epoch_age_days, generate_trajectory
+import scanner
+from orbital import EARTH_R, generate_trajectory
 from proximity import geodetic_to_ecef, screening_radius_km, HAS_NATIVE_MATH, opas_math
+
+
+def tle_epoch_age_days(tle_line1):
+    # resolved at call time so baseline.freeze_tle_age(t0) takes effect
+    return scanner.tle_epoch_age_days(tle_line1)
+
 
 
 def _ecef_dist(ax, ay, az, bx, by, bz):

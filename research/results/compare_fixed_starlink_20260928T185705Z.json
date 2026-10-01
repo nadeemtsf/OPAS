@@ -1,0 +1,36 @@
+{
+  "baseline_file": "research/results/fixed_starlink_20260928T124617Z.json",
+  "reference_file": "research/results/reference_starlink_20260922T071313Z.json",
+  "preset": "starlink",
+  "radius_formula": "10.0 + min(0.5*age_days, 5.0)",
+  "reference_overall_unsafe_rate_at_exact_radius": 0.32105263157894737,
+  "windows": [
+    {
+      "window": {
+        "start": "2026-09-21T10:03:54.811735+00:00",
+        "end": "2026-09-21T10:22:54.811735+00:00",
+        "duration_minutes": 19
+      },
+      "raw": {
+        "start": "2026-09-21T10:03:54.811735+00:00",
+        "end": "2026-09-21T10:22:54.811735+00:00",
+        "reference_samples": 19,
+        "marked_unsafe": 4,
+        "false_safe_rate": 0.21052631578947367,
+        "uncovered_minutes": 1,
+        "window_minutes_total": 20,
+        "reference_samples_in_window": 19
+      },
+      "clipped_to_requested_range": {
+        "start": "2026-09-21T10:03:54.811735+00:00",
+        "end": "2026-09-21T10:22:54.811735+00:00",
+        "reference_samples": 19,
+        "marked_unsafe": 4,
+        "false_safe_rate": 0.21052631578947367,
+        "uncovered_minutes": 1,
+        "window_minutes_total": 20,
+        "reference_samples_in_window": 19
+      }
+    }
+  ]
+}
