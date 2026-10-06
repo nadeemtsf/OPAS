@@ -8,7 +8,7 @@ interpolant of the vehicle waypoints. It does not change SGP4 or the vehicle mod
 """
 import numpy as np
 
-from skyfield.framelib import itrs
+from prediction import satellite_positions as propagate_positions
 
 RELATIVE_ACCELERATION_KM_S2 = 0.05
 WAYPOINT_ALLOWANCE_KM = 0.02  # rounded coordinates and vehicle interpolation
@@ -71,7 +71,7 @@ def has_close_approach(sat, satellite_positions, vehicle, sample_tt, radius_km,
             pos = satellite_positions[indices]
         else:
             tt = sample_tt[indices] + fractions * np.diff(sample_tt)[indices]
-            pos = np.asarray(sat.at(timescale.tt_jd(tt)).frame_xyz(itrs).km).T
+            pos = propagate_positions(sat, timescale.tt_jd(tt))
         if not np.isfinite(pos).all():
             raise ValueError('non-finite propagated position')
         diff = pos - wp
@@ -96,7 +96,7 @@ def has_close_approach(sat, satellite_positions, vehicle, sample_tt, radius_km,
             new_values = distances(np.where(left, x1, x2))
             f1, f2 = np.where(left, new_values, f2), np.where(left, f1, new_values)
         return bool(np.any(np.minimum(f1, f2) < radius2))
-    except Exception:
+    except Exception as error:
         if strict:
-            raise ValueError('Closest-approach refinement could not be completed.')
+            raise ValueError(f'Closest-approach refinement could not be completed: {error}') from error
         return True

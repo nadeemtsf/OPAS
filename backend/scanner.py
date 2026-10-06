@@ -11,6 +11,7 @@ import numpy as np
 from skyfield.framelib import itrs
 
 from encounters import has_close_approach
+from prediction import satellite_positions
 from windows import LAUNCH_STEP_SECONDS, find_windows, WindowVerificationError
 
 from db import ts, get_sat, _sat_cache
@@ -141,11 +142,11 @@ def count_threats_fast(scan_items, trajectory, target_alt, t, proximity_km,
 
         if sat is not None:
             try:
-                xyz = np.asarray(sat.at(t_samples).frame_xyz(itrs).km).T
-            except Exception:
+                xyz = satellite_positions(sat, t_samples)
+            except Exception as error:
                 if strict:
                     raise WindowVerificationError(
-                        f"Orbital prediction failed for object {doc.get('norad_id', 'unknown')}.")
+                        _prediction_failure(doc, t, error)) from error
                 # A failed prediction cannot establish a clear launch time.
                 count += 1
                 if stop_after_first:
@@ -168,13 +169,21 @@ def count_threats_fast(scan_items, trajectory, target_alt, t, proximity_km,
                                             strict=strict)
         except ValueError as error:
             raise WindowVerificationError(
-                f"Flight prediction or refinement failed for object {doc.get('norad_id', 'unknown')}.") from error
+                _prediction_failure(doc, t, error)) from error
         if obstructed:
             count += 1
             if stop_after_first:
                 return count
 
     return count
+
+
+def _prediction_failure(doc, launch_time, error):
+    norad = doc.get('norad_id', 'unknown')
+    return (f"Orbital verification failed for object {norad} at launch "
+            f"{launch_time.utc_iso()}: {error} "
+            f"Refresh this object's TLE with python refresh_catalogue.py --norad-id {norad} "
+            "from the backend directory, then retry. No windows were verified.")
 
 def full_check(candidates, trajectory, target_lat, target_lon, target_alt, t,
                launch_dt=None):

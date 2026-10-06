@@ -1,0 +1,19 @@
+{
+  "source": "Frozen research catalogue (2026-09-21); the live database TLE was not supplied.",
+  "snapshot_sha256_uncompressed": "c13469e0cee49549504c9de7e45388c926e32ebe5c3b3ec6ccb81855838b1fa8",
+  "launch_utc": "2026-10-06T17:09:47.322041+00:00",
+  "object": {
+    "altitude_km": 469.67,
+    "location": {
+      "coordinates": [
+        152.8084,
+        -2.7563
+      ],
+      "type": "Point"
+    },
+    "name": "STARLINK-38093",
+    "norad_id": 69980,
+    "tle_line1": "1 69980U 26159F   26263.91670139 -.04572949  00000-0 -14214+0 0  9993",
+    "tle_line2": "2 69980  97.2831 105.8657 0002926  89.0686 114.0630 15.37715233  5908"
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "base_commit": "9a0f5541fd02f8c809b466002aafff6fa73ce30c",
+  "source_sha256": {
+    "backend/prediction.py": "70356d60684ff9cb5f99dc45cd22628f7a924abf7b4d4744575d75670ba44f80",
+    "backend/refresh_catalogue.py": "8f67f7a495b3880df2811b972028c2993797cd8f5120a96e2307d82379a00e46",
+    "backend/scanner.py": "24ccf91fb22b0b5ad9ea6bc91a5d932b054817f9e02c32c2eff53600ed83c32a",
+    "backend/encounters.py": "ad5de627baf89488d4055e6650f5a5ac90e6c8d1c120faa5adbac585c5216040",
+    "backend/api.py": "33a0c24bb8f385e63353914030d594e7be72acef52bbdf1c9e478788f497c56e",
+    "backend/tests/test_api.py": "31ce4711e3ff4b7ed323cbff27d70ec41af9196637dea72a40485701e16cbde2",
+    "backend/tests/test_prediction.py": "c1a9447962b93ef4f6a62579d4d457b0b4c351120c0bcc681daf76028bc5bf13",
+    "backend/tests/fixtures/stale_prediction.json": "96952b05bbb5911d7c1c396f6c63a19445402b9e837cdd7eb9bab5e98570e722",
+    "backend/windows.py": "7faa3e20726bd38c4caab1875b24aa56971f8e7f003eddab077cee0d28485f63",
+    "backend/db.py": "d0c057399c16b2065baa32deedb707477eca000878909997c8c2f1be27383b4a",
+    "backend/orbital.py": "2b899ef6c5fcf717c2253df58ab14880d3869f1a18f88201d5357e1b9bf3d9ba",
+    "backend/proximity.py": "d94ba443edb8b5682982b8062623ebf53cb3d15f5c3b93d92f63f2cf13fb397a",
+    "backend/ingest.py": "3bb70b71f34a282bb4e9655fdcd99b8c6667a72854d6006982cc804662194dc8",
+    "validation/run_focused_tests.py": "e535960d4819377c08c1469b2218eacb92f3f9a2d5919a2a6cb1bbf465a55384",
+    "validation/validate_encounters.py": "bb8002dd2c28c696d74c9eaca37ab184ce315d32fb63f3fef43ff5dc7c50f08e"
+  },
+  "environment": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "skyfield": "1.55",
+    "sgp4": "2.27",
+    "fastapi": "0.142.2",
+    "pymongo": "4.18.2",
+    "requests": "2.34.2",
+    "httpx": "0.28.1"
+  },
+  "focused_tests": {
+    "status": "complete",
+    "successful": true,
+    "tests_run": 66,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "elapsed_seconds": 11.111,
+    "failure_details": []
+  },
+  "archived_pair_replay": {
+    "unsafe_pairs": 451,
+    "clear_pairs": 3089,
+    "missed_unsafe_pairs": 0,
+    "false_alarm_pairs": 0,
+    "elapsed_seconds": 78.591
+  },
+  "commands": {
+    "focused_tests": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 OPAS_LOG_LEVEL=WARNING python validation/run_focused_tests.py --output validation/results/prediction_recovery/focused_tests.json",
+    "pair_replay": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python validation/validate_encounters.py --research-root ../OPAS-research/research --output validation/results/prediction_recovery/archived_pair_replay.json"
+  },
+  "result_sha256": {
+    "focused_tests.json": "947e96c13eb1607964fa00d2ab312d81375c678dae7c6a488d3c124b381190b9",
+    "archived_pair_replay.log": "f615473995f26e3e78c06a2dd9de84bc83c718a519df8912fb0e5531fd25c666",
+    "README.md": "864eb278f9f7acca1c38915278d1e37a71a99eb9bcaee7e20c71427ad15d76ed",
+    "focused_tests.log": "9950626d78c89595a47de8ce607520b65af5bdf9f30f97d4691440cd8a3d61ed",
+    "archived_pair_replay.json": "b4f5071b9f37dd4f67e96f79a233ef2e7c1ccc1bbec4520a831f40a6cd7f8361",
+    "reproduction.json": "e9a5b34348bf56299dd83ec415359552064c9ec38e013ec71296a6847f580979"
+  },
+  "timing_context": "Sequential focused tests and archived replay; not API latency or a controlled speedup.",
+  "scope": "Archived real-TLE failure reproduction, refresh behavior with mocked service/database boundaries, real HTTP/spawn/SSE and independent archived encounter pairs. No authenticated Space-Track query or live catalogue write; no fresh full-catalogue six-hour window reference; frontend unchanged."
+}

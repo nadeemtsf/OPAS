@@ -1,5 +1,6 @@
 """HTTP integration: verified responses and incomplete orbital-data failures."""
-from datetime import datetime
+from datetime import datetime, timezone
+import json
 import os
 from pathlib import Path
 import sys
@@ -83,6 +84,25 @@ class WindowApiTests(unittest.TestCase):
         self.assertIn('event: error\n', response.text)
         self.assertNotIn('event: result\n', response.text)
         self.assertIn('"status": "incomplete"', response.text)
+
+    def test_real_stale_prediction_has_an_actionable_error_in_both_endpoints(self):
+        doc = json.loads((Path(__file__).parent/'fixtures/stale_prediction.json').read_text())['object']
+        class FrozenDatetime(datetime):
+            @classmethod
+            def now(cls, tz=None):
+                return datetime(2026, 10, 6, 17, 9, 47, tzinfo=timezone.utc)
+        with patch.object(api, 'datetime', FrozenDatetime):
+            for endpoint in ['/safe-windows', '/safe-windows/stream']:
+                with self.subTest(endpoint=endpoint):
+                    response = self.request([doc], endpoint=endpoint)
+                    self.assertIn('mean eccentricity is outside the range', response.text)
+                    self.assertIn('refresh_catalogue.py --norad-id 69980', response.text)
+                    if endpoint.endswith('/stream'):
+                        self.assertIn('event: error\n', response.text)
+                        self.assertNotIn('event: result\n', response.text)
+                    else:
+                        self.assertEqual(response.status_code, 503)
+                        self.assertNotIn('windows', response.json())
 
     def test_invalid_mission_parameters_are_rejected_before_search(self):
         with TestClient(api.app) as client:

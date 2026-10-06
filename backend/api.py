@@ -21,6 +21,8 @@ from diagnostics import SearchDiagnostics
 
 logging.basicConfig(level=getattr(logging, os.getenv('OPAS_LOG_LEVEL', 'INFO').upper(), logging.INFO),
                     format="%(asctime)s | %(levelname)s | %(message)s")
+# OPAS debug output should not enable database topology/heartbeat traffic.
+logging.getLogger('pymongo').setLevel(logging.WARNING)
 log = logging.getLogger("opas")
 
 app = FastAPI(title="OPAS – Orbital Proximity Alert System")

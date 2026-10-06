@@ -1,0 +1,27 @@
+{
+  "status": "complete",
+  "result": "incomplete search as required",
+  "object_id": 69980,
+  "object_name": "STARLINK-38093",
+  "launch_utc": "2026-10-06T17:09:47.322041+00:00",
+  "tle_epoch_utc": "2026-09-20T22:00:03Z",
+  "parameters": {
+    "target_lat": 28.573,
+    "target_lon": -80.649,
+    "target_alt": 400,
+    "inclination": 51.6
+  },
+  "flight_samples": 536,
+  "flight_start_seconds": 600.6926353979193,
+  "flight_end_seconds": 5544.855095980793,
+  "nonfinite_position_samples": 536,
+  "sgp4_errors": [
+    "mean eccentricity is outside the range 0.0 to 1.0"
+  ],
+  "strict_error": "Orbital verification failed for object 69980 at launch 2026-10-06T17:09:47Z: SGP4: mean eccentricity is outside the range 0.0 to 1.0 Refresh this object's TLE with python refresh_catalogue.py --norad-id 69980 from the backend directory, then retry. No windows were verified.",
+  "legacy_obstructed_count": 1,
+  "valid_at_snapshot_epoch": true,
+  "detector_elapsed_seconds": 0.055812,
+  "fixture_sha256": "96952b05bbb5911d7c1c396f6c63a19445402b9e837cdd7eb9bab5e98570e722",
+  "scope": "Archived TLE reproduces the object/time failure; live request did not supply its TLE lines. No live MongoDB writes or authenticated Space-Track queries were performed."
+}

@@ -39,6 +39,7 @@ Windows describe checked launch times in the post-ascent model. The current sear
 - backend/
   - api.py: FastAPI app and endpoints.
   - ingest.py: Space-Track ingestion and MongoDB loader.
+  - refresh_catalogue.py: validated refresh of named existing objects without deleting the catalogue.
   - db.py: MongoDB connection and Skyfield helpers.
   - orbital.py, proximity.py, scanner.py: orbital math and scanning logic.
   - encounters.py, windows.py: interval encounter refinement and launch-window discovery.
@@ -84,7 +85,7 @@ python ingest.py
 Run the API:
 
 ```bash
-uvicorn api:app --reload --host 0.0.0.0 --port 8000
+python -m uvicorn api:app --reload --host 0.0.0.0 --port 8000
 ```
 
 Frontend
@@ -96,6 +97,19 @@ npm run dev
 ```
 
 Open the Vite dev URL (typically `http://localhost:5173`). The frontend calls the backend at `http://localhost:8000`.
+
+If a window request fails because an object's orbital prediction is invalid,
+refresh that specific object from the backend directory, for example:
+
+```bash
+python refresh_catalogue.py --norad-id 69980
+```
+
+This uses the Space-Track credentials in `backend/.env`, validates the fetched
+TLE at one-minute samples over eight hours, and updates only the existing named
+object. It does not delete the catalogue or silently remove failed objects.
+The scanner still checks actual launch/flight times; this data validation is not
+a collision-safety certificate. See [recovery instructions](validation/RUNTIME_CHECKS.md#recovering-an-invalid-orbital-prediction).
 
 ## Configuration
 

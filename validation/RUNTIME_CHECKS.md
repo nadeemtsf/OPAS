@@ -32,20 +32,64 @@ the earlier research measurements separately.
 For every launch classification, enable debug logging before starting the API:
 
 ```bash
-OPAS_LOG_LEVEL=DEBUG uvicorn api:app --reload --host 0.0.0.0 --port 8000
+OPAS_LOG_LEVEL=DEBUG python -m uvicorn api:app --reload --host 0.0.0.0 --port 8000
 ```
 
 PowerShell, from the backend directory:
 
 ```powershell
 $env:OPAS_LOG_LEVEL = "DEBUG"
-uvicorn api:app --reload --host 0.0.0.0 --port 8000
+python -m uvicorn api:app --reload --host 0.0.0.0 --port 8000
 ```
 
 `INFO` is the default and logs phase changes plus periodic count updates.
 `DEBUG` can produce large logs over long horizons; neither mode logs catalogue
 TLE contents or credentials. The backend's per-launch debug lines identify the
 request ID, checked UTC instant, phase and classification.
+MongoDB heartbeat/topology debug traffic is suppressed; database warnings and
+errors remain visible.
+
+## Recovering an invalid orbital prediction
+
+An incomplete search is not evidence that no safe windows exist. A failed SGP4
+prediction must not be ignored or converted into a successful empty result.
+Errors now include the NORAD ID, launch time and underlying propagation/refinement
+cause. Both non-finite positions and explicit Skyfield/SGP4 error messages reject
+the window search, including reported errors whose coordinates happen to be finite.
+
+For the observed object `69980`, the archived September 20 TLE reproduces the
+October 6 request's failure: SGP4 reports that mean eccentricity is outside its
+valid range. This is a reproduction using archived data, not proof that the
+live database contained identical TLE lines. Age alone is not a decay diagnosis.
+
+From the backend directory, with the Python environment active:
+
+```powershell
+python refresh_catalogue.py --norad-id 69980
+```
+
+The existing `.env` must contain `MONGO_URI`, `SPACE_TRACK_USER` and
+`SPACE_TRACK_PASS`. The command obtains the latest Space-Track GP record for
+that object, checks its identity/TLE lines and predictions, and updates only
+that existing document. It retains unrelated metadata, refuses an older epoch,
+and detects concurrent changes. Use `--dry-run` to validate without writing;
+repeat `--norad-id` to refresh multiple objects.
+
+Default prediction validation spans eight hours at one-minute samples: a
+six-hour launch horizon plus two hours of LEO flight. Increase
+`--validation-hours` for longer launch horizons/flights. This tests prediction
+usability at those samples, not clearance or continuous-time validity. Runtime
+checks still verify each modeled flight and its refinement times.
+
+Rerun the window search after a successful refresh. Workers rebuild their
+propagators from the request's current TLE lines; a backend restart is not needed
+for the data update itself. If another ID fails, refresh that ID as well. Missing
+Space-Track records, reported decay, invalid fresh predictions and unavailable
+credentials stop the refresh and retain the object. Confirm catalogue status
+separately rather than silently excluding it. `python ingest.py` deletes and
+repopulates the whole catalogue, so it is not the targeted recovery command.
+The archived reproduction and regression/replay results are recorded in
+[prediction recovery evidence](results/prediction_recovery/).
 
 ## What has to pass before a window is returned
 
