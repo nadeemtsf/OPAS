@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testsuites>
+	<testcase name="checked window keeps its exact timestamp in UTC" time="0.004261" classname="test" file="/workspace/scratch/178dae584200/OPAS/frontend/tests/launchTime.test.mjs"/>
+	<testcase name="manually entered time is interpreted as UTC in UTC" time="0.000534" classname="test" file="/workspace/scratch/178dae584200/OPAS/frontend/tests/launchTime.test.mjs"/>
+	<testcase name="checked window keeps its exact timestamp in Asia/Jerusalem" time="0.000274" classname="test" file="/workspace/scratch/178dae584200/OPAS/frontend/tests/launchTime.test.mjs"/>
+	<testcase name="manually entered time is interpreted as UTC in Asia/Jerusalem" time="0.000129" classname="test" file="/workspace/scratch/178dae584200/OPAS/frontend/tests/launchTime.test.mjs"/>
+	<testcase name="checked window keeps its exact timestamp in America/New_York" time="0.000155" classname="test" file="/workspace/scratch/178dae584200/OPAS/frontend/tests/launchTime.test.mjs"/>
+	<testcase name="manually entered time is interpreted as UTC in America/New_York" time="0.000131" classname="test" file="/workspace/scratch/178dae584200/OPAS/frontend/tests/launchTime.test.mjs"/>
+	<testcase name="a manual edit replaces the previously selected window timestamp" time="0.000113" classname="test" file="/workspace/scratch/178dae584200/OPAS/frontend/tests/launchTime.test.mjs"/>
+	<testcase name="a selected offset timestamp displays UTC without changing the checked instant" time="0.000147" classname="test" file="/workspace/scratch/178dae584200/OPAS/frontend/tests/launchTime.test.mjs"/>
+	<testcase name="invalid time input cannot become a collision-check timestamp" time="0.000414" classname="test" file="/workspace/scratch/178dae584200/OPAS/frontend/tests/launchTime.test.mjs"/>
+	<!-- tests 9 -->
+	<!-- suites 0 -->
+	<!-- pass 9 -->
+	<!-- fail 0 -->
+	<!-- cancelled 0 -->
+	<!-- skipped 0 -->
+	<!-- todo 0 -->
+	<!-- duration_ms 378.315226 -->
+</testsuites>

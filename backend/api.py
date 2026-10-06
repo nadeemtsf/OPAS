@@ -3,13 +3,13 @@ import sys
 import time
 import logging
 from datetime import datetime, timezone, timedelta
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 
 from db import collection, make_skyfield_time, ts
 from orbital import EARTH_R, generate_trajectory
 from proximity import HAS_NATIVE_MATH
-from scanner import full_check, scan_windows, SAFE_WINDOW_PROXIMITY_KM, safe_window_proximity_km
+from scanner import full_check, scan_windows, SAFE_WINDOW_PROXIMITY_KM, safe_window_proximity_km, WindowVerificationError
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s | %(message)s")
 log = logging.getLogger("opas")
@@ -107,10 +107,14 @@ def safe_windows(
 
     now = datetime.now(timezone.utc)
     end = now + timedelta(hours=search_hours)
-    windows = scan_windows(
-        candidates, trajectory, target_lat, target_lon, target_alt,
-        now, end, safe_window_proximity_km(target_alt),
-    )
+    try:
+        windows = scan_windows(
+            candidates, trajectory, target_lat, target_lon, target_alt,
+            now, end, safe_window_proximity_km(target_alt),
+        )
+    except WindowVerificationError as error:
+        log.warning("safe-windows | verification failed: %s", error)
+        raise HTTPException(status_code=503, detail=str(error)) from error
 
     log.info("safe-windows | RESPONSE total: %.2fs", time.perf_counter() - t_req)
     return {

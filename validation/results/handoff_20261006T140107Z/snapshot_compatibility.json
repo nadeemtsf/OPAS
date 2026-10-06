@@ -1,0 +1,12 @@
+{
+  "status": "complete",
+  "snapshot_sha256": "c13469e0cee49549504c9de7e45388c926e32ebe5c3b3ec6ccb81855838b1fa8",
+  "iss_objects_constructed": 11997,
+  "failed_constructions": [],
+  "unchanged_numerical_modules": {
+    "backend/encounters.py": true,
+    "backend/windows.py": true,
+    "backend/orbital.py": true
+  },
+  "scope": "The added TLE-construction failure guards are not reached by the frozen ISS snapshot. The full six-hour numerical run was not repeated after integration-only changes."
+}

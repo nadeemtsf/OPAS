@@ -18,7 +18,7 @@ OPAS is a lightweight toolchain for assessing orbital collision risk for launch 
 - FastAPI backend with `/debris`, `/alert`, and `/safe-windows` endpoints.
 - Ingestion pipeline that pulls recent Space-Track TLEs, computes subpoints with Skyfield, and stores GeoJSON points in MongoDB with a `2dsphere` index.
 - Collision checks that compute 3D ECEF distances, plus optional TLE age-based uncertainty and threat scoring.
-- Safe-window scanning with dense trajectory sampling (600 waypoints), altitude-dependent screening radii, 1-minute temporal resolution, and boundary clamping.
+- Safe-window scanning with interval close-approach refinement between trajectory waypoints, altitude-dependent screening radii, exact minute discovery and 10-second launch checks inside candidate windows.
 - React + Vite UI using `react-globe.gl` and Three.js, with interactive tooltips and report export.
 - Optional native `opas_math` extension (pybind11) for faster proximity checks.
 
@@ -26,12 +26,18 @@ OPAS is a lightweight toolchain for assessing orbital collision risk for launch 
 
 An independent study auditing the `/safe-windows` endpoint's collision-screening accuracy is available on the [`research-branch`](https://github.com/nadeemtsf/OPAS/tree/research-branch/research). The fixes applied in this branch were derived from that study's findings.
 
+The frozen six-hour ISS replay found agreement at all 691 production launch checks and no observed false-safe samples among 565 clear samples. The instrumented search took 18.44 minutes on the measured host. See the [numerical verification report](validation/results/rerun_20261006T115728Z/report.md) for exact scope, runtime, environment and code checksums, and [validation instructions](validation/README.md) to reproduce it.
+
+Windows describe checked launch times in the post-ascent model. The current search uses an altitude filter of ±100 km and starts checking the flight at approximately 600 seconds. Accuracy between launch samples, ascent coverage and real-world propagation uncertainty require separate validation.
+
 ## Project layout
 - backend/
   - api.py: FastAPI app and endpoints.
   - ingest.py: Space-Track ingestion and MongoDB loader.
   - db.py: MongoDB connection and Skyfield helpers.
   - orbital.py, proximity.py, scanner.py: orbital math and scanning logic.
+  - encounters.py, windows.py: interval encounter refinement and launch-window discovery.
+  - tests/: focused detector, window and HTTP integration tests.
   - native/: pybind11 extension source and build config.
 - frontend/
   - src/App.tsx and components: UI and globe visualization.
@@ -44,7 +50,7 @@ An independent study auditing the `/safe-windows` endpoint's collision-screening
 
 Prerequisites
 - Python 3.10+ and pip
-- Node.js 18+ and npm
+- Node.js 22.12+ and npm
 - MongoDB Atlas connection string or local MongoDB instance
 
 Backend
@@ -120,7 +126,23 @@ Query parameters:
 - `target_lat`, `target_lon`, `target_alt`, `inclination` (required)
 - `search_hours` (optional; default `24`, allowed `1..336`)
 
-Returns up to five windows sorted by duration, with `start`, `end`, and `duration_minutes`.
+Returns up to five windows of at least 15 minutes, sorted by actual duration, with `start`, `end`, and `duration_minutes`. Both endpoints are checked clear launches; an unsafe or unchecked launch does not extend the window. Candidate windows are checked at 10-second launch spacing before selection.
+
+If an orbital object cannot be loaded, the endpoint returns HTTP 503 with a `detail` message. The frontend displays the incomplete search separately from a successful result with no qualifying windows. Selecting a window sends its exact checked ISO timestamp, including fractional seconds; the launch-time input represents UTC.
+
+## Verification
+
+```bash
+pip install -r backend/requirements-dev.txt
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python validation/run_focused_tests.py --output /tmp/opas-focused-tests.json
+cd frontend
+npm ci
+npm test
+npm run build
+npm run lint
+```
+
+The focused tests use frozen fixtures and mock database reads. HTTP tests exercise the production scanner with spawned workers. Frontend tests cover exact checked timestamps, UTC input in multiple timezones and manual edits.
 
 ## Data model
 

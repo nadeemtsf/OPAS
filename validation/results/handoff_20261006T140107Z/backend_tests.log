@@ -1,0 +1,53 @@
+/tmp/opas-verify-venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
+MongoDB connection check failed: localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 0.001s, Topology Description: <TopologyDescription id: 6ac4ff24fd9d4a2ce69c527d, topology_type: Unknown, servers: [<ServerDescription ('localhost', 1) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+INFO | CORS origins: ['http://localhost:5173']
+INFO | Native C++ math (opas_math): FALLBACK to Python
+INFO | Python 3.12.14 | Workers: 9
+test_bad_orbital_data_returns_an_error_instead_of_verified_windows (test_api.WindowApiTests.test_bad_orbital_data_returns_an_error_instead_of_verified_windows) ... INFO | safe-windows | REQUEST lat=28.573 lon=-80.649 alt=420 inc=51.6 hours=1
+INFO | safe-windows | DB query: 0.00s — 1 candidates (alt ±100km)
+WARNING | safe-windows | verification failed: The window search could not load an orbital object. Refresh the catalogue and retry.
+INFO | HTTP Request: GET http://testserver/safe-windows?target_lat=28.573&target_lon=-80.649&target_alt=420&inclination=51.6&search_hours=1 "HTTP/1.1 503 Service Unavailable"
+ok
+test_success_uses_the_actual_scanner_and_spawned_workers (test_api.WindowApiTests.test_success_uses_the_actual_scanner_and_spawned_workers) ... INFO | safe-windows | REQUEST lat=28.573 lon=-80.649 alt=420 inc=51.6 hours=1
+INFO | safe-windows | DB query: 0.00s — 0 candidates (alt ±100km)
+INFO | safe-windows | sat build: 0.00s — 0 TLE, 0 static, 0 geo-skipped, 0 scan items (cache: 0)
+MongoDB connection check failed: localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 0.001s, Topology Description: <TopologyDescription id: 6ac4ff24145b7bca08e49a37, topology_type: Unknown, servers: [<ServerDescription ('localhost', 1) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+MongoDB connection check failed: localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 0.001s, Topology Description: <TopologyDescription id: 6ac4ff24100a8e848b7ee1fa, topology_type: Unknown, servers: [<ServerDescription ('localhost', 1) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+MongoDB connection check failed: localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 0.001s, Topology Description: <TopologyDescription id: 6ac4ff250378700b20d755d4, topology_type: Unknown, servers: [<ServerDescription ('localhost', 1) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+MongoDB connection check failed: localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 0.001s, Topology Description: <TopologyDescription id: 6ac4ff259e304021fe8e4b10, topology_type: Unknown, servers: [<ServerDescription ('localhost', 1) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+INFO | safe-windows | 61 minute discovery checks + 300 finer checks (10s); 1 candidates, 1 qualifying spans
+INFO | safe-windows | TOTAL: 1.39s — returning 1 windows
+INFO | safe-windows | RESPONSE total: 1.39s
+INFO | HTTP Request: GET http://testserver/safe-windows?target_lat=28.573&target_lon=-80.649&target_alt=420&inclination=51.6&search_hours=1 "HTTP/1.1 200 OK"
+ok
+test_verified_obstruction_returns_a_successful_empty_result (test_api.WindowApiTests.test_verified_obstruction_returns_a_successful_empty_result) ... INFO | safe-windows | REQUEST lat=28.573 lon=-80.649 alt=420 inc=51.6 hours=1
+INFO | safe-windows | DB query: 0.00s — 1 candidates (alt ±100km)
+INFO | safe-windows | sat build: 0.00s — 0 TLE, 1 static, 0 geo-skipped, 1 scan items (cache: 0)
+MongoDB connection check failed: localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 0.001s, Topology Description: <TopologyDescription id: 6ac4ff26fe2c93c0cd2ec32e, topology_type: Unknown, servers: [<ServerDescription ('localhost', 1) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+MongoDB connection check failed: localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 0.001s, Topology Description: <TopologyDescription id: 6ac4ff2684ec396369dec33f, topology_type: Unknown, servers: [<ServerDescription ('localhost', 1) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+MongoDB connection check failed: localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 0.001s, Topology Description: <TopologyDescription id: 6ac4ff26f138d7b1c5a86f41, topology_type: Unknown, servers: [<ServerDescription ('localhost', 1) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+INFO | safe-windows | 7 minute discovery checks + 0 finer checks (10s); 0 candidates, 0 qualifying spans
+MongoDB connection check failed: localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 0.001s, Topology Description: <TopologyDescription id: 6ac4ff267fbb54a72513d47a, topology_type: Unknown, servers: [<ServerDescription ('localhost', 1) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+INFO | safe-windows | TOTAL: 1.34s — returning 0 windows
+INFO | safe-windows | RESPONSE total: 1.34s
+INFO | HTTP Request: GET http://testserver/safe-windows?target_lat=28.573&target_lon=-80.649&target_alt=420&inclination=51.6&search_hours=1 "HTTP/1.1 200 OK"
+ok
+test_all_ten_research_gap_misses_are_detected (test_encounters.DocumentedEncounterTests.test_all_ten_research_gap_misses_are_detected) ... ok
+test_counting_and_first_threat_shortcut (test_encounters.DocumentedEncounterTests.test_counting_and_first_threat_shortcut) ... ok
+test_initial_propagation_failure_obstructs_scan (test_encounters.DocumentedEncounterTests.test_initial_propagation_failure_obstructs_scan) ... ok
+test_missing_propagator_cannot_use_a_static_snapshot (test_encounters.DocumentedEncounterTests.test_missing_propagator_cannot_use_a_static_snapshot) ... ok
+test_process_workers_agree_with_single_worker (test_encounters.DocumentedEncounterTests.test_process_workers_agree_with_single_worker) ... INFO | safe-windows | sat build: 0.00s — 0 TLE, 1 static, 0 geo-skipped, 1 scan items (cache: 10)
+INFO | safe-windows | 4 minute discovery checks + 0 finer checks (10s); 0 candidates, 0 qualifying spans
+INFO | safe-windows | TOTAL: 0.00s — returning 0 windows
+INFO | safe-windows | sat build: 0.00s — 0 TLE, 1 static, 0 geo-skipped, 1 scan items (cache: 10)
+MongoDB connection check failed: localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 0.001s, Topology Description: <TopologyDescription id: 6ac4ff27760233c23643b0c0, topology_type: Unknown, servers: [<ServerDescription ('localhost', 1) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+INFO | safe-windows | 4 minute discovery checks + 0 finer checks (10s); 0 candidates, 0 qualifying spans
+MongoDB connection check failed: localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 0.001s, Topology Description: <TopologyDescription id: 6ac4ff282974dbbe4588bbef, topology_type: Unknown, servers: [<ServerDescription ('localhost', 1) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+INFO | safe-windows | TOTAL: 1.33s — returning 0 windows
+INFO | safe-windows | sat build: 0.00s — 0 TLE, 1 static, 0 geo-skipped, 1 scan items (cache: 10)
+INFO | safe-windows | 31 minute discovery checks + 150 finer checks (10s); 1 candidates, 1 qualifying spans
+INFO | safe-windows | TOTAL: 0.35s — returning 1 windows
+INFO | safe-windows | sat build: 0.00s — 0 TLE, 1 static, 0 geo-skipped, 1 scan items (cache: 10)
+MongoDB connection check failed: localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 0.001s, Topology Description: <TopologyDescription id: 6ac4ff2949aa4afba5c5b0c9, topology_type: Unknown, servers: [<ServerDescription ('localhost', 1) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+MongoDB connection check failed: localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 0.001s, Topology Description: <TopologyDescription id: 6ac4ff29de1dfb01d03ae700, topology_type: Unknown, servers: [<ServerDescription ('localhost', 1) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>

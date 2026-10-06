@@ -129,10 +129,32 @@ class DocumentedEncounterTests(unittest.TestCase):
                 self.assertEqual(parallel, single)
                 self.assertEqual(len(parallel), expected_count)
 
-    def test_worker_satellite_construction_failure_is_obstructed(self):
+    def test_worker_satellite_construction_failure_is_reported(self):
         with patch.object(scanner, 'get_sat', return_value=None):
             scanner._prepare_window_worker([({}, 10, True)], [], 420, 10)
-        self.assertTrue(scanner._window_launch_obstructed(datetime(2026, 9, 21, tzinfo=timezone.utc)))
+        with self.assertRaises(scanner.WindowVerificationError):
+            scanner._window_launch_obstructed(datetime(2026, 9, 21, tzinfo=timezone.utc))
+
+    def test_missing_propagator_cannot_use_a_static_snapshot(self):
+        trajectory = [{'lat': 0, 'lon': 0, 'alt': 420} for _ in range(3)]
+        t = scanner.ts.from_datetime(datetime(2026, 9, 21, tzinfo=timezone.utc))
+        doc = {'tle_line1': 'unavailable TLE', 'location': {'coordinates': [180, 0]},
+               'altitude_km': 420}
+        for shortcut in [False, True]:
+            with self.subTest(stop_after_first=shortcut):
+                self.assertEqual(scanner.count_threats_fast([(None, doc, 10)], trajectory, 420, t, 10,
+                                                           stop_after_first=shortcut), 1)
+
+    def test_unavailable_tle_is_not_discarded_by_the_static_longitude_filter(self):
+        start = datetime(2026, 9, 21, tzinfo=timezone.utc)
+        trajectory = [{'lat': 0, 'lon': 0, 'alt': 420} for _ in range(3)]
+        for tle in [{'tle_line1': 'unavailable TLE'}, {'tle_line2': 'unavailable TLE'}]:
+            for workers in [1, 2]:
+                with self.subTest(tle=tle, workers=workers), patch.object(scanner, 'get_sat', return_value=None):
+                    doc = {**tle, 'location': {'coordinates': [180, 0]}, 'altitude_km': 420}
+                    with self.assertRaises(scanner.WindowVerificationError):
+                        scanner.scan_windows([doc], trajectory, 0, 0, 420, start,
+                                             start+timedelta(minutes=30), 10, workers=workers)
 
 
 if __name__ == '__main__':

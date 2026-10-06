@@ -16,6 +16,7 @@ interface Props {
   windowSearchDone: boolean;
   windowSearchHours: number | null;
   windowElapsed: number | null;
+  windowSearchError: string | null;
   onPresetChange: (index: number) => void;
   onLatChange: (v: number) => void;
   onLonChange: (v: number) => void;
@@ -84,7 +85,7 @@ export function LeftSidebar(props: Props) {
 
         <div>
           <span className="text-xs text-gray-500">Launch Time (UTC)</span>
-          <input type="datetime-local" step="1" value={props.launchTime}
+          <input type="datetime-local" step="0.001" value={props.launchTime}
             onChange={(e) => props.onLaunchTimeChange(e.target.value)}
             className={`${inputClass} [color-scheme:dark]`} />
         </div>
@@ -153,7 +154,14 @@ export function LeftSidebar(props: Props) {
         </div>
       )}
 
-      {props.windowSearchDone && props.safeWindows.length === 0 && (
+      {props.windowSearchError && (
+        <div className="mt-3 rounded bg-red-900/30 border border-red-800/40 p-3">
+          <p className="text-xs text-red-400 font-medium">Window search incomplete</p>
+          <p className="text-[10px] text-gray-400 mt-1">{props.windowSearchError}</p>
+        </div>
+      )}
+
+      {props.windowSearchDone && !props.windowSearchError && props.safeWindows.length === 0 && (
         <div className="mt-3 rounded bg-yellow-900/30 border border-yellow-800/40 p-3">
           <p className="text-xs text-yellow-400 font-medium">No safe windows found within {props.windowSearchHours ?? props.searchHoursInput}h.</p>
           <p className="text-[10px] text-gray-400 mt-1">

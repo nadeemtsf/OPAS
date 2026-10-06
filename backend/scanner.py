@@ -29,6 +29,10 @@ def safe_window_proximity_km(alt_km):
 SAFE_WINDOW_PROXIMITY_KM = 50  # legacy default, used by count_threats
 
 
+class WindowVerificationError(RuntimeError):
+    """The available orbital data cannot establish verified launch windows."""
+
+
 def _ecef_dist(ax, ay, az, bx, by, bz):
     dx, dy, dz = ax - bx, ay - by, az - bz
     return sqrt(dx * dx + dy * dy + dz * dz)
@@ -145,6 +149,12 @@ def count_threats_fast(scan_items, trajectory, target_alt, t, proximity_km,
                     return count
                 continue
         else:
+            if doc.get("tle_line1") or doc.get("tle_line2"):
+                # A missing propagator is not evidence of a stationary object.
+                count += 1
+                if stop_after_first:
+                    return count
+                continue
             coords = doc["location"]["coordinates"]
             position = geodetic_to_ecef(coords[1], coords[0], doc["altitude_km"])
             xyz = np.broadcast_to(position, sample_ecef.shape)
@@ -342,8 +352,10 @@ def _prepare_window_worker(documents, trajectory, target_alt, proximity_km):
 
 def _window_launch_obstructed(launch_dt):
     items, trajectory, alt, proximity, failed = _window_worker_state
-    return failed or count_threats_fast(items, trajectory, alt, ts.from_datetime(launch_dt),
-                                        proximity, stop_after_first=True) > 0
+    if failed:
+        raise WindowVerificationError("The window search could not load an orbital object. Refresh the catalogue and retry.")
+    return count_threats_fast(items, trajectory, alt, ts.from_datetime(launch_dt),
+                             proximity, stop_after_first=True) > 0
 
 
 def scan_windows(candidates, trajectory, target_lat, target_lon, target_alt,
@@ -367,6 +379,8 @@ def scan_windows(candidates, trajectory, target_lat, target_lon, target_alt,
             radius = screening_radius_km(proximity_km, tle_age)
             scan_items.append((sat, doc, radius))
         else:
+            if doc.get("tle_line1") or doc.get("tle_line2"):
+                raise WindowVerificationError("The window search could not load an orbital object. Refresh the catalogue and retry.")
             coords = doc.get("location", {}).get("coordinates")
             if coords and not wraps:
                 d_lon = coords[0]

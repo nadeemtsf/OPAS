@@ -6,6 +6,7 @@ import * as THREE from "three";
 import type { Threat, GlobePoint, TrajectoryPoint, SafeWindow } from "./types";
 import { API_BASE, EARTH_RADIUS_KM, PRESETS } from "./constants";
 import { generateReport } from "./utils/reportGenerator";
+import { launchTimeForRequest, utcLaunchTimeValue } from "./utils/launchTime";
 import { useGlobeSize } from "./hooks/useGlobeSize";
 import { useGlobeDebris } from "./hooks/useGlobeDebris";
 import { StatusBar } from "./components/StatusBar";
@@ -33,6 +34,8 @@ export default function App() {
   const [windowSearchHours, setWindowSearchHours] = useState<number | null>(null);
   const [searchHoursInput, setSearchHoursInput] = useState(24);
   const [windowElapsed, setWindowElapsed] = useState<number | null>(null);
+  const [windowSearchError, setWindowSearchError] = useState<string | null>(null);
+  const checkedWindowTime = useRef<string | null>(null);
 
   const globeRef = useRef<GlobeMethods>(undefined);
   const { containerRef, globeSize } = useGlobeSize();
@@ -52,6 +55,8 @@ export default function App() {
     setSafeWindows([]);
     setWindowSearchDone(false);
     setWindowSearchHours(null);
+    setWindowSearchError(null);
+    checkedWindowTime.current = null;
     setSelectedThreat(null);
   }
 
@@ -115,7 +120,7 @@ export default function App() {
         target_lon: targetLon,
         target_alt: targetAlt,
         inclination,
-        launch_time: new Date(effectiveTime).toISOString(),
+        launch_time: launchTimeForRequest(effectiveTime, checkedWindowTime.current),
       };
       const { data } = await axios.get(`${API_BASE}/alert`, { params });
       setStatus(data.status);
@@ -124,6 +129,7 @@ export default function App() {
       setTrajectory(data.trajectory ?? []);
       setSafeWindows([]);
       setWindowSearchDone(false);
+      setWindowSearchError(null);
       setSelectedThreat(null);
       rebuildPoints(data.threats);
       if (globeRef.current) {
@@ -142,9 +148,7 @@ export default function App() {
   async function checkCollision() {
     let effectiveTime = launchTime;
     if (!effectiveTime) {
-      const now = new Date();
-      const pad = (n: number) => String(n).padStart(2, "0");
-      effectiveTime = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
+      effectiveTime = utcLaunchTimeValue(new Date().toISOString());
       setLaunchTime(effectiveTime);
     }
     await runCollisionCheck(effectiveTime);
@@ -161,7 +165,9 @@ export default function App() {
 
   async function findSafeWindows() {
     setFindingWindows(true);
+    setSafeWindows([]);
     setWindowSearchDone(false);
+    setWindowSearchError(null);
     setWindowSearchHours(null);
     setWindowElapsed(null);
     const t0 = performance.now();
@@ -175,7 +181,10 @@ export default function App() {
     } catch (err) {
       console.error(err);
       setSafeWindows([]);
-      setWindowSearchDone(true);
+      const detail = axios.isAxiosError(err) ? err.response?.data?.detail : null;
+      setWindowSearchError(typeof detail === "string"
+        ? detail
+        : "The window search could not be completed. Please retry.");
     } finally {
       setWindowElapsed(Math.round((performance.now() - t0) / 1000));
       setFindingWindows(false);
@@ -183,10 +192,10 @@ export default function App() {
   }
 
   function applyWindow(iso: string) {
-    const dt = new Date(iso);
-    const local = new Date(dt.getTime() - dt.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
-    setLaunchTime(local);
-    runCollisionCheck(local);
+    const value = utcLaunchTimeValue(iso);
+    checkedWindowTime.current = iso;
+    setLaunchTime(value);
+    runCollisionCheck(value);
   }
 
   function handleGenerateReport() {
@@ -238,12 +247,16 @@ export default function App() {
           windowSearchDone={windowSearchDone}
           windowSearchHours={windowSearchHours}
           windowElapsed={windowElapsed}
+          windowSearchError={windowSearchError}
           onPresetChange={applyPreset}
           onLatChange={(v) => { setTargetLat(v); setPreset(0); }}
           onLonChange={(v) => { setTargetLon(v); setPreset(0); }}
           onAltChange={(v) => { setTargetAlt(v); setPreset(0); }}
           onIncChange={(v) => { setInclination(v); setPreset(0); }}
-          onLaunchTimeChange={setLaunchTime}
+          onLaunchTimeChange={(value) => {
+            checkedWindowTime.current = null;
+            setLaunchTime(value);
+          }}
           onSearchHoursChange={setSearchHoursInput}
           onCheckCollision={checkCollision}
           onFindSafeWindows={findSafeWindows}
