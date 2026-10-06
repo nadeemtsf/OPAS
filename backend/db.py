@@ -28,11 +28,11 @@ def get_sat(doc):
     if not tle1 or not tle2:
         return None
     cached = _sat_cache.get(norad)
-    if cached and cached[0] == tle1:
+    if cached and cached[0] == (tle1, tle2):
         return cached[1]
     try:
         sat = EarthSatellite(tle1, tle2, doc.get("name", ""), ts)
-        _sat_cache[norad] = (tle1, sat)
+        _sat_cache[norad] = ((tle1, tle2), sat)
         return sat
     except Exception:
         return None

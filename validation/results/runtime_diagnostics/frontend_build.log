@@ -1,0 +1,20 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> frontend@0.0.0 build
+> tsc -b && vite build
+
+vite v8.0.11 building client environment for production...
+
+transforming...✓ 502 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                     0.48 kB │ gzip:   0.31 kB
+dist/assets/index-CmZFrpPw.css     21.60 kB │ gzip:   4.77 kB
+dist/assets/index-B2KbnBc7.js   2,096.34 kB │ gzip: 600.16 kB
+
+✓ built in 1.25s
+[plugin builtin:vite-reporter]
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.

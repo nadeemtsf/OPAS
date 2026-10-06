@@ -6,7 +6,7 @@ import sys
 import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from windows import find_windows, launch_grid
+from windows import find_windows, launch_grid, verify_window_coverage, WindowVerificationError
 
 
 class WindowTests(unittest.TestCase):
@@ -124,6 +124,88 @@ class WindowTests(unittest.TestCase):
         expected.sort(key=lambda w: (-(datetime.fromisoformat(w['end'])-
                                       datetime.fromisoformat(w['start'])).total_seconds(), w['start']))
         self.assertEqual(find_windows(obstructed, self.start, end), expected[:5])
+
+    def test_five_second_validation_finds_threat_between_ten_second_checks(self):
+        end = self.start+timedelta(minutes=40)
+        def obstructed(point):
+            return (point-self.start).total_seconds() == 1205
+        baseline = find_windows(obstructed, self.start, end)
+        diagnostics, events = {}, []
+        verified = find_windows(obstructed, self.start, end, verification_step_seconds=5,
+                                diagnostics=diagnostics, progress=events.append)
+        self.assertEqual(self.offsets(baseline), [(0, 40)])
+        self.assertEqual(self.offsets(verified), [(0, 20), (1210/60, 40)])
+        self.assertEqual(diagnostics['validation_obstructed_samples'], 1)
+        self.assertEqual(diagnostics['extra_validation_checks'], 240)
+        self.assertEqual(events[-1]['status'], 'complete')
+        self.assertTrue(any(e['phase']=='window_validation' for e in events))
+        self.assertEqual(diagnostics['checked_launch_samples'],
+                         diagnostics['clear_launch_samples']+diagnostics['obstructed_launch_samples'])
+        for window in verified:
+            self.assertEqual(window['verification']['status'], 'passed')
+            self.assertLessEqual(window['verification']['max_launch_gap_seconds'], 5)
+
+    def test_incomplete_extra_or_invalid_batch_results_fail_verification(self):
+        for values in [[], [False]*10, [None]*4, [0]*4, [float('nan')]*4]:
+            with self.subTest(values=values), self.assertRaises(WindowVerificationError):
+                find_windows(lambda t: False, self.start, self.start+timedelta(minutes=30),
+                             check_many=lambda points: iter(values))
+
+    def test_final_audit_rejects_missing_unsafe_and_outside_horizon_samples(self):
+        end = self.start+timedelta(minutes=15)
+        points = launch_grid(self.start, end, 5)
+        window = {'start':self.start, 'end':end}
+        clear = dict.fromkeys(points, False)
+        self.assertEqual(verify_window_coverage(window, clear, self.start, end, 5)['checked_launches'],181)
+        missing = dict(clear); missing.pop(points[50])
+        unsafe = {**clear, points[50]: True}
+        for checked in [missing, unsafe]:
+            with self.assertRaises(WindowVerificationError):
+                verify_window_coverage(window, checked, self.start, end, 5)
+        with self.assertRaises(WindowVerificationError):
+            verify_window_coverage(window, clear, self.start+timedelta(seconds=1), end, 5)
+
+    def test_final_audit_rejects_obstruction_off_the_required_grid(self):
+        end = self.start+timedelta(minutes=15)
+        checked = dict.fromkeys(launch_grid(self.start,end,5), False)
+        checked[self.start+timedelta(seconds=2)] = True
+        with self.assertRaises(WindowVerificationError):
+            verify_window_coverage({'start':self.start,'end':end},checked,self.start,end,5)
+
+    def test_final_validation_ranks_all_spans_before_five_window_limit(self):
+        spans = [(0,1200),(1800,3060),(3600,4920),(5400,6780),(7200,8640),(9000,10800)]
+        def obstructed(point):
+            s=(point-self.start).total_seconds()
+            return not any(a<=s<=b for a,b in spans) or s==9605
+        windows=find_windows(obstructed,self.start,self.start+timedelta(seconds=11400),
+                             verification_step_seconds=5)
+        # The longest original candidate splits into shorter runs at 9605;
+        # validating only the first five selected windows would lose (0,1200).
+        self.assertEqual(self.offsets(windows),[(120,144),(90,113),(60,82),(30,51),(0,20)])
+
+    def test_final_windows_agree_with_exhaustive_five_second_enumeration(self):
+        spans=[(250,1150),(1810,2940),(3610,4880),(5430,6710),(7210,8650),(9060,10580),(11000,12650)]
+        def obstructed(point):
+            seconds=(point-self.start).total_seconds()
+            return not any(a<=seconds<=b for a,b in spans) or seconds==8115
+        end=self.start+timedelta(seconds=13200)
+        expected=[]
+        for unsafe,group in groupby(launch_grid(self.start,end,5),key=obstructed):
+            points=list(group)
+            seconds=(points[-1]-points[0]).total_seconds()
+            if not unsafe and seconds>=900:
+                expected.append({'start':points[0].isoformat(),'end':points[-1].isoformat(),
+                                 'duration_minutes':round(seconds/60,2)})
+        expected.sort(key=lambda w:(-(datetime.fromisoformat(w['end'])-datetime.fromisoformat(w['start'])).total_seconds(),w['start']))
+        self.assertEqual(find_windows(obstructed,self.start,end,verification_step_seconds=5),expected[:5])
+
+    def test_launch_debug_logs_identify_their_request(self):
+        with self.assertLogs('opas',level='DEBUG') as captured:
+            find_windows(lambda point:False,self.start,self.start+timedelta(minutes=15),
+                         diagnostics={'request_id':'trace-control'},workers=1)
+        launches=[line for line in captured.output if 'launch=' in line]
+        self.assertTrue(launches)
+        self.assertTrue(all('request=trace-control' in line and 'classification=clear' in line for line in launches))
 
 
 if __name__ == '__main__':

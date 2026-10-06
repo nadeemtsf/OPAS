@@ -11,7 +11,7 @@ import numpy as np
 from skyfield.framelib import itrs
 
 from encounters import has_close_approach
-from windows import LAUNCH_STEP_SECONDS, find_windows
+from windows import LAUNCH_STEP_SECONDS, find_windows, WindowVerificationError
 
 from db import ts, get_sat, _sat_cache
 from orbital import EARTH_R, tle_epoch_age_days
@@ -27,10 +27,6 @@ def safe_window_proximity_km(alt_km):
     return 10.0 if alt_km < 2000 else 50.0
 
 SAFE_WINDOW_PROXIMITY_KM = 50  # legacy default, used by count_threats
-
-
-class WindowVerificationError(RuntimeError):
-    """The available orbital data cannot establish verified launch windows."""
 
 
 def _ecef_dist(ax, ay, az, bx, by, bz):
@@ -115,10 +111,12 @@ def count_threats(candidates, trajectory, target_lat, target_lon, target_alt, t,
 
 
 def count_threats_fast(scan_items, trajectory, target_alt, t, proximity_km,
-                       stop_after_first=False):
+                       stop_after_first=False, strict=False):
     count = 0
     steps = len(trajectory) - 1
     if steps < 1:
+        if strict:
+            raise WindowVerificationError('The flight trajectory has no intervals to verify.')
         return 0
     r = EARTH_R + target_alt
     period_sec = 2 * pi * sqrt(r ** 3 / 398600.4418)
@@ -138,11 +136,16 @@ def count_threats_fast(scan_items, trajectory, target_alt, t, proximity_km,
         sat, doc = item[0], item[1]
         radius = item[2] if len(item) > 2 else screening_radius_km(
             proximity_km, tle_epoch_age_days(doc["tle_line1"]) if doc.get("tle_line1") else None)
+        if not np.isfinite(radius) or radius <= 0:
+            raise WindowVerificationError('An object has an invalid screening radius.')
 
         if sat is not None:
             try:
                 xyz = np.asarray(sat.at(t_samples).frame_xyz(itrs).km).T
             except Exception:
+                if strict:
+                    raise WindowVerificationError(
+                        f"Orbital prediction failed for object {doc.get('norad_id', 'unknown')}.")
                 # A failed prediction cannot establish a clear launch time.
                 count += 1
                 if stop_after_first:
@@ -150,6 +153,8 @@ def count_threats_fast(scan_items, trajectory, target_alt, t, proximity_km,
                 continue
         else:
             if doc.get("tle_line1") or doc.get("tle_line2"):
+                if strict:
+                    raise WindowVerificationError('An orbital propagator is unavailable.')
                 # A missing propagator is not evidence of a stationary object.
                 count += 1
                 if stop_after_first:
@@ -158,7 +163,13 @@ def count_threats_fast(scan_items, trajectory, target_alt, t, proximity_km,
             coords = doc["location"]["coordinates"]
             position = geodetic_to_ecef(coords[1], coords[0], doc["altitude_km"])
             xyz = np.broadcast_to(position, sample_ecef.shape)
-        if has_close_approach(sat, xyz, sample_ecef, t_samples.tt, radius, ts):
+        try:
+            obstructed = has_close_approach(sat, xyz, sample_ecef, t_samples.tt, radius, ts,
+                                            strict=strict)
+        except ValueError as error:
+            raise WindowVerificationError(
+                f"Flight prediction or refinement failed for object {doc.get('norad_id', 'unknown')}.") from error
+        if obstructed:
             count += 1
             if stop_after_first:
                 return count
@@ -355,12 +366,12 @@ def _window_launch_obstructed(launch_dt):
     if failed:
         raise WindowVerificationError("The window search could not load an orbital object. Refresh the catalogue and retry.")
     return count_threats_fast(items, trajectory, alt, ts.from_datetime(launch_dt),
-                             proximity, stop_after_first=True) > 0
+                             proximity, stop_after_first=True, strict=True) > 0
 
 
 def scan_windows(candidates, trajectory, target_lat, target_lon, target_alt,
                  start_dt, end_dt, proximity_km, launch_step_seconds=LAUNCH_STEP_SECONDS,
-                 workers=None):
+                 workers=None, verification_step_seconds=None, progress=None, diagnostics=None):
     t_total = time.perf_counter()
     traj_lons = [wp["lon"] for wp in trajectory]
     lon_min, lon_max = min(traj_lons), max(traj_lons)
@@ -371,11 +382,14 @@ def scan_windows(candidates, trajectory, target_lat, target_lon, target_alt,
     scan_items = []
     tle_count = 0
     geo_skipped = 0
+    ages = []
     for doc in candidates:
         sat = get_sat(doc)
         if sat is not None:
             tle_count += 1
             tle_age = tle_epoch_age_days(doc["tle_line1"])
+            if tle_age is not None:
+                ages.append(tle_age)
             radius = screening_radius_km(proximity_km, tle_age)
             scan_items.append((sat, doc, radius))
         else:
@@ -391,16 +405,30 @@ def scan_windows(candidates, trajectory, target_lat, target_lon, target_alt,
     log.info("safe-windows | sat build: %.2fs — %d TLE, %d static, %d geo-skipped, %d scan items (cache: %d)",
              time.perf_counter() - t0, tle_count,
              len(scan_items) - tle_count, geo_skipped, len(scan_items), len(_sat_cache))
+    if diagnostics is not None:
+        diagnostics.update(tle_objects=tle_count, static_objects=len(scan_items)-tle_count,
+                           static_objects_excluded=geo_skipped, scan_items=len(scan_items),
+                           radius_min_km=min((item[2] for item in scan_items), default=None),
+                           radius_max_km=max((item[2] for item in scan_items), default=None),
+                           oldest_tle_age_days=round(max(ages), 3) if ages else None,
+                           future_epoch_objects=sum(age < 0 for age in ages))
 
     def is_obstructed(launch_dt):
         t = ts.from_datetime(launch_dt)
         return count_threats_fast(scan_items, trajectory, target_alt, t, proximity_km,
-                                  stop_after_first=True) > 0
+                                  stop_after_first=True, strict=True) > 0
 
     workers = min(os.cpu_count() or 4, 4) if workers is None else workers
+    options = dict(launch_step_seconds=launch_step_seconds,
+                   verification_step_seconds=verification_step_seconds,
+                   progress=progress, diagnostics=diagnostics)
+    if diagnostics is not None:
+        diagnostics['workers'] = workers
+    if progress:
+        progress({'phase': 'orbital_data_ready', **(diagnostics or {})})
     if workers == 1:
         windows = find_windows(is_obstructed, start_dt, end_dt, workers=1,
-                               launch_step_seconds=launch_step_seconds)
+                               **options)
     else:
         documents = [(doc, radius, sat is not None) for sat, doc, radius in scan_items]
         # Spawn works on Windows too and avoids inheriting thread/BLAS state.
@@ -408,7 +436,7 @@ def scan_windows(candidates, trajectory, target_lat, target_lon, target_alt,
                                  initializer=_prepare_window_worker,
                                  initargs=(documents, trajectory, target_alt, proximity_km)) as executor:
             windows = find_windows(is_obstructed, start_dt, end_dt, workers=1,
-                                   launch_step_seconds=launch_step_seconds,
+                                   **options,
                                    check_many=lambda points: executor.map(_window_launch_obstructed, points))
     log.info("safe-windows | TOTAL: %.2fs — returning %d windows",
              time.perf_counter() - t_total, len(windows))

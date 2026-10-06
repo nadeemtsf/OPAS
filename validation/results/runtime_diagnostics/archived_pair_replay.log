@@ -1,0 +1,50 @@
+MongoDB connection check failed: localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 0.001s, Topology Description: <TopologyDescription id: 6ac522b50a764f24edf9fa29, topology_type: Unknown, servers: [<ServerDescription ('localhost', 1) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+{"iss": {"unsafe_pairs": 72, "clear_pairs": 465, "missed_unsafe_pairs": 0, "false_alarm_pairs": 0, "disagreements": [], "excluded_outside_production_scope": 2, "production_scope_start_s": 603.3560647056598, "reference_npz_sha256": "d5330c48a6a88747dcdcf7df32c647a7aca43de3648f227752d30c682f352698", "elapsed_seconds": 12.876}}
+{"starlink": {"unsafe_pairs": 145, "clear_pairs": 1129, "missed_unsafe_pairs": 0, "false_alarm_pairs": 0, "disagreements": [], "excluded_outside_production_scope": 3, "production_scope_start_s": 601.6633443801337, "reference_npz_sha256": "53e27186d42e22b7d9306bef1d45e03ea492eaaadb8a0f590e9a17373cacbd17", "elapsed_seconds": 29.537}}
+{"sso": {"unsafe_pairs": 234, "clear_pairs": 1495, "missed_unsafe_pairs": 0, "false_alarm_pairs": 0, "disagreements": [], "excluded_outside_production_scope": 1, "production_scope_start_s": 602.2423630494319, "reference_npz_sha256": "158fc62ddec37ccae45f17596b4b43446895b7e0da01375c1ad3a7cc68df149a", "elapsed_seconds": 37.556}}
+{
+  "status": "complete",
+  "snapshot_sha256": "c13469e0cee49549504c9de7e45388c926e32ebe5c3b3ec6ccb81855838b1fa8",
+  "presets": {
+    "iss": {
+      "unsafe_pairs": 72,
+      "clear_pairs": 465,
+      "missed_unsafe_pairs": 0,
+      "false_alarm_pairs": 0,
+      "disagreements": [],
+      "excluded_outside_production_scope": 2,
+      "production_scope_start_s": 603.3560647056598,
+      "reference_npz_sha256": "d5330c48a6a88747dcdcf7df32c647a7aca43de3648f227752d30c682f352698",
+      "elapsed_seconds": 12.876
+    },
+    "starlink": {
+      "unsafe_pairs": 145,
+      "clear_pairs": 1129,
+      "missed_unsafe_pairs": 0,
+      "false_alarm_pairs": 0,
+      "disagreements": [],
+      "excluded_outside_production_scope": 3,
+      "production_scope_start_s": 601.6633443801337,
+      "reference_npz_sha256": "53e27186d42e22b7d9306bef1d45e03ea492eaaadb8a0f590e9a17373cacbd17",
+      "elapsed_seconds": 29.537
+    },
+    "sso": {
+      "unsafe_pairs": 234,
+      "clear_pairs": 1495,
+      "missed_unsafe_pairs": 0,
+      "false_alarm_pairs": 0,
+      "disagreements": [],
+      "excluded_outside_production_scope": 1,
+      "production_scope_start_s": 602.2423630494319,
+      "reference_npz_sha256": "158fc62ddec37ccae45f17596b4b43446895b7e0da01375c1ad3a7cc68df149a",
+      "elapsed_seconds": 37.556
+    }
+  },
+  "unsafe_pairs": 451,
+  "clear_pairs": 3089,
+  "missed_unsafe_pairs": 0,
+  "false_alarm_pairs": 0,
+  "scope": "Archived independent ~1s reference pairs inside the 6h horizon and production post-ascent scope; clear controls within radius+20km.",
+  "elapsed_seconds": 80.218,
+  "source_sha256": "bb8002dd2c28c696d74c9eaca37ab184ce315d32fb63f3fef43ff5dc7c50f08e"
+}

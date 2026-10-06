@@ -1,5 +1,16 @@
 # Focused scanner verification
 
+Looking for the files behind a report result? Start with the
+[report evidence index](EVIDENCE.md), which maps each table and supplementary
+check to its exact records. The commands below reproduce the follow-up checks;
+the index also links the historical research and corrected duration recount.
+
+For live application diagnostics, request logs and the finer final validation
+pass, see [runtime checks](RUNTIME_CHECKS.md). The research benchmark commands
+below retain their documented 10-second comparison protocol. The HTTP API now
+also checks qualifying spans at 5 seconds; do not label its runtime or result
+as the earlier six-hour measurement without a fresh matched reference run.
+
 Run the detector and window-finder tests from the repository root:
 
 ```bash

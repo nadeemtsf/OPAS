@@ -1,0 +1,162 @@
+{
+  "status": "complete",
+  "purpose": "Endpoint-span recount for Table 3 of the revised OPAS audit report; preserves the previously computed recount without rerunning orbital propagation.",
+  "research_commit": "8fef312648e542060256b94fef2cbce49be4e161",
+  "snapshot_sha256_uncompressed": "c13469e0cee49549504c9de7e45388c926e32ebe5c3b3ec6ccb81855838b1fa8",
+  "snapshot_T0_utc": "2026-09-21T08:52:54.811735+00:00",
+  "inputs": {
+    "snapshot_metadata": "research/data/snapshot_meta.json",
+    "iss": "research/results/reference_iss_20260921T102002Z.npz",
+    "starlink": "research/results/reference_starlink_20260922T071313Z.npz",
+    "sso": "research/results/reference_sso_20260922T072024Z.npz"
+  },
+  "method": {
+    "launch_offset_range_s": [
+      -1,
+      21603
+    ],
+    "radius_km": "10 + min(0.5 * TLE_age_days_at_T0, 5), matching the historical enumeration; all selected candidate ages in these three archived sets were nonnegative.",
+    "unsafe": "Any stored pair minimum strictly below its per-object radius.",
+    "run": "Consecutive archived launch samples classified clear.",
+    "endpoint_span_minutes": "(last_offset_s - first_offset_s) / 60",
+    "original_count_plus_one_minutes": "endpoint_span_minutes + 1; retained only to document the historical convention.",
+    "scope": "Sampled clear runs in the archived nominal-minute grids; no continuous launch-time or physical safety certification."
+  },
+  "results": [
+    {
+      "preset": "iss",
+      "sample_step_s": 60.004746963004436,
+      "checked_in_original_range": 361,
+      "original_count_plus_one_runs_ge_15": 5,
+      "endpoint_span_runs_ge_15": 2,
+      "top_runs": [
+        {
+          "n_samples": 19,
+          "endpoint_span_minutes": 18.001424088901846,
+          "first_offset_s": 13141.03958489833,
+          "last_offset_s": 14221.12503023244
+        },
+        {
+          "n_samples": 17,
+          "endpoint_span_minutes": 16.001265856801638,
+          "first_offset_s": 15001.186740751518,
+          "last_offset_s": 15961.262692159617
+        },
+        {
+          "n_samples": 15,
+          "endpoint_span_minutes": 14.00110762470143,
+          "first_offset_s": 8280.655080894838,
+          "last_offset_s": 9120.721538376923
+        },
+        {
+          "n_samples": 15,
+          "endpoint_span_minutes": 14.001107624701417,
+          "first_offset_s": 1740.1376619271762,
+          "last_offset_s": 2580.2041194092612
+        },
+        {
+          "n_samples": 15,
+          "endpoint_span_minutes": 14.0011076247014,
+          "first_offset_s": 20581.628208311085,
+          "last_offset_s": 21421.69466579317
+        },
+        {
+          "n_samples": 14,
+          "endpoint_span_minutes": 13.001028508651295,
+          "first_offset_s": 11160.88293511913,
+          "last_offset_s": 11940.944645638208
+        }
+      ]
+    },
+    {
+      "preset": "starlink",
+      "sample_step_s": 60.001330778370175,
+      "checked_in_original_range": 361,
+      "original_count_plus_one_runs_ge_15": 0,
+      "endpoint_span_runs_ge_15": 0,
+      "top_runs": [
+        {
+          "n_samples": 14,
+          "endpoint_span_minutes": 13.000288335314144,
+          "first_offset_s": 16680.36995638765,
+          "last_offset_s": 17460.3872565065
+        },
+        {
+          "n_samples": 11,
+          "endpoint_span_minutes": 10.000221796395484,
+          "first_offset_s": 13200.292771242026,
+          "last_offset_s": 13800.306079025755
+        },
+        {
+          "n_samples": 9,
+          "endpoint_span_minutes": 8.000177437116387,
+          "first_offset_s": 4560.101139156336,
+          "last_offset_s": 5040.111785383319
+        },
+        {
+          "n_samples": 9,
+          "endpoint_span_minutes": 8.000177437116372,
+          "first_offset_s": 7080.157031847996,
+          "last_offset_s": 7560.1676780749785
+        },
+        {
+          "n_samples": 7,
+          "endpoint_span_minutes": 6.00013307783729,
+          "first_offset_s": 5460.121100831929,
+          "last_offset_s": 5820.129085502166
+        },
+        {
+          "n_samples": 7,
+          "endpoint_span_minutes": 6.00013307783726,
+          "first_offset_s": 20520.455126203513,
+          "last_offset_s": 20880.46311087375
+        }
+      ]
+    },
+    {
+      "preset": "sso",
+      "sample_step_s": 59.99691466161312,
+      "checked_in_original_range": 361,
+      "original_count_plus_one_runs_ge_15": 0,
+      "endpoint_span_runs_ge_15": 0,
+      "top_runs": [
+        {
+          "n_samples": 6,
+          "endpoint_span_minutes": 4.999742888467851,
+          "first_offset_s": 5699.706892853346,
+          "last_offset_s": 5999.691466161417
+        },
+        {
+          "n_samples": 5,
+          "endpoint_span_minutes": 3.9997943107742686,
+          "first_offset_s": 6119.685295484646,
+          "last_offset_s": 6359.672954131102
+        },
+        {
+          "n_samples": 5,
+          "endpoint_span_minutes": 3.9997943107742686,
+          "first_offset_s": 7319.62358871693,
+          "last_offset_s": 7559.611247363386
+        },
+        {
+          "n_samples": 4,
+          "endpoint_span_minutes": 2.9998457330807167,
+          "first_offset_s": 13979.281116156102,
+          "last_offset_s": 14159.271860140945
+        },
+        {
+          "n_samples": 4,
+          "endpoint_span_minutes": 2.9998457330807167,
+          "first_offset_s": 15359.21015337323,
+          "last_offset_s": 15539.200897358072
+        },
+        {
+          "n_samples": 4,
+          "endpoint_span_minutes": 2.9998457330807167,
+          "first_offset_s": 21058.917046226576,
+          "last_offset_s": 21238.90779021142
+        }
+      ]
+    }
+  ]
+}

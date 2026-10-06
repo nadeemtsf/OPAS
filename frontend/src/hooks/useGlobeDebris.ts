@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
-import axios from "axios";
+import { http } from "../utils/http";
 import type { GlobeMethods } from "react-globe.gl";
 import type { Debris, DebrisInstance, HoveredDebris } from "../types";
 import { API_BASE, EARTH_RADIUS_KM } from "../constants";
@@ -19,7 +19,7 @@ export function useGlobeDebris(globeRef: React.RefObject<GlobeMethods | undefine
   const [hoveredDebris, setHoveredDebris] = useState<HoveredDebris | null>(null);
 
   useEffect(() => {
-    axios.get(`${API_BASE}/debris`).then(({ data }) => {
+    http.get(`${API_BASE}/debris`).then(({ data }) => {
       debrisRef.current = data.debris.map((d: Debris) => ({
         lat: d.location.coordinates[1],
         lng: d.location.coordinates[0],
@@ -29,7 +29,7 @@ export function useGlobeDebris(globeRef: React.RefObject<GlobeMethods | undefine
         altitude_km: d.altitude_km,
       }));
       setDebrisReady(true);
-    });
+    }).catch(error => console.error("[OPAS] Debris display could not load", error.message));
   }, []);
 
   useEffect(() => {

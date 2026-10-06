@@ -1,12 +1,14 @@
-import { useState, useRef, useCallback, useMemo } from "react";
+import { useState, useRef, useCallback, useMemo, useEffect } from "react";
 import axios from "axios";
 import Globe, { type GlobeMethods } from "react-globe.gl";
 import * as THREE from "three";
 
-import type { Threat, GlobePoint, TrajectoryPoint, SafeWindow } from "./types";
+import type { Threat, GlobePoint, TrajectoryPoint, SafeWindow, WindowDiagnostics } from "./types";
 import { API_BASE, EARTH_RADIUS_KM, PRESETS } from "./constants";
 import { generateReport } from "./utils/reportGenerator";
 import { launchTimeForRequest, utcLaunchTimeValue } from "./utils/launchTime";
+import { readWindowStream } from "./utils/windowSearch";
+import { http } from "./utils/http";
 import { useGlobeSize } from "./hooks/useGlobeSize";
 import { useGlobeDebris } from "./hooks/useGlobeDebris";
 import { StatusBar } from "./components/StatusBar";
@@ -32,16 +34,42 @@ export default function App() {
   const [findingWindows, setFindingWindows] = useState(false);
   const [windowSearchDone, setWindowSearchDone] = useState(false);
   const [windowSearchHours, setWindowSearchHours] = useState<number | null>(null);
-  const [searchHoursInput, setSearchHoursInput] = useState(24);
+  const [searchHoursInput, setSearchHoursInput] = useState(6);
   const [windowElapsed, setWindowElapsed] = useState<number | null>(null);
   const [windowSearchError, setWindowSearchError] = useState<string | null>(null);
+  const [windowDiagnostics, setWindowDiagnostics] = useState<WindowDiagnostics | null>(null);
+  const [collisionError, setCollisionError] = useState<string | null>(null);
   const checkedWindowTime = useRef<string | null>(null);
+  const windowAbort = useRef<AbortController | null>(null);
+  const windowStarted = useRef(0);
+
+  useEffect(() => () => windowAbort.current?.abort(), []);
+  useEffect(() => {
+    if (!findingWindows) return;
+    const timer = setInterval(() => setWindowElapsed(Math.round((performance.now()-windowStarted.current)/1000)), 1000);
+    return () => clearInterval(timer);
+  }, [findingWindows]);
+
+  function clearResults() {
+    setTrajectory([]);
+    setCustomData([]);
+    setStatus(null);
+    setThreats([]);
+    setCheckedCount(null);
+    setSafeWindows([]);
+    setWindowSearchDone(false);
+    setWindowDiagnostics(null);
+    setWindowSearchError(null);
+    setCollisionError(null);
+    checkedWindowTime.current = null;
+  }
 
   const globeRef = useRef<GlobeMethods>(undefined);
   const { containerRef, globeSize } = useGlobeSize();
   const { hoveredDebris } = useGlobeDebris(globeRef);
 
   function applyPreset(index: number) {
+    clearResults();
     setPreset(index);
     const p = PRESETS[index];
     setTargetLat(p.lat);
@@ -114,6 +142,7 @@ export default function App() {
 
   async function runCollisionCheck(effectiveTime: string) {
     setLoading(true);
+    setCollisionError(null);
     try {
       const params: Record<string, string | number> = {
         target_lat: targetLat,
@@ -122,21 +151,19 @@ export default function App() {
         inclination,
         launch_time: launchTimeForRequest(effectiveTime, checkedWindowTime.current),
       };
-      const { data } = await axios.get(`${API_BASE}/alert`, { params });
+      const { data } = await http.get(`${API_BASE}/alert`, { params });
       setStatus(data.status);
       setThreats(data.threats);
       setCheckedCount(data.candidates_checked ?? null);
       setTrajectory(data.trajectory ?? []);
-      setSafeWindows([]);
-      setWindowSearchDone(false);
-      setWindowSearchError(null);
       setSelectedThreat(null);
       rebuildPoints(data.threats);
       if (globeRef.current) {
         globeRef.current.pointOfView({ lat: targetLat, lng: targetLon, altitude: 2 }, 1000);
       }
     } catch (err) {
-      console.error(err);
+      const detail = axios.isAxiosError(err) ? err.response?.data?.detail : null;
+      setCollisionError(typeof detail === "string" ? detail : "The collision check could not be completed. Check the request log.");
       setStatus(null);
       setThreats([]);
       setTrajectory([]);
@@ -170,24 +197,41 @@ export default function App() {
     setWindowSearchError(null);
     setWindowSearchHours(null);
     setWindowElapsed(null);
+    setWindowDiagnostics(null);
+    const controller = new AbortController();
+    windowAbort.current = controller;
     const t0 = performance.now();
+    windowStarted.current = t0;
+    const parameters = { target_lat: targetLat, target_lon: targetLon, target_alt: targetAlt,
+      inclination, search_hours: searchHoursInput };
+    console.info("[OPAS] Window search started", parameters);
     try {
-      const { data } = await axios.get(`${API_BASE}/safe-windows`, {
-        params: { target_lat: targetLat, target_lon: targetLon, target_alt: targetAlt, inclination, search_hours: searchHoursInput },
+      const query = new URLSearchParams(Object.entries(parameters).map(([key, value]) => [key, String(value)]));
+      const response = await fetch(`${API_BASE}/safe-windows/stream?${query}`, { signal: controller.signal });
+      let lastPhase = "";
+      const data = await readWindowStream(response, progress => {
+        setWindowDiagnostics(progress);
+        if (progress.phase !== lastPhase || progress.phase === "complete") {
+          console.info("[OPAS] Window search progress", progress);
+          lastPhase = progress.phase;
+        }
       });
       setSafeWindows(data.windows);
+      setWindowDiagnostics(data.diagnostics);
       setWindowSearchHours(data.search_hours);
       setWindowSearchDone(true);
+      console.info("[OPAS] Window verification completed", data);
     } catch (err) {
-      console.error(err);
       setSafeWindows([]);
-      const detail = axios.isAxiosError(err) ? err.response?.data?.detail : null;
-      setWindowSearchError(typeof detail === "string"
-        ? detail
-        : "The window search could not be completed. Please retry.");
+      const message = controller.signal.aborted ? "Search cancelled. No windows were accepted."
+        : err instanceof Error ? err.message : "The window search could not be completed. Please retry.";
+      setWindowSearchError(message);
+      setWindowDiagnostics(previous => previous ? { ...previous, status: "incomplete" } : null);
+      console.error("[OPAS] Window search incomplete", message);
     } finally {
       setWindowElapsed(Math.round((performance.now() - t0) / 1000));
       setFindingWindows(false);
+      windowAbort.current = null;
     }
   }
 
@@ -248,11 +292,13 @@ export default function App() {
           windowSearchHours={windowSearchHours}
           windowElapsed={windowElapsed}
           windowSearchError={windowSearchError}
+          windowDiagnostics={windowDiagnostics}
+          collisionError={collisionError}
           onPresetChange={applyPreset}
-          onLatChange={(v) => { setTargetLat(v); setPreset(0); }}
-          onLonChange={(v) => { setTargetLon(v); setPreset(0); }}
-          onAltChange={(v) => { setTargetAlt(v); setPreset(0); }}
-          onIncChange={(v) => { setInclination(v); setPreset(0); }}
+          onLatChange={(v) => { clearResults(); setTargetLat(v); setPreset(0); }}
+          onLonChange={(v) => { clearResults(); setTargetLon(v); setPreset(0); }}
+          onAltChange={(v) => { clearResults(); setTargetAlt(v); setPreset(0); }}
+          onIncChange={(v) => { clearResults(); setInclination(v); setPreset(0); }}
           onLaunchTimeChange={(value) => {
             checkedWindowTime.current = null;
             setLaunchTime(value);
@@ -261,6 +307,7 @@ export default function App() {
           onCheckCollision={checkCollision}
           onFindSafeWindows={findSafeWindows}
           onApplyWindow={applyWindow}
+          onCancelWindowSearch={() => windowAbort.current?.abort()}
         />
 
         <div ref={containerRef} className="flex-1 flex items-center justify-center overflow-hidden min-w-0">

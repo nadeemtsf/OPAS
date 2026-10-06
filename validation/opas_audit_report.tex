@@ -1,0 +1,645 @@
+\documentclass[11pt,a4paper]{article}
+
+% Self-contained Overleaf source; no external bibliography or figures required.
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage[T1]{fontenc}
+\usepackage{authblk}
+\usepackage{tabularx}
+\usepackage{xurl}
+\usepackage{hyperref}
+\hypersetup{hidelinks,
+  pdftitle={Auditing the OPAS Orbital Proximity Alert System's Safe-Window Scanner},
+  pdfauthor={Nadim Baboun}}
+
+\title{Auditing the OPAS Orbital Proximity Alert System's Safe-Window Scanner}
+\author[1]{Nadim Baboun}
+\affil[1]{Al-Quds University}
+\date{6 October 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+The Orbital Proximity Alert System (OPAS) estimates candidate launch windows
+from two-line element (TLE) sets and SGP4 propagation. This study audits its
+\texttt{/safe-windows} scanner against an independently implemented dense
+numerical reference. In a frozen six-hour launch horizon, every reference
+launch sample covered by the original scanner's reported ISS, Starlink and
+sun-synchronous windows was obstructed at the scanner's own screening
+radius; a geostationary control case had no obstructed reference samples.
+An initial four-fix scanner reduced this sampled false-safe rate to 9.6\%
+for its ISS window and 21.1\% for its Starlink window, with all ten
+investigated residual object--launch pairs traced to finite waypoint
+spacing. A follow-up scanner refines close approaches between waypoints,
+uses exact clock launch grids, and verifies candidate windows at 10-second
+spacing. Its six-hour ISS search agreed with the independent reference on
+all 691 checked launch times, including zero observed false-safe samples
+among 565 launches classified clear. Finer verification exposed 52 unsafe
+launch samples inside apparently clear minute-grid windows, leaving no
+qualifying window of at least 15 minutes. Archived ISS, Starlink and SSO
+pair replay also produced zero disagreements. These results support the
+sampling-gap diagnosis and demonstrate improved sampled clearance within
+OPAS's frozen post-ascent model. They do not certify continuous launch-time
+clearance or real-world launch safety. Anisotropic screening, calibrated
+orbital uncertainty, ascent coverage and further runtime work remain open.
+\end{abstract}
+
+\section{Introduction}
+
+The Orbital Proximity Alert System (OPAS) is a lightweight web tool for
+screening planned satellite and rocket trajectories for proximity to
+tracked objects\footnote{Source repository:
+\url{https://github.com/nadeemtsf/OPAS}. The follow-up commits documented
+here were local at the time of this report; their measurements should not
+be attributed to the repository's default branch.}. Given a launch site,
+target altitude and inclination, its \texttt{/safe-windows} endpoint
+returns candidate launch-time intervals that its model classifies as
+clear. OPAS ingests TLE sets from Space-Track, propagates object positions
+using SGP4 via Skyfield, and screens a simplified vehicle trajectory
+against objects selected near the target altitude.
+
+OPAS was developed through rapid, AI-assisted prototyping. Its claimed
+safe windows need independent verification, particularly where sampling
+reduces web-request cost. This report examines missed close approaches
+under its own model and threshold, their causes and subsequent corrections.
+
+Throughout this report, ``clear'' means no reference-resolved encounter
+inside the chosen radius for a particular checked launch time and modeled
+flight scope. Consecutive clear launch samples are not, by themselves, a
+certificate that every intervening launch time is clear. Historical
+measurements and follow-up results are kept separate to preserve their
+different code versions, launch grids and validation coverage.
+
+\section{Background}
+\label{sec:background}
+
+\subsection{TLE/SGP4 propagation accuracy}
+
+TLE propagation accuracy is object- and epoch-dependent. Priestley and
+Handley report an often-quoted heuristic of approximately 1~km error at
+epoch, growing by 1--3~km per day; this is context for numerical precision,
+not a calibrated uncertainty law for every object~\cite{jaxsgp4}. Rich's
+LEO study, which included the Hubble Space Telescope, reported
+SGP4-propagated position error within 1~km over seven days in the cases
+examined~\cite{afit_sgp4}. These observations should not be converted into
+a universal TLE-age penalty. A screening margin needs evidence appropriate
+to the objects, tracking quality and mission being protected.
+
+\subsection{Documented conjunction-screening practice}
+
+NASA's 2023 handbook assigns screening volumes according to orbital and
+mission characteristics and distinguishes conjunction screening from risk
+assessment~\cite{nasa_handbook}. Hejduk and Pachura's six-month study used
+an intentionally large 50~km radial by 250~km in-track by 250~km cross-track
+volume to investigate screening performance. Their approximately 700~km
+orbit group used a smaller ellipsoid with \emph{semi-axes} of 0.5, 17 and
+20~km in those directions~\cite{nasa_screening}; the handbook also reports
+a 0.5~km~$\times$~17~km~$\times$~20~km screening example~\cite{nasa_handbook}.
+The 0.5~km value is a radial dimension, not a spherical collision radius.
+
+These documented examples are mission-specific screening volumes rather
+than universal final safety thresholds. The handbook also advises against
+using public TLEs alone for conjunction risk assessment because their
+accuracy is insufficient for that purpose~\cite{nasa_handbook}. OPAS's
+numerical audit consequently concerns a model-based proximity screen,
+not an operational collision-avoidance certification. The historical
+examples cited here are identified by publication version; no claim is
+made that they specify every mission's present screening configuration.
+
+\section{Methodology}
+\label{sec:methodology}
+
+\subsection{Frozen data and scanner versions}
+
+The MongoDB debris collection was exported once to a checksummed snapshot
+of 32,517 objects. Its epoch, $T_0$, is
+\texttt{2026-09-21T08:52:54.811735+00:00}. The requested six-hour
+\emph{launch} horizon ends at
+\texttt{2026-09-21T14:52:54.811735+00:00}; each launch is then screened
+over its own modeled post-ascent flight. TLE ages in retained measurements
+are evaluated relative to $T_0$, independent of when a script is run.
+The snapshot identifier and result paths are recorded in
+Appendix~\ref{sec:records}.
+
+Three scanner stages are distinguished:
+\begin{enumerate}
+  \item \textbf{Original scanner:} unmodified OPAS commit
+  \texttt{a89f2e72}, used for the baseline audit and Table~\ref{tab:baseline}.
+  \item \textbf{Initial four-fix scanner:}
+  the research scanner, with corrected frozen-age results
+  dated 28 September 2026. Its production counterpart is
+  \texttt{fix/scanner-accuracy} at \texttt{50fb28f}. Its historical results
+  appear in Table~\ref{tab:fixed}.
+  \item \textbf{Follow-up scanner:}
+  \texttt{fix/refine-close-approaches}, based on \texttt{50fb28f}.
+  The full numerical search measured local commit \texttt{19548cd}.
+  Subsequent integration fixes are in local commit \texttt{9637985};
+  their separate verification is described below~\cite{opas_validation}.
+\end{enumerate}
+
+The original Windows study used Python 3.13.14, NumPy 2.4.4, Skyfield 1.54
+and the optional C++ extension. The Linux follow-up used Python 3.12.14,
+NumPy 2.3.5, Skyfield 1.55 and \texttt{sgp4} 2.27; timings are not a
+controlled before-and-after comparison.
+
+Research scanner and sweep outputs with unfrozen TLE age were invalidated
+and archived. Only corrected records are used; the original
+baseline/reference pipeline was unaffected.
+
+\subsection{Baseline measurement}
+
+The original \texttt{scan\_windows} was run over the launch horizon for
+ISS (420~km, 51.6\textdegree{} inclination), Starlink (550~km,
+53.0\textdegree{}), SSO (705~km, 98.2\textdegree{}), polar orbit
+(800~km, 90\textdegree{}) and the preset named ``GEO transfer''
+(35,786~km, 6.0\textdegree{}). The last preset still uses OPAS's simplified
+trajectory model; its name does not imply a physically modeled transfer
+trajectory. Each run recorded the actual windows returned to a user.
+
+\subsection{Dense reference implementation}
+
+The archived reference shares OPAS's snapshot, SGP4 propagator and vehicle
+generator. It resolves the modeled flight at approximately one-second
+spacing and refines minima by parabolic interpolation of squared distance
+around the nearest sample. This refinement is exact for locally
+straight-line relative motion and an approximation for curved motion.
+It supplies a validated numerical reference rather than physical ground
+truth.
+
+Two planted-object tests recovered known minima to within 0.02~km after
+refinement. A one-second versus two-second comparison over 38,000
+object--launch pairs found a median distance disagreement of 0.5~m and
+zero classification flips at 5, 10, 25 or 50~km radii. These checks support
+the reference resolution in the tested cases; they are not an exhaustive
+error bound for every pair or launch time.
+
+Archived launch offsets derive from numerical flight spacing and differ
+slightly from clock minutes. Historical cases retain their recorded offsets;
+the follow-up compares identical exact-clock timestamps.
+
+\subsection{Validating the reported windows}
+
+For each original window, the reference classifies covered approximately
+minute-spaced launch samples using OPAS's own per-object radius. The
+\emph{sampled false-safe rate} is the number of covered launch samples
+inside that reported window which the reference marks obstructed, divided
+by the number of covered reference launch samples. It is not the fraction
+of continuous elapsed time proved unsafe. Missing endpoint coverage is
+reported separately and is not treated as clearance. Windows are also
+clipped to the requested horizon to separate the boundary defect from
+sampling errors.
+
+A sweep varied coarse step, fine step and inner-orbit sample count. Its
+parameterized scanner first reproduced the original ISS, Starlink and SSO
+windows and evaluation counts, testing sampling under the original model.
+
+\subsection{Initial four-fix scanner}
+\label{sec:initial-method}
+
+The first correction (i) increased trajectory generation to 600 intervals
+per modeled orbit, producing 601 waypoints before post-ascent selection,
+and evaluated every retained waypoint; (ii) replaced the 50~km base and
+age inflation capped at 200~km with a 10~km LEO base and capped linear
+age penalty; (iii) tightened launch verification from two-minute to
+one-minute spacing; and (iv) clamped returned windows to the requested
+horizon. The LEO radius used in the retained data is
+\begin{equation}
+  r_i = 10 + \min\!\left(0.5\max(a_i,0),\,5\right)\quad\mathrm{km},
+  \label{eq:radius}
+\end{equation}
+where $a_i$ is TLE age in days. Higher-orbit presets retain a 50~km base.
+This is an engineering screening choice, not a measured uncertainty model.
+
+Historical residual pairs were replayed at exact recorded offsets and
+radii. Consecutive clear archived launches were also enumerated independently
+of window formation. Their endpoint span is $t_{\rm last}-t_{\rm first}$:
+$N$ minute samples do not span $N$ minutes.
+
+\subsection{Follow-up refinement and independent verification}
+\label{sec:followup-method}
+
+The follow-up preserves the 600-interval trajectory, radius formula,
+SGP4 propagation and post-ascent scope. For each interval between retained
+flight waypoints, it first screens the minimum distance along the chord
+of relative Earth-fixed motion. Its screening allowance is
+\begin{equation}
+  \epsilon = \frac{a_{\max}(\Delta t)^2}{8} + 0.02~\mathrm{km},
+  \qquad a_{\max}=0.05~\mathrm{km\,s^{-2}}.
+  \label{eq:allowance}
+\end{equation}
+The acceleration ceiling and allowance are engineering assumptions, not
+universal bounds. Potential encounters receive cubic Hermite vehicle
+interpolation and fresh satellite propagation, with up to 20 golden-section
+iterations. Failed or non-finite predictions cannot establish clearance.
+
+Exact clock grids are independent of flight spacing. Ten-minute discovery
+leads to minute checks and ten-second candidate verification. Unsafe samples
+split runs; checked-clear endpoints must span at least 15 minutes. All
+eligible candidates are considered before returning the five longest,
+without extrapolating boundaries. Intervening launches remain unchecked.
+
+The ISS test used 11,997 objects within the existing 420~km $\pm$100~km
+altitude filter. Its independent reference used a regenerated 1.000079~s
+vehicle grid, interpolated one-second satellite ephemerides and parabolic
+distance minimization. Minima at or below radius plus 20~m were directly
+repropagated. It checked 361 exact-minute and 375 finer launches, covering
+every production timestamp plus 45 extra minute timestamps. Flight checking
+starts at 603.356~s for production and 600.047~s for the reference because
+their grids round the post-ascent boundary differently.
+
+Supplementary replay used exact-offset ISS, Starlink and SSO pairs inside
+the horizon and production scope, including clear controls within radius
+plus 20~km. A direct approximately 0.2-second control checked six
+threshold-nearest ISS pairs; neither is a complete finer-grid catalogue run.
+
+Final integration fixes report unavailable orbital data explicitly and
+preserve selected UTC timestamps. Tests and pair replay were rerun, but
+the full search was not repeated or retimed. Interval mathematics, vehicle
+generation and window discovery remain byte-identical. All 11,997 ISS
+objects construct, so the new failure guards are not reached by the
+snapshot~\cite{opas_validation}.
+
+\section{Results}
+\label{sec:results}
+
+\subsection{Original scanner: false-safe samples in crowded shells}
+
+Every covered reference launch sample inside the original ISS, Starlink
+and SSO windows was obstructed; the GEO control had none
+(Table~\ref{tab:baseline}).
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{lrrr}
+\toprule
+Preset & Window duration & Reference samples & Sampled false-safe rate \\
+\midrule
+ISS (420~km)      & 24~min & 24 & 100\% \\
+Starlink (550~km) & 46~min & 46 & 100\% \\
+Starlink (550~km) & 16~min & 16 & 100\% \\
+SSO (705~km)      & 20~min & 20 & 100\% \\
+GEO preset       & 360~min (clipped) & 360 & 0\% \\
+\bottomrule
+\end{tabular}
+\caption{Original scanner results over the six-hour launch horizon.
+Rates are fractions of covered reference launch samples, not continuous
+duration estimates. Polar orbit returned no window.}
+\label{tab:baseline}
+\end{table}
+
+\subsection{Root cause and boundary defect}
+
+The original inner check used approximately a dozen intervals per orbit,
+yielding roughly 14 checked points about six minutes apart. At a flat
+50~km radius, every tested minute-grid launch in ISS, Starlink and SSO
+had at least one reference-resolved encounter, with means of 8.8--12.2
+objects per launch. Sparse waypoint checks therefore missed encounters
+which occurred between their evaluation times.
+
+Doubling the sweep's inner sample count from 12 to 24 reduced the returned
+window count to zero for those three presets at every tested coarse step.
+This is consistent with the sampling diagnosis under the original
+radius. An independent boundary defect let refinement evaluate and return
+times outside the requested horizon: the original GEO result extended
+eight minutes before and after the range, yielding 376 minutes before
+clipping to 360 minutes.
+
+\subsection{Initial four-fix scanner and residual waypoint misses}
+
+The first correction returned one ISS window and one Starlink window,
+shown in Table~\ref{tab:fixed}; SSO returned none. These historical results
+belong to the four-fix research scanner, not to the follow-up branch.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{llrrr}
+\toprule
+Preset & Window (UTC) & Samples & Unsafe & Sampled false-safe rate \\
+\midrule
+ISS      & 10:33--11:25 (52~min) & 52 & 5 & 9.6\% \\
+Starlink & 10:03--10:22 (19~min) & 19 & 4 & 21.1\% \\
+\bottomrule
+\end{tabular}
+\caption{Initial four-fix scanner windows, graded at its exact per-object
+10--15~km radius. Times are abbreviated to minutes; recorded timestamps
+retain seconds and fractions. SSO returned no window.}
+\label{tab:fixed}
+\end{table}
+
+The nine obstructed launches involved ten object--launch pairs. Replayed
+at recorded offsets, all ten had waypoint minima outside the radius despite
+reference-refined minima inside: five ISS and five Starlink pairs confirmed
+between-waypoint misses. Spacing was approximately 9.28~s and 9.55~s,
+allowing roughly 139--143~km of relative motion at 15~km/s. This diagnoses
+the examined cases, not every possible failure mode.
+
+\subsection{Archived clear-sample runs and the duration correction}
+\label{sec:archived-runs}
+
+The archived enumeration added one minute to each first-to-last sample
+span. Its five ISS runs labelled 15--19 minutes contained 15--19 samples;
+three span only about 14 minutes. Recounting archived distances and frozen
+radii leaves two ISS spans of at least 15 minutes
+(Table~\ref{tab:runs}); Starlink and SSO have none.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{lrrr}
+\toprule
+Preset & Longest run: samples & Endpoint span (min) & Spans $\geq$15 min \\
+\midrule
+ISS      & 19 & 18.0014 & 2 \\
+Starlink & 14 & 13.0003 & 0 \\
+SSO      &  6 &  4.9997 & 0 \\
+\bottomrule
+\end{tabular}
+\caption{Recount of consecutive clear samples on the archived nominal
+minute launch grids, using $t_{\rm last}-t_{\rm first}$ rather than adding
+one minute. The second qualifying ISS endpoint span is 16.0013 minutes.
+These are sampled runs, not continuously certified clear intervals.}
+\label{tab:runs}
+\end{table}
+
+These are sampled-clear candidates, not continuous certificates. The
+historical first-five-candidate cap and truncation at unsafe checks are
+search limitations, but their individual effects on missed runs were not
+experimentally isolated. The archived grid also differs from clock minutes.
+
+\subsection{Follow-up ISS launch classification and window verification}
+\label{sec:followup-results}
+
+The instrumented production search made 691 launch checks: 316 during
+minute discovery and 375 at finer spacing. Of these, 565 were clear and
+126 obstructed. The independent calculation supplied 736 launch results,
+including every exact production timestamp. Table~\ref{tab:followup}
+summarizes their agreement~\cite{opas_validation}.
+
+\begin{table}[htbp]
+\centering
+\begin{tabularx}{\linewidth}{Xr}
+\toprule
+Follow-up ISS measurement & Result \\
+\midrule
+Production launch samples checked & 691 \\
+Independent launch samples checked & 736 \\
+Matched production classifications & 691/691 \\
+Production launches classified clear & 565 \\
+Observed false-safe launch samples & 0/565 (0\%) \\
+Observed false alarms & 0 \\
+Returned windows with endpoint span $\geq$15 min & 0 \\
+\bottomrule
+\end{tabularx}
+\caption{Follow-up classification agreement at exact checked launch times
+in the frozen ISS post-ascent model. The false-safe denominator is clear
+launch samples, not returned windows or continuous elapsed time.}
+\label{tab:followup}
+\end{table}
+
+The independent exact-minute grid produced two apparently clear endpoint
+spans, 33 and 23 minutes. Ten-second checking added 280 intervening launch
+samples inside those spans, of which 52 were obstructed
+(18.57\%; Table~\ref{tab:minute-gaps}). These are missed unsafe samples of
+\emph{minute-only launch verification}, separate from the follow-up
+scanner's observed false-safe rate. The final candidate refinement split
+these apparent windows and returned no qualifying 15-minute window.
+Zero returned windows provides no positive returned-window case to certify,
+and does not mean every launch sample was obstructed.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{lrrrr}
+\toprule
+Minute-grid span (UTC) & Min & Extra samples & Unsafe & Unsafe fraction \\
+\midrule
+10:51:54--11:24:54 & 33 & 165 & 25 & 15.15\% \\
+12:26:54--12:49:54 & 23 & 115 & 27 & 23.48\% \\
+\midrule
+Combined & 56 & 280 & 52 & 18.57\% \\
+\bottomrule
+\end{tabular}
+\caption{Unsafe intervening launch samples inside apparent exact-minute
+ISS windows. All endpoint timestamps retain the common fractional part
+\texttt{.811735}; fractions are omitted here for space. These spans were
+generated by the new independent minute reference, not copied from the
+historical four-fix scanner output.}
+\label{tab:minute-gaps}
+\end{table}
+
+These spans differ from archived runs because the grids, reference details
+and boundary rounding differ; their durations are not a controlled
+scanner-only comparison. Follow-up agreement compares identical timestamps.
+
+\subsection{Supplementary replay, integration and runtime}
+
+On the final integration version, archived pair replay detected all 451
+selected unsafe pairs and retained all 3,089 nearby clear controls, with
+zero disagreements across ISS, Starlink and SSO. Six additional nearby
+pairs had archived closest approaches before the production flight scope
+and were excluded. This is pair-level detector verification, not a full
+Starlink or SSO window-finder rerun. The six selected approximately
+0.2-second ISS controls showed zero classification changes and zero
+production pair disagreements; this does not establish that the entire
+catalogue was checked at that resolution.
+
+Integration checks passed: 38 backend tests in 6.789~s, nine frontend
+timestamp tests across UTC, Jerusalem and New York, and frontend build
+and lint. These are software checks, not physical safety validation.
+
+The six-hour ISS search took 1,106.109~s (18.44 minutes), versus
+948.989~s (15.82 minutes) for the reference. Production, using four
+processes, overlapped with threaded reference work and part of an archived
+replay under an eight-core CPU quota; BLAS/OpenMP used one thread.
+Timings include instrumented classification phases but exclude input
+setup, startup and final serialization. They describe shared load, not
+isolated latency or a controlled original-scanner speed comparison.
+
+\section{Discussion}
+\label{sec:discussion}
+
+\subsection{Screening radius and uncertainty are separate from sampling}
+
+The original 50~km sphere was OPAS's final proximity threshold, whereas
+the large NASA example was a screening dataset used to study event
+capture and filtering~\cite{nasa_screening}. Their similar radial scale
+does not make the thresholds operationally equivalent. Moreover, the
+smaller documented 0.5~km radial semi-axis belongs to an anisotropic
+volume with much larger in-track and cross-track axes, not a 0.5~km
+sphere~\cite{nasa_screening}.
+
+The radius and 0.5~km/day penalty are engineering choices, not measured
+catalogue errors or mission-specific collision-risk criteria. Changing
+them changes obstruction. Starlink and SSO unsafe-launch fractions rose
+from about 10--11\% at a flat 5~km radius to 29--45\% at 10~km. Each
+scanner is graded at its own criterion, which does not validate that
+threshold as actual mission risk.
+
+An isotropic radius is also a simplification. Mission-specific
+component-wise screening volumes and covariance-based risk assessment
+address a different question from OPAS's spherical nominal-distance
+test~\cite{nasa_handbook,nasa_screening}. The present follow-up improves
+resolution of that existing test. It does not add covariance propagation,
+anisotropic screening or a validated operational uncertainty model.
+
+\subsection{Flight-time and launch-time gaps require distinct fixes}
+
+The ten historical misses establish a between-waypoint problem during
+modeled flight. Interval screening and closest-approach refinement address
+that mechanism without replacing SGP4. The follow-up pair replay supports
+this improvement in the investigated archived cases.
+
+The 52 obstructed intervening launches expose a separate launch-time gap:
+minute-spaced clear results do not guarantee intervening clearance. This
+supports the sampling diagnosis while narrowing claims about genuinely
+clear intervals. The historical waypoint diagnosis remains valid for its
+cases, not an exhaustive account of window errors.
+
+\subsection{What zero disagreements and zero windows establish}
+
+The 691/691 agreement and 0/565 false-safe samples concern selected
+timestamps in one model, not independent random trials or a universal
+0\% false-safe rate.
+
+No qualifying ISS window means apparent spans failed finer checking.
+It neither validates a positive returned window nor makes every launch
+unsafe: 565 checked launches were clear. Runtime remains substantial
+for a synchronous request.
+
+\section{Limitations}
+\label{sec:limitations}
+
+\textbf{Physical and endpoint scope.} This study evaluates
+\texttt{/safe-windows} nominal-distance screening. The probability-of-
+collision scoring and detector mathematics of the separate
+\texttt{/alert} endpoint were not independently validated by these
+experiments. Preserving its selected launch timestamp is an integration
+fix, not validation of that endpoint's risk model.
+
+\textbf{Vehicle model and ascent.} The vehicle follows OPAS's simplified
+orbit construction, which includes a schematic initial altitude ramp.
+Safe-window flight checking starts after approximately 600~s, so ascent
+safety is not established. The production and dense-reference starts
+are slightly different because each rounds to its own flight grid.
+Neither represents a vehicle-specific guided launch trajectory.
+
+\textbf{Catalogue filtering and physical uncertainty.} The existing
+target-altitude filter is retained. Objects outside it, untracked debris,
+TLE prediction errors, maneuvers and vehicle trajectory uncertainty are
+not independently bounded by the experiment. Both numerical methods
+share SGP4 and the vehicle model, so their agreement can coexist with
+physical model error.
+
+\textbf{Discrete launch times and numerical refinement.} Ten-second
+launch samples leave intervening times unchecked. Flight interval
+refinement relies on interpolation, finite minimization and the assumed
+acceleration allowance in Equation~\ref{eq:allowance}. Its tests and
+resolution controls support the investigated cases, not a universal
+mathematical guarantee for arbitrary trajectories or invalid orbital data.
+
+\textbf{Validation coverage.} All measurements use one snapshot, with
+different coverage across stages. Full follow-up window searches are not
+reported for Starlink, SSO, polar or GEO, and the ISS search yielded no
+qualifying positive window.
+
+\textbf{Historical conventions.} Archived offsets drift slightly from
+clock minutes. Original comparisons retain those offsets and sample-based
+denominators; recounting corrects an extra-minute duration convention.
+Comparison with exact-clock results requires matching timestamps.
+
+\textbf{Search and versions.} The follow-up removes the historical
+first-five-candidate restriction and splits unsafe runs, but coarse
+discovery is not a continuous-time completeness proof. Final integration
+checks remain separate from the earlier full numerical search.
+
+\textbf{Threshold and runtime.} The radius and age penalty remain
+engineering assumptions. The performance measurements reflect overlapping
+instrumented calculations on one environment; no isolated latency,
+controlled speedup or post-integration full-search timing is established.
+
+\section{Conclusion and Future Work}
+\label{sec:conclusion}
+
+The original crowded-shell windows were obstructed at every covered
+reference launch sample. Four initial fixes reduced sampled false-safe
+rates to 9.6\% for ISS and 21.1\% for Starlink; all ten investigated
+residual pairs confirmed waypoint-gap misses. Correcting archived duration
+leaves two ISS spans of at least 15 minutes rather than five, still
+without continuous-clearance certification.
+
+The follow-up's interval refinement, exact-clock grids and ten-second
+verification match all 691 checked ISS classifications, with no observed
+false-safe samples among 565 clear launches. Finer checks expose 52
+obstructed launches inside apparent minute-grid windows, leaving none
+qualifying at 15 minutes. This supports improved sampled screening,
+not continuous or physical safety.
+
+Remaining work includes bounding intervening launch times and refinement
+error, modeling vehicle-specific ascent, calibrating uncertainty and
+evaluating anisotropic screening. Broader snapshots, presets and positive
+returned-window cases are needed. Runtime improvements require controlled
+benchmarks while preserving the verification criterion.
+
+\appendix
+\section{Evidence and Reproducibility Records}
+\label{sec:records}
+
+The report evidence index, \path{validation/EVIDENCE.md}, maps each table
+and supplementary check to exact files, code versions and the snapshot
+checksum. It covers the baseline comparisons, corrected four-fix results,
+waypoint-gap evidence, duration recount and follow-up checks. The historical
+inventory is in \path{research/results/README.md} on the research branch
+at \texttt{8fef312}.
+
+The duration recount uses archived reference distances and frozen radii
+within the original horizon tolerance ($-1$ to $21603$ seconds). It reports
+last minus first launch offset without rerunning propagation.
+
+The index distinguishes the full numerical search from later integration
+checks and links their manifests. Reproduction commands are in
+\path{validation/README.md}.
+
+\begin{thebibliography}{9}
+
+\bibitem{jaxsgp4}
+C. Priestley and W. Handley,
+``jaxsgp4: GPU-accelerated mega-constellation propagation with batch parallelism,''
+\emph{arXiv preprint arXiv:2603.27830}, 2026.
+\url{https://arxiv.org/abs/2603.27830}.
+
+\bibitem{afit_sgp4}
+A. T. Rich,
+``Investigating Analytical and Numerical Methods to Predict Satellite Orbits Using Two-Line Element Sets,''
+M.S. thesis, Air Force Institute of Technology, AFIT-ENY-MS-17-M-286, 2017.
+\url{https://scholar.afit.edu/etd/1722/}.
+
+\bibitem{nasa_screening}
+M. D. Hejduk and D. A. Pachura,
+``Conjunction assessment screening volume sizing and event filtering in light of natural conjunction event development behaviors,''
+\emph{AAS/AIAA Astrodynamics Specialist Conference}, Stevenson, WA,
+August 2017. NASA Technical Reports Server document 20170007928.
+\url{https://ntrs.nasa.gov/citations/20170007928}.
+
+\bibitem{nasa_handbook}
+NASA Office of the Chief Engineer,
+``NASA Spacecraft Conjunction Assessment and Collision Avoidance Best Practices Handbook,''
+NASA/SP-20230002470, Rev.~1, February 2023.
+\url{https://ntrs.nasa.gov/citations/20230002470}.
+
+\bibitem{opas_validation}
+OPAS project,
+``Focused scanner verification and final integration records,''
+6 October 2026. Local measured commit \texttt{19548cd} and final integration
+commit \texttt{9637985}; evidence index and reproduction guide identified
+in Appendix~\ref{sec:records}. These records had not been pushed or published
+at the time of this report.
+
+\end{thebibliography}
+
+\end{document}

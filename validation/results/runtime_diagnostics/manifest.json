@@ -1,0 +1,90 @@
+{
+  "status": "complete",
+  "branch": "fix/refine-close-approaches",
+  "parent_commit": "9637985be260c7476759ae6ebe246f18f074514e",
+  "source_sha256": {
+    "backend/api.py": "b0b0d829bd1e4472809f666f1daa9db158a6dbeaf288d2442d87239341e6394b",
+    "backend/diagnostics.py": "81de71d52e03b0ceecb21433f191b9cd2ebb9c0c0efb17459e22df1f71081fd3",
+    "backend/db.py": "d0c057399c16b2065baa32deedb707477eca000878909997c8c2f1be27383b4a",
+    "backend/encounters.py": "665bec1a2ef2f848f5d413e8730ec9bc67a3ab7e2c363e4a7e41bd2eb1d26e01",
+    "backend/scanner.py": "9d819e57e6d75c66fc5bf819047ad95f5af4a47231ba3547e25155293c7dd16d",
+    "backend/windows.py": "7faa3e20726bd38c4caab1875b24aa56971f8e7f003eddab077cee0d28485f63",
+    "frontend/src/App.tsx": "7b96515ca83c67bbecf08ef8babc1f0cd305280260b9d94a094ba932d3f2db66",
+    "frontend/src/types.ts": "6b81a0a3dbce6946fdacefd57ae5746dc186ad792c1775387da6bfdb20173cc1",
+    "frontend/src/components/LeftSidebar.tsx": "080b28259cf82574ef04a6029c7f02a39b1636aff2efee75f16908ec04badfcc",
+    "frontend/src/hooks/useGlobeDebris.ts": "72e17785d7f4f9aa1ea207b2b7551890fae6ea8dad05f3a2368900c9717b34b2",
+    "frontend/src/utils/http.ts": "e13ba94e0fe37cf40558a0c1f7986611d8139895c3f6cdb57717dfe1cdacd12f",
+    "frontend/src/utils/windowSearch.ts": "ea481069cf23d396254d9fbb66489c1f6fd79c4b9006ab8979d61784b94b8a24",
+    "backend/tests/test_api.py": "ff0e1a61e5d2de9b2441a70a1381a29be243b9a79652b438b9d71b7695a29141",
+    "backend/tests/test_cache.py": "deb972071792b5f0034cc9bb4a1c17d34c67e3636baad83c8b940a4747bbdfb5",
+    "backend/tests/test_encounters.py": "149c6753d24993a1461573166f3c9cca18d8707912817e8adabc223a9d690855",
+    "backend/tests/test_stream_cancel.py": "e8f8c3bccf35b95efc0b9e9826711b4b2b21dbbacda4aee5644966e9e6676fa3",
+    "backend/tests/test_windows.py": "b11d6a32d372bffc65719b16757680dad6ca456e352aae56ef15a2d2108f32dd",
+    "frontend/tests/windowSearch.test.mjs": "c2bd4787c03e94a6bc60ba805493605386daf0b009acf6e5245b05c3de7fb439"
+  },
+  "environment": {
+    "python": "3.12.14",
+    "node": "v24.19.0",
+    "packages": {
+      "numpy": "2.3.5",
+      "skyfield": "1.55",
+      "sgp4": "2.27",
+      "fastapi": "0.142.2",
+      "httpx": "0.28.1"
+    },
+    "blas_threads": 1,
+    "omp_threads": 1
+  },
+  "focused_tests": {
+    "status": "complete",
+    "successful": true,
+    "tests_run": 54,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "elapsed_seconds": 8.133,
+    "failure_details": []
+  },
+  "frontend_checks": {
+    "status": "complete",
+    "tests": {
+      "command": "npm test",
+      "tests_run": 25,
+      "passed": 25,
+      "failed": 0,
+      "elapsed_milliseconds": 451.741241,
+      "provenance": "Recorded from the successful Node test summary in this session."
+    },
+    "build": {
+      "command": "npm run build",
+      "exit_code": 0,
+      "log": "frontend_build.log"
+    },
+    "lint": {
+      "command": "npm run lint",
+      "exit_code": 0
+    }
+  },
+  "archived_pair_replay": {
+    "unsafe_pairs": 451,
+    "clear_pairs": 3089,
+    "missed_unsafe_pairs": 0,
+    "false_alarm_pairs": 0,
+    "elapsed_seconds": 80.218
+  },
+  "commands": {
+    "focused_tests": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 OPAS_LOG_LEVEL=WARNING python validation/run_focused_tests.py --output focused_tests.json",
+    "pair_replay": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python validation/validate_encounters.py --research-root ../OPAS-research/research --output archived_pair_replay.json"
+  },
+  "scope": "Focused real HTTP/scanner/spawn and controlled positive/negative window tests, exhaustive five-second toy enumeration, client stream acceptance and archived detector pair replay. No fresh full-catalogue six-hour five-second window-reference run; no operational or continuous-time safety certification.",
+  "timing_context": "Build, an earlier focused suite run and archived replay overlapped in this session; elapsed times are recorded test/replay runtimes, not API window-search latency or a controlled speedup.",
+  "log_normalization": "ANSI escapes, trailing whitespace and extra terminal blank lines removed from copied logs; source and JSON results unchanged.",
+  "artifact_sha256": {
+    "frontend_build.log": "f6fd812d9169dda3a67b664aa7b835736e8a5698195002f0a21a5180ac92355a",
+    "focused_tests.json": "7e3f866e8cc1eb648bb18172d99d8c17134110cb72e79e1c6e6cb71fbe452ddf",
+    "archived_pair_replay.log": "b32cc2bdd4b9c2c6c443617e9027a505bccc84c5202fa1b12d83ab03ae706391",
+    "frontend_checks.json": "87447c239bfbaec3cea32e8b2bcacacb0d009b1feacf3d7b6502e040781f4b72",
+    "focused_tests.log": "31f62b05f65d0ed759826607bc53191cc977d72c2b43b439a26929bc2d486070",
+    "archived_pair_replay.json": "d81d20724d436f4e34e782d696c8de8af751c147c97650225e8780a2cced9166"
+  }
+}

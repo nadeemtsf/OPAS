@@ -105,6 +105,23 @@ class DocumentedEncounterTests(unittest.TestCase):
         t = scanner.ts.from_datetime(datetime(2026, 9, 21, tzinfo=timezone.utc))
         items = [(BrokenSatellite(), {}, 10)]
         self.assertEqual(scanner.count_threats_fast(items, trajectory, 420, t, 10), 1)
+        with self.assertRaises(scanner.WindowVerificationError):
+            scanner.count_threats_fast(items, trajectory, 420, t, 10, strict=True)
+
+    def test_nonfinite_prediction_is_an_incomplete_window_check(self):
+        trajectory = [{'lat':0,'lon':0,'alt':420} for _ in range(3)]
+        satellite=ToySatellite(lambda times: np.full((len(times),3),np.nan))
+        t=scanner.ts.from_datetime(datetime(2026,9,21,tzinfo=timezone.utc))
+        with self.assertRaises(scanner.WindowVerificationError):
+            scanner.count_threats_fast([(satellite,{},10)],trajectory,420,t,10,strict=True)
+
+    def test_invalid_radius_cannot_classify_a_launch_clear(self):
+        trajectory = [{'lat':0,'lon':0,'alt':420} for _ in range(3)]
+        doc = {'location':{'coordinates':[0,0]},'altitude_km':420}
+        t=scanner.ts.from_datetime(datetime(2026,9,21,tzinfo=timezone.utc))
+        for radius in [float('nan'),float('inf'),0,-1]:
+            with self.subTest(radius=radius), self.assertRaises(scanner.WindowVerificationError):
+                scanner.count_threats_fast([(None,doc,radius)],trajectory,420,t,10,strict=True)
 
     def test_scan_boundary_clamping_survives(self):
         start = datetime(2026, 9, 21, tzinfo=timezone.utc)

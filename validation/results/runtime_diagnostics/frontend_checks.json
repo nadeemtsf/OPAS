@@ -1,0 +1,20 @@
+{
+  "status": "complete",
+  "tests": {
+    "command": "npm test",
+    "tests_run": 25,
+    "passed": 25,
+    "failed": 0,
+    "elapsed_milliseconds": 451.741241,
+    "provenance": "Recorded from the successful Node test summary in this session."
+  },
+  "build": {
+    "command": "npm run build",
+    "exit_code": 0,
+    "log": "frontend_build.log"
+  },
+  "lint": {
+    "command": "npm run lint",
+    "exit_code": 0
+  }
+}

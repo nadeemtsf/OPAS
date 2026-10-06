@@ -1,5 +1,10 @@
 # OPAS scanner changes ready for review
 
+This handoff records the measured scanner and integration version through
+`9637985`. Later [runtime checks](RUNTIME_CHECKS.md) add progress diagnostics,
+strict prediction errors and a finer final launch-validation pass. Their
+verification is separate from the timings and source hashes below.
+
 The scanner now refines close approaches between flight waypoints and checks candidate launch times every 10 seconds. Unsafe samples split windows, both endpoints are checked clear, and all candidates are evaluated before selecting the five longest spans of at least 15 minutes.
 
 The measured scanner version is local commit `19548cdbc9486f1b990fd2ad881544e6482d02d3` on `fix/refine-close-approaches`, based on `fix/scanner-accuracy` at `50fb28f61a2fef1a1f29ea1d92e2089333fb24cc`. Its staged sources match every checksum in the [six-hour verification manifest](results/rerun_20261006T115728Z/manifest.json).

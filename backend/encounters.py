@@ -31,7 +31,7 @@ def vehicle_positions(points, indices, fractions):
 
 
 def has_close_approach(sat, satellite_positions, vehicle, sample_tt, radius_km,
-                       timescale):
+                       timescale, strict=False):
     """Screen every interval, then refine potential minima with real propagation.
 
     Invalid/failed propagation is treated as obstructed, never as evidence of
@@ -42,6 +42,8 @@ def has_close_approach(sat, satellite_positions, vehicle, sample_tt, radius_km,
     sample_tt = np.asarray(sample_tt, dtype=float)
     if (not np.isfinite(satellite_positions).all() or
             not np.isfinite(vehicle).all() or not np.isfinite(sample_tt).all()):
+        if strict:
+            raise ValueError('Non-finite flight or orbital prediction.')
         return True
     relative = satellite_positions - vehicle
     radius2 = radius_km ** 2
@@ -95,4 +97,6 @@ def has_close_approach(sat, satellite_positions, vehicle, sample_tt, radius_km,
             f1, f2 = np.where(left, new_values, f2), np.where(left, f1, new_values)
         return bool(np.any(np.minimum(f1, f2) < radius2))
     except Exception:
+        if strict:
+            raise ValueError('Closest-approach refinement could not be completed.')
         return True

@@ -18,7 +18,8 @@ OPAS is a lightweight toolchain for assessing orbital collision risk for launch 
 - FastAPI backend with `/debris`, `/alert`, and `/safe-windows` endpoints.
 - Ingestion pipeline that pulls recent Space-Track TLEs, computes subpoints with Skyfield, and stores GeoJSON points in MongoDB with a `2dsphere` index.
 - Collision checks that compute 3D ECEF distances, plus optional TLE age-based uncertainty and threat scoring.
-- Safe-window scanning with interval close-approach refinement between trajectory waypoints, altitude-dependent screening radii, exact minute discovery and 10-second launch checks inside candidate windows.
+- Safe-window scanning with interval close-approach refinement between trajectory waypoints, altitude-dependent screening radii, 10-second candidate checks and a final 5-second launch validation pass.
+- Live request progress, correlated server/browser logs, downloadable verification details and endpoint/duration/coverage checks for returned windows.
 - React + Vite UI using `react-globe.gl` and Three.js, with interactive tooltips and report export.
 - Optional native `opas_math` extension (pybind11) for faster proximity checks.
 
@@ -27,6 +28,10 @@ OPAS is a lightweight toolchain for assessing orbital collision risk for launch 
 An independent study auditing the `/safe-windows` endpoint's collision-screening accuracy is available on the [`research-branch`](https://github.com/nadeemtsf/OPAS/tree/research-branch/research). The fixes applied in this branch were derived from that study's findings.
 
 The frozen six-hour ISS replay found agreement at all 691 production launch checks and no observed false-safe samples among 565 clear samples. The instrumented search took 18.44 minutes on the measured host. See the [numerical verification report](validation/results/rerun_20261006T115728Z/report.md) for exact scope, runtime, environment and code checksums, and [validation instructions](validation/README.md) to reproduce it.
+
+For the exact files behind each table in the revised audit report, use the [report evidence index](validation/EVIDENCE.md). It maps historical research, the corrected duration recount, the full ISS search and later integration checks to their records and code versions.
+
+The app now adds runtime diagnostics and 5-second checks of qualifying spans. These changes follow the measured research versions above; their focused checks do not constitute a new full six-hour benchmark. See [runtime checks and testing instructions](validation/RUNTIME_CHECKS.md).
 
 Windows describe checked launch times in the post-ascent model. The current search uses an altitude filter of ±100 km and starts checking the flight at approximately 600 seconds. Accuracy between launch samples, ascent coverage and real-world propagation uncertainty require separate validation.
 
@@ -98,6 +103,7 @@ Backend env vars
 - `MONGO_URI` (required)
 - `SPACE_TRACK_USER`, `SPACE_TRACK_PASS` (required for ingestion)
 - `ALLOWED_ORIGINS` (optional, comma-separated; defaults to `http://localhost:5173`)
+- `OPAS_LOG_LEVEL` (optional, defaults to `INFO`; `DEBUG` also logs every safe-window launch classification)
 
 Frontend env vars
 - `VITE_API_URL` (optional; defaults to `http://localhost:8000`)
@@ -126,9 +132,19 @@ Query parameters:
 - `target_lat`, `target_lon`, `target_alt`, `inclination` (required)
 - `search_hours` (optional; default `24`, allowed `1..336`)
 
-Returns up to five windows of at least 15 minutes, sorted by actual duration, with `start`, `end`, and `duration_minutes`. Both endpoints are checked clear launches; an unsafe or unchecked launch does not extend the window. Candidate windows are checked at 10-second launch spacing before selection.
+Returns up to five windows of at least 15 minutes, sorted by actual duration, with `start`, `end`, `duration_minutes`, and `verification`. Candidate windows are checked at 10-second launch spacing; all qualifying spans then receive additional 5-second checks before selection. New obstructions split spans. A final audit requires clear endpoints, correct duration, requested-horizon bounds and complete sampled coverage.
+
+The response includes `diagnostics`: request ID, exact horizon, catalogue fingerprint, screened object count, model scope, screening radii, clear/obstructed launch counts, extra validation results, timings and per-window checks. An empty catalogue or failed prediction produces an incomplete search instead of a clear window.
 
 If an orbital object cannot be loaded, the endpoint returns HTTP 503 with a `detail` message. The frontend displays the incomplete search separately from a successful result with no qualifying windows. Selecting a window sends its exact checked ISO timestamp, including fractional seconds; the launch-time input represents UTC.
+
+GET `/safe-windows/stream`
+- Accepts the same query parameters and runs the same search.
+- Streams `progress`, followed by either `result` or `error`, as server-sent events, with ten-second heartbeat comments while calculations run.
+- Used by the frontend for live phase/count/timing updates. An `error` event is incomplete even if the stream's HTTP headers already returned 200.
+- Closing the stream cancels further work between bounded batches; already running prediction work finishes first.
+
+Every API response has an `X-Request-ID` header to match browser messages with server logs. In the UI, start with a one-hour test, open the browser console, and use **Download check details** to retain the model and coverage evidence. Mission inputs are locked while requests run so their results cannot be mistaken for another mission.
 
 ## Verification
 
