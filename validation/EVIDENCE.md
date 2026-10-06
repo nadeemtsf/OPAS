@@ -6,6 +6,11 @@ map to the exact files below; long filenames do not need to be repeated in the
 paper. See [the validation guide](README.md) for reproduction commands and
 [the handoff](HANDOFF.md) for the final implementation checks.
 
+Local measured commit IDs map to their published GitHub counterparts in
+[published history](PUBLISHED_HISTORY.md). Every published stage has a verified
+identical Git file tree; the publication changed commit metadata, not the
+measured source or result files.
+
 The revised [Overleaf source](opas_audit_report.tex) is included without a newly
 compiled PDF. [Runtime checks](RUNTIME_CHECKS.md) describe the later application
 diagnostics and 5-second final validation; the historical tables below retain
