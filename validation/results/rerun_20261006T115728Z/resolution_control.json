@@ -1,0 +1,87 @@
+{
+  "status": "complete",
+  "snapshot_sha256": "c13469e0cee49549504c9de7e45388c926e32ebe5c3b3ec6ccb81855838b1fa8",
+  "selected_pairs": 6,
+  "scope": "Three clear and three obstructed launch/object pairs nearest the threshold; direct propagation at ~0.2s flight spacing.",
+  "source_reference": "validation/results/rerun_20261006T115728Z/iss_reference.json",
+  "flight_step_s": 0.2000014578691785,
+  "flight_scope_start_s": 600.0043736075355,
+  "classification_changes": 0,
+  "production_pair_disagreements": 0,
+  "elapsed_seconds": 7.23,
+  "cases": [
+    {
+      "launch_time": "2026-09-21T13:49:24.811735+00:00",
+      "norad_id": 100294,
+      "screening_radius_km": 10.437708034762732,
+      "reference_minimum_distance_km": 10.472073922732354,
+      "direct_minimum_distance_km": 10.472607794699597,
+      "direct_margin_km": 0.03489975993686478,
+      "distance_change_m": 0.5338719672423053,
+      "reference_obstructed": false,
+      "direct_obstructed": false,
+      "production_pair_obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:41:14.811735+00:00",
+      "norad_id": 100008,
+      "screening_radius_km": 10.252883094762732,
+      "reference_minimum_distance_km": 10.326968256789941,
+      "direct_minimum_distance_km": 10.326272133684968,
+      "direct_margin_km": 0.0733890389222367,
+      "distance_change_m": -0.6961231049729122,
+      "reference_obstructed": false,
+      "direct_obstructed": false,
+      "production_pair_obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:03:54.811735+00:00",
+      "norad_id": 46355,
+      "screening_radius_km": 10.601724079762732,
+      "reference_minimum_distance_km": 10.735566398744234,
+      "direct_minimum_distance_km": 10.732811425520131,
+      "direct_margin_km": 0.13108734575739867,
+      "distance_change_m": -2.754973224103452,
+      "reference_obstructed": false,
+      "direct_obstructed": false,
+      "production_pair_obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:43:24.811735+00:00",
+      "norad_id": 58326,
+      "screening_radius_km": 10.216950184762732,
+      "reference_minimum_distance_km": 10.095533706890363,
+      "direct_minimum_distance_km": 10.090419783202297,
+      "direct_margin_km": -0.12653040156043538,
+      "distance_change_m": -5.11392368806618,
+      "reference_obstructed": true,
+      "direct_obstructed": true,
+      "production_pair_obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T13:47:04.811735+00:00",
+      "norad_id": 45074,
+      "screening_radius_km": 10.226753224762732,
+      "reference_minimum_distance_km": 10.0660843695663,
+      "direct_minimum_distance_km": 10.065081776067244,
+      "direct_margin_km": -0.161671448695488,
+      "distance_change_m": -1.0025934990558483,
+      "reference_obstructed": true,
+      "direct_obstructed": true,
+      "production_pair_obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T09:29:54.811735+00:00",
+      "norad_id": 44805,
+      "screening_radius_km": 10.63438605976273,
+      "reference_minimum_distance_km": 10.45473649650366,
+      "direct_minimum_distance_km": 10.456154872476686,
+      "direct_margin_km": -0.1782311872860447,
+      "distance_change_m": 1.418375973026187,
+      "reference_obstructed": true,
+      "direct_obstructed": true,
+      "production_pair_obstructed": true
+    }
+  ],
+  "source_sha256": "fcd07d6d1fe0d1c963322afca19430a6e893ba1d6cbf86f659794ac3c9045efb"
+}

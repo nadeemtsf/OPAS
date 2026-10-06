@@ -1,0 +1,147 @@
+MongoDB connection check failed: localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 0.001s, Topology Description: <TopologyDescription id: 6ac4e46951a945cec1236b55, topology_type: Unknown, servers: [<ServerDescription ('localhost', 1) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+dense 100/11997 objects: unsafe_launches=4
+dense 200/11997 objects: unsafe_launches=6
+dense 300/11997 objects: unsafe_launches=7
+dense 400/11997 objects: unsafe_launches=10
+dense 500/11997 objects: unsafe_launches=16
+dense 600/11997 objects: unsafe_launches=20
+dense 700/11997 objects: unsafe_launches=22
+dense 800/11997 objects: unsafe_launches=24
+dense 900/11997 objects: unsafe_launches=24
+dense 1000/11997 objects: unsafe_launches=24
+dense 1100/11997 objects: unsafe_launches=24
+dense 1200/11997 objects: unsafe_launches=25
+dense 1300/11997 objects: unsafe_launches=25
+dense 1400/11997 objects: unsafe_launches=25
+dense 1500/11997 objects: unsafe_launches=25
+dense 1600/11997 objects: unsafe_launches=26
+dense 1700/11997 objects: unsafe_launches=26
+dense 1800/11997 objects: unsafe_launches=27
+dense 1900/11997 objects: unsafe_launches=27
+dense 2000/11997 objects: unsafe_launches=28
+dense 2100/11997 objects: unsafe_launches=28
+dense 2200/11997 objects: unsafe_launches=29
+dense 2300/11997 objects: unsafe_launches=29
+dense 2400/11997 objects: unsafe_launches=30
+dense 2500/11997 objects: unsafe_launches=30
+dense 2600/11997 objects: unsafe_launches=30
+dense 2700/11997 objects: unsafe_launches=32
+dense 2800/11997 objects: unsafe_launches=32
+dense 2900/11997 objects: unsafe_launches=33
+dense 3000/11997 objects: unsafe_launches=34
+dense 3100/11997 objects: unsafe_launches=34
+dense 3200/11997 objects: unsafe_launches=35
+dense 3300/11997 objects: unsafe_launches=35
+dense 3400/11997 objects: unsafe_launches=35
+dense 3500/11997 objects: unsafe_launches=35
+dense 3600/11997 objects: unsafe_launches=36
+dense 3700/11997 objects: unsafe_launches=36
+dense 3800/11997 objects: unsafe_launches=38
+dense 3900/11997 objects: unsafe_launches=38
+dense 4000/11997 objects: unsafe_launches=41
+dense 4100/11997 objects: unsafe_launches=41
+dense 4200/11997 objects: unsafe_launches=41
+dense 4300/11997 objects: unsafe_launches=41
+dense 4400/11997 objects: unsafe_launches=41
+dense 4500/11997 objects: unsafe_launches=41
+dense 4600/11997 objects: unsafe_launches=41
+dense 4700/11997 objects: unsafe_launches=41
+dense 4800/11997 objects: unsafe_launches=41
+dense 4900/11997 objects: unsafe_launches=41
+dense 5000/11997 objects: unsafe_launches=41
+dense 5100/11997 objects: unsafe_launches=41
+dense 5200/11997 objects: unsafe_launches=41
+dense 5300/11997 objects: unsafe_launches=41
+dense 5400/11997 objects: unsafe_launches=41
+dense 5500/11997 objects: unsafe_launches=41
+dense 5600/11997 objects: unsafe_launches=41
+dense 5700/11997 objects: unsafe_launches=42
+dense 5800/11997 objects: unsafe_launches=42
+dense 5900/11997 objects: unsafe_launches=42
+dense 6000/11997 objects: unsafe_launches=42
+dense 6100/11997 objects: unsafe_launches=42
+dense 6200/11997 objects: unsafe_launches=42
+dense 6300/11997 objects: unsafe_launches=42
+dense 6400/11997 objects: unsafe_launches=42
+dense 6500/11997 objects: unsafe_launches=42
+dense 6600/11997 objects: unsafe_launches=42
+dense 6700/11997 objects: unsafe_launches=42
+dense 6800/11997 objects: unsafe_launches=42
+dense 6900/11997 objects: unsafe_launches=42
+dense 7000/11997 objects: unsafe_launches=42
+dense 7100/11997 objects: unsafe_launches=42
+dense 7200/11997 objects: unsafe_launches=42
+dense 7300/11997 objects: unsafe_launches=42
+dense 7400/11997 objects: unsafe_launches=42
+dense 7500/11997 objects: unsafe_launches=42
+dense 7600/11997 objects: unsafe_launches=42
+dense 7700/11997 objects: unsafe_launches=42
+dense 7800/11997 objects: unsafe_launches=42
+dense 7900/11997 objects: unsafe_launches=42
+dense 8000/11997 objects: unsafe_launches=42
+dense 8100/11997 objects: unsafe_launches=43
+dense 8200/11997 objects: unsafe_launches=43
+dense 8300/11997 objects: unsafe_launches=43
+dense 8400/11997 objects: unsafe_launches=43
+dense 8500/11997 objects: unsafe_launches=43
+dense 8600/11997 objects: unsafe_launches=43
+dense 8700/11997 objects: unsafe_launches=43
+dense 8800/11997 objects: unsafe_launches=43
+dense 8900/11997 objects: unsafe_launches=43
+dense 9000/11997 objects: unsafe_launches=43
+dense 9100/11997 objects: unsafe_launches=43
+dense 9200/11997 objects: unsafe_launches=43
+dense 9300/11997 objects: unsafe_launches=43
+dense 9400/11997 objects: unsafe_launches=43
+dense 9500/11997 objects: unsafe_launches=43
+dense 9600/11997 objects: unsafe_launches=43
+dense 9700/11997 objects: unsafe_launches=43
+dense 9800/11997 objects: unsafe_launches=43
+dense 9900/11997 objects: unsafe_launches=43
+dense 10000/11997 objects: unsafe_launches=43
+dense 10100/11997 objects: unsafe_launches=43
+dense 10200/11997 objects: unsafe_launches=43
+dense 10300/11997 objects: unsafe_launches=43
+dense 10400/11997 objects: unsafe_launches=43
+dense 10500/11997 objects: unsafe_launches=43
+dense 10600/11997 objects: unsafe_launches=43
+dense 10700/11997 objects: unsafe_launches=43
+dense 10800/11997 objects: unsafe_launches=43
+dense 10900/11997 objects: unsafe_launches=43
+dense 11000/11997 objects: unsafe_launches=43
+dense 11100/11997 objects: unsafe_launches=43
+dense 11200/11997 objects: unsafe_launches=43
+dense 11300/11997 objects: unsafe_launches=44
+dense 11400/11997 objects: unsafe_launches=45
+dense 11500/11997 objects: unsafe_launches=45
+dense 11600/11997 objects: unsafe_launches=52
+dense 11700/11997 objects: unsafe_launches=52
+dense 11800/11997 objects: unsafe_launches=57
+dense 11900/11997 objects: unsafe_launches=71
+dense 11997/11997 objects: unsafe_launches=71
+{
+  "phase": "dense",
+  "status": "complete",
+  "snapshot_sha256": "c13469e0cee49549504c9de7e45388c926e32ebe5c3b3ec6ccb81855838b1fa8",
+  "candidate_count": 11997,
+  "launch_count": 375,
+  "scope": "independent verification at every exact launch instant checked by production; frozen post-ascent model",
+  "launch_step_seconds": 10,
+  "candidate_windows": [],
+  "workers": 4,
+  "source_sha256": {
+    "backend/scanner.py": "ce31b4e2e02566ecafe41feb18bf88dbd31e842cfeae88746a4cda8cfd1d5218",
+    "backend/encounters.py": "3b96d2520a69eb72c99a1eeb4f83dd08ed2677670738168b5c357f3a93aa54b4",
+    "backend/windows.py": "5e4cc72b7786904e800e12f8ba8ab4a74840f6a78517e7bbb41110637b2d404c",
+    "backend/orbital.py": "2b899ef6c5fcf717c2253df58ab14880d3869f1a18f88201d5357e1b9bf3d9ba",
+    "validation/verify_iss_windows.py": "12ed265367b9fdc30bdcd2983c62caf0794cb7864975fc9721fe91df0338a842"
+  },
+  "completed_objects": 11997,
+  "unsafe_launches_so_far": 71,
+  "direct_near_threshold_pairs": 82,
+  "dense_flight_step_s": 1.0000791160501012,
+  "dense_scope_start_s": 600.0474696300607,
+  "numerical_caveat": "1s object ephemeris interpolation; <=radius+20m pairs directly repropagated; dense parabola remains approximate",
+  "elapsed_seconds": 400.028,
+  "obstructed_launches": 71
+}

@@ -1,0 +1,45 @@
+{
+  "status": "complete",
+  "snapshot_sha256": "c13469e0cee49549504c9de7e45388c926e32ebe5c3b3ec6ccb81855838b1fa8",
+  "minute_reference_launches": 361,
+  "minute_unsafe_launches": 62,
+  "minute_grid_windows": [
+    {
+      "start": "2026-09-21T10:51:54.811735+00:00",
+      "end": "2026-09-21T11:24:54.811735+00:00",
+      "duration_minutes": 33.0
+    },
+    {
+      "start": "2026-09-21T12:26:54.811735+00:00",
+      "end": "2026-09-21T12:49:54.811735+00:00",
+      "duration_minutes": 23.0
+    }
+  ],
+  "per_window": [
+    {
+      "window": {
+        "start": "2026-09-21T10:51:54.811735+00:00",
+        "end": "2026-09-21T11:24:54.811735+00:00",
+        "duration_minutes": 33.0
+      },
+      "extra_fine_samples": 165,
+      "unsafe_extra_fine_samples": 25
+    },
+    {
+      "window": {
+        "start": "2026-09-21T12:26:54.811735+00:00",
+        "end": "2026-09-21T12:49:54.811735+00:00",
+        "duration_minutes": 23.0
+      },
+      "extra_fine_samples": 115,
+      "unsafe_extra_fine_samples": 27
+    }
+  ],
+  "extra_fine_launches": 375,
+  "unsafe_extra_fine_launches": 71,
+  "fine_samples_inside_minute_windows": 280,
+  "unsafe_fine_samples_inside_minute_windows": 52,
+  "observed_unsafe_percentage_inside_minute_windows": 18.571428571428573,
+  "final_production_windows": [],
+  "scope": "Exact sampled instants in the frozen model. Unsafe fine samples are missed threats of minute-only launch sampling; this is not the final scanner false-safe rate."
+}

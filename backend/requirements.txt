@@ -6,3 +6,4 @@ dnspython
 fastapi
 uvicorn
 pybind11
+numpy

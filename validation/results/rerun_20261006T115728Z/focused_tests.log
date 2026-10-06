@@ -1,0 +1,43 @@
+MongoDB connection check failed: localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 0.001s, Topology Description: <TopologyDescription id: 6ac4e179d92c1b7c3e64ee3f, topology_type: Unknown, servers: [<ServerDescription ('localhost', 1) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+test_all_ten_research_gap_misses_are_detected (test_encounters.DocumentedEncounterTests.test_all_ten_research_gap_misses_are_detected) ... ok
+test_counting_and_first_threat_shortcut (test_encounters.DocumentedEncounterTests.test_counting_and_first_threat_shortcut) ... ok
+test_initial_propagation_failure_obstructs_scan (test_encounters.DocumentedEncounterTests.test_initial_propagation_failure_obstructs_scan) ... ok
+test_process_workers_agree_with_single_worker (test_encounters.DocumentedEncounterTests.test_process_workers_agree_with_single_worker) ... MongoDB connection check failed: localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 0.001s, Topology Description: <TopologyDescription id: 6ac4e17ae6325f5eb54db7de, topology_type: Unknown, servers: [<ServerDescription ('localhost', 1) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+MongoDB connection check failed: localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 0.001s, Topology Description: <TopologyDescription id: 6ac4e17ab75c1a6721d2e6c4, topology_type: Unknown, servers: [<ServerDescription ('localhost', 1) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+MongoDB connection check failed: localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 0.001s, Topology Description: <TopologyDescription id: 6ac4e17cc5f5fa50d6987226, topology_type: Unknown, servers: [<ServerDescription ('localhost', 1) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+MongoDB connection check failed: localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 0.001s, Topology Description: <TopologyDescription id: 6ac4e17c7e6d8a8a6e0790cd, topology_type: Unknown, servers: [<ServerDescription ('localhost', 1) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+ok
+test_scan_boundary_clamping_survives (test_encounters.DocumentedEncounterTests.test_scan_boundary_clamping_survives) ... ok
+test_worker_satellite_construction_failure_is_obstructed (test_encounters.DocumentedEncounterTests.test_worker_satellite_construction_failure_is_obstructed) ... ok
+test_crossing_between_clear_endpoints (test_encounters.IntervalTests.test_crossing_between_clear_endpoints) ... ok
+test_endpoint_encounter (test_encounters.IntervalTests.test_endpoint_encounter) ... ok
+test_equal_distance_tracks_are_clear (test_encounters.IntervalTests.test_equal_distance_tracks_are_clear) ... ok
+test_failed_refinement_is_not_clear (test_encounters.IntervalTests.test_failed_refinement_is_not_clear) ... ok
+test_near_miss_is_clear (test_encounters.IntervalTests.test_near_miss_is_clear) ... ok
+test_nonfinite_is_not_clear (test_encounters.IntervalTests.test_nonfinite_is_not_clear) ... ok
+test_refinement_uses_curved_propagation (test_encounters.IntervalTests.test_refinement_uses_curved_propagation) ... ok
+test_same_spatial_track_at_different_times_is_clear (test_encounters.IntervalTests.test_same_spatial_track_at_different_times_is_clear) ... ok
+test_single_sample (test_encounters.IntervalTests.test_single_sample) ... ok
+test_constant_relative_position (test_verification.DenseVerificationTests.test_constant_relative_position) ... ok
+test_endpoints_are_not_extrapolated (test_verification.DenseVerificationTests.test_endpoints_are_not_extrapolated) ... ok
+test_planted_encounter_between_one_second_samples (test_verification.DenseVerificationTests.test_planted_encounter_between_one_second_samples) ... ok
+test_all_obstructed_and_short_runs (test_windows.WindowTests.test_all_obstructed_and_short_runs) ... ok
+test_fifteen_minute_run_with_only_one_clear_coarse_marker (test_windows.WindowTests.test_fifteen_minute_run_with_only_one_clear_coarse_marker) ... ok
+test_fine_check_rejects_fifteen_minute_bin_without_clear_endpoint (test_windows.WindowTests.test_fine_check_rejects_fifteen_minute_bin_without_clear_endpoint) ... ok
+test_fine_discovery_matches_exhaustive_enumeration (test_windows.WindowTests.test_fine_discovery_matches_exhaustive_enumeration) ... ok
+test_invalid_grid_spacing (test_windows.WindowTests.test_invalid_grid_spacing) ... ok
+test_later_clear_run_survives_early_threat (test_windows.WindowTests.test_later_clear_run_survives_early_threat) ... ok
+test_launch_grid_is_exact_and_independent_of_flight_spacing (test_windows.WindowTests.test_launch_grid_is_exact_and_independent_of_flight_spacing) ... ok
+test_no_checks_outside_horizon_and_no_repeated_checks (test_windows.WindowTests.test_no_checks_outside_horizon_and_no_repeated_checks) ... ok
+test_rank_by_actual_duration_before_rounding (test_windows.WindowTests.test_rank_by_actual_duration_before_rounding) ... ok
+test_return_five_longest_after_complete_discovery (test_windows.WindowTests.test_return_five_longest_after_complete_discovery) ... ok
+test_short_or_empty_horizon (test_windows.WindowTests.test_short_or_empty_horizon) ... ok
+test_shortened_candidate_does_not_hide_later_qualifying_window (test_windows.WindowTests.test_shortened_candidate_does_not_hide_later_qualifying_window) ... ok
+test_start_between_minutes_is_recovered_from_fringe (test_windows.WindowTests.test_start_between_minutes_is_recovered_from_fringe) ... ok
+test_threat_between_clear_minutes_splits_window (test_windows.WindowTests.test_threat_between_clear_minutes_splits_window) ... ok
+test_valid_window_after_five_short_candidates (test_windows.WindowTests.test_valid_window_after_five_short_candidates) ... ok
+
+----------------------------------------------------------------------
+Ran 33 tests in 3.120s
+
+OK

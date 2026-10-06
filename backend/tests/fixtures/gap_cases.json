@@ -1,0 +1,196 @@
+{
+  "t0": "2026-09-21T08:52:54.811735+00:00",
+  "snapshot_sha256": "c13469e0cee49549504c9de7e45388c926e32ebe5c3b3ec6ccb81855838b1fa8",
+  "cases": [
+    {
+      "preset": "iss",
+      "case": {
+        "launch_offset_s": 7080.560141634717,
+        "norad_id": 54922,
+        "true_dmin_km": 1.9471048658258088,
+        "radius_km": 11.76942066976273,
+        "scanner_sampled_min_km": 22.2709719370719,
+        "true_closest_approach_s_since_launch": 1343.2870742430673,
+        "gap_to_nearest_scanner_sample_s": 2.6610701003278336,
+        "sample_spacing_s": 9.28240099547169
+      },
+      "object": {
+        "norad_id": 54922,
+        "name": "CZ-6A DEB",
+        "tle_line1": "1 54922U 22151RK  26260.83123750  .00376747  00000-0  62996-2 0  9996",
+        "tle_line2": "2 54922  98.6092   3.0106 0021535 260.0794  99.8023 15.50309435202451"
+      }
+    },
+    {
+      "preset": "iss",
+      "case": {
+        "launch_offset_s": 7740.612358227783,
+        "norad_id": 55104,
+        "true_dmin_km": 9.056306961112659,
+        "radius_km": 10.219020314762732,
+        "scanner_sampled_min_km": 19.39243248639466,
+        "true_closest_approach_s_since_launch": 948.3772124605479,
+        "gap_to_nearest_scanner_sample_s": 1.572310922435463,
+        "sample_spacing_s": 9.28240099547169
+      },
+      "object": {
+        "norad_id": 55104,
+        "name": "SHARJAHSAT-1",
+        "tle_line1": "1 55104U 23001CZ  26263.93203821  .00020448  00000-0  33344-3 0  9996",
+        "tle_line2": "2 55104  97.3057 334.2039 0006732 113.2800 246.9162 15.52613347207337"
+      }
+    },
+    {
+      "preset": "iss",
+      "case": {
+        "launch_offset_s": 7140.5648885977225,
+        "norad_id": 100091,
+        "true_dmin_km": 9.93383167290097,
+        "radius_km": 10.311796159762732,
+        "scanner_sampled_min_km": 37.26323193589346,
+        "true_closest_approach_s_since_launch": 3818.2303000935194,
+        "gap_to_nearest_scanner_sample_s": 3.1634909546546623,
+        "sample_spacing_s": 9.28240099547169
+      },
+      "object": {
+        "norad_id": 100091,
+        "name": "RASSVET-3 25",
+        "tle_line1": "1 A0091U 26165J   26263.74648652 -.00280058  00000-0 -48248-2 0  9994",
+        "tle_line2": "2 A0091  82.3012 161.3536 0004522 206.2650 153.8373 15.52032759  9892"
+      }
+    },
+    {
+      "preset": "iss",
+      "case": {
+        "launch_offset_s": 6540.517418967662,
+        "norad_id": 100290,
+        "true_dmin_km": 4.031195406251614,
+        "radius_km": 10.204691369762731,
+        "scanner_sampled_min_km": 17.90315120587899,
+        "true_closest_approach_s_since_launch": 2442.731906409647,
+        "gap_to_nearest_scanner_sample_s": 1.460444600592382,
+        "sample_spacing_s": 9.28240099547169
+      },
+      "object": {
+        "norad_id": 100290,
+        "name": "STARLINK-37805",
+        "tle_line1": "1 A0290U 26183U   26263.96069610  .00032953  00000-0  59800-3 0  9994",
+        "tle_line2": "2 A0290  53.1590 256.0013 0001277  89.4249 270.6907 15.49311470  6367"
+      }
+    },
+    {
+      "preset": "iss",
+      "case": {
+        "launch_offset_s": 8220.650333931831,
+        "norad_id": 100406,
+        "true_dmin_km": 9.689872537603858,
+        "radius_km": 10.383468744762732,
+        "scanner_sampled_min_km": 43.828438615308954,
+        "true_closest_approach_s_since_launch": 2882.759153790346,
+        "gap_to_nearest_scanner_sample_s": 4.067555801349499,
+        "sample_spacing_s": 9.28240099547169
+      },
+      "object": {
+        "norad_id": 100406,
+        "name": "STARLINK-38016",
+        "tle_line1": "1 A0406U 26192C   26263.60314135  .00028754  00000-0  52269-3 0  9995",
+        "tle_line2": "2 A0406  53.1594 305.6806 0001227  87.0891 273.0258 15.49333534  5925"
+      }
+    },
+    {
+      "preset": "starlink",
+      "case": {
+        "launch_offset_s": 4380.097146821217,
+        "norad_id": 46810,
+        "true_dmin_km": 6.598836239272396,
+        "radius_km": 10.232279784762731,
+        "scanner_sampled_min_km": 41.74573363630294,
+        "true_closest_approach_s_since_launch": 1858.001582595033,
+        "gap_to_nearest_scanner_sample_s": 4.289721438714196,
+        "sample_spacing_s": 9.550211815557677
+      },
+      "object": {
+        "norad_id": 46810,
+        "name": "TIANQI-6",
+        "tle_line1": "1 46810U 20076D   26263.90551927  .00002178  00000-0  14152-3 0  9995",
+        "tle_line2": "2 46810  34.9981 180.7580 0011227 291.2386  68.7124 15.07706749323033"
+      }
+    },
+    {
+      "preset": "starlink",
+      "case": {
+        "launch_offset_s": 4500.099808377963,
+        "norad_id": 53688,
+        "true_dmin_km": 7.850392339736925,
+        "radius_km": 10.40643040976273,
+        "scanner_sampled_min_km": 28.3209724777605,
+        "true_closest_approach_s_since_launch": 761.1956653459539,
+        "gap_to_nearest_scanner_sample_s": 2.8212798986602365,
+        "sample_spacing_s": 9.550211815557677
+      },
+      "object": {
+        "norad_id": 53688,
+        "name": "STARLINK-4571",
+        "tle_line1": "1 53688U 22105AS  26263.55721802  .00000276  00000-0  23057-4 0  9995",
+        "tle_line2": "2 53688  97.2839 137.3142 0002110  71.1812 288.9645 15.05652266222551"
+      }
+    },
+    {
+      "preset": "starlink",
+      "case": {
+        "launch_offset_s": 5100.113116161692,
+        "norad_id": 55782,
+        "true_dmin_km": 9.33649817348895,
+        "radius_km": 10.226688724762731,
+        "scanner_sampled_min_km": 18.19186815411558,
+        "true_closest_approach_s_since_launch": 3118.106937183626,
+        "gap_to_nearest_scanner_sample_s": 4.737885311823447,
+        "sample_spacing_s": 9.550211815557677
+      },
+      "object": {
+        "norad_id": 55782,
+        "name": "STARLINK-5826",
+        "tle_line1": "1 55782U 23028AT  26263.91670139  .00082945  00000-0  55106-2 0  9994",
+        "tle_line2": "2 55782  70.0026  72.3150 0002994 230.9281 256.8953 15.06727521  5527"
+      }
+    },
+    {
+      "preset": "starlink",
+      "case": {
+        "launch_offset_s": 5340.118439275183,
+        "norad_id": 56768,
+        "true_dmin_km": 8.512907707920368,
+        "radius_km": 10.226688724762731,
+        "scanner_sampled_min_km": 35.10399286802529,
+        "true_closest_approach_s_since_launch": 4491.3190253101875,
+        "gap_to_nearest_scanner_sample_s": 2.719471998078916,
+        "sample_spacing_s": 9.550211815557677
+      },
+      "object": {
+        "norad_id": 56768,
+        "name": "STARLINK-6198",
+        "tle_line1": "1 56768U 23078B   26263.91670139  .00001517  00000-0  10902-3 0  9996",
+        "tle_line2": "2 56768  70.0005 191.9284 0002918 263.1732 115.2541 15.06578500  5768"
+      }
+    },
+    {
+      "preset": "starlink",
+      "case": {
+        "launch_offset_s": 4500.099808377963,
+        "norad_id": 68204,
+        "true_dmin_km": 8.452119226901528,
+        "radius_km": 10.210868564762732,
+        "scanner_sampled_min_km": 18.35400829470352,
+        "true_closest_approach_s_since_launch": 4008.5066042405874,
+        "gap_to_nearest_scanner_sample_s": 2.5823582936372986,
+        "sample_spacing_s": 9.550211815557677
+      },
+      "object": {
+        "norad_id": 68204,
+        "name": "OBJECT G",
+        "tle_line1": "1 68204U 26052G   26263.94834171  .00002919  00000-0  17203-3 0  9998",
+        "tle_line2": "2 68204  97.5250 337.4751 0009523 348.0015  12.0988 15.12344839 28525"
+      }
+    }
+  ]
+}

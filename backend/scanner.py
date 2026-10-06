@@ -1,18 +1,23 @@
 import time
 import logging
-import concurrent.futures
 import os
+from concurrent.futures import ProcessPoolExecutor
+from multiprocessing import get_context
 from math import pi, sqrt
 from datetime import timedelta
 
+import numpy as np
+
 from skyfield.framelib import itrs
+
+from encounters import has_close_approach
+from windows import LAUNCH_STEP_SECONDS, find_windows
 
 from db import ts, get_sat, _sat_cache
 from orbital import EARTH_R, tle_epoch_age_days
 from proximity import (
     geodetic_to_ecef, screening_radius_km,
     estimate_sigma_m, compute_pc, threat_level_from_pc, proximity_severity,
-    HAS_NATIVE_MATH, opas_math,
 )
 
 log = logging.getLogger("opas")
@@ -105,7 +110,8 @@ def count_threats(candidates, trajectory, target_lat, target_lon, target_alt, t,
     return count
 
 
-def count_threats_fast(scan_items, trajectory, target_alt, t, proximity_km):
+def count_threats_fast(scan_items, trajectory, target_alt, t, proximity_km,
+                       stop_after_first=False):
     count = 0
     steps = len(trajectory) - 1
     if steps < 1:
@@ -120,9 +126,7 @@ def count_threats_fast(scan_items, trajectory, target_alt, t, proximity_km):
         sample_indices = [steps]
     sample_wps = [trajectory[idx] for idx in sample_indices]
     sample_ecef = [geodetic_to_ecef(wp["lat"], wp["lon"], wp["alt"]) for wp in sample_wps]
-    wp_xs = [e[0] for e in sample_ecef]
-    wp_ys = [e[1] for e in sample_ecef]
-    wp_zs = [e[2] for e in sample_ecef]
+    sample_ecef = np.asarray(sample_ecef)
     t_samples = ts.tt_jd([t.tt + period_sec * idx / (steps * 86400.0)
                           for idx in sample_indices])
 
@@ -133,39 +137,23 @@ def count_threats_fast(scan_items, trajectory, target_alt, t, proximity_km):
 
         if sat is not None:
             try:
-                xyz = sat.at(t_samples).frame_xyz(itrs).km
+                xyz = np.asarray(sat.at(t_samples).frame_xyz(itrs).km).T
             except Exception:
+                # A failed prediction cannot establish a clear launch time.
+                count += 1
+                if stop_after_first:
+                    return count
                 continue
-            if HAS_NATIVE_MATH:
-                if opas_math.any_threat_ecef(
-                    wp_xs, wp_ys, wp_zs,
-                    xyz[0], xyz[1], xyz[2], radius,
-                ):
-                    count += 1
-            else:
-                for i, (wx, wy, wz) in enumerate(sample_ecef):
-                    d = sqrt((float(xyz[0][i]) - wx) ** 2 + (float(xyz[1][i]) - wy) ** 2 + (float(xyz[2][i]) - wz) ** 2)
-                    if d < radius:
-                        count += 1
-                        break
         else:
             coords = doc["location"]["coordinates"]
-            d_ecef = geodetic_to_ecef(coords[1], coords[0], doc["altitude_km"])
-            if HAS_NATIVE_MATH:
-                if opas_math.any_within_ecef(
-                    wp_xs, wp_ys, wp_zs,
-                    d_ecef[0], d_ecef[1], d_ecef[2], radius,
-                ):
-                    count += 1
-            else:
-                for wx, wy, wz in sample_ecef:
-                    d = sqrt((d_ecef[0] - wx) ** 2 + (d_ecef[1] - wy) ** 2 + (d_ecef[2] - wz) ** 2)
-                    if d < radius:
-                        count += 1
-                        break
+            position = geodetic_to_ecef(coords[1], coords[0], doc["altitude_km"])
+            xyz = np.broadcast_to(position, sample_ecef.shape)
+        if has_close_approach(sat, xyz, sample_ecef, t_samples.tt, radius, ts):
+            count += 1
+            if stop_after_first:
+                return count
 
     return count
-
 
 def full_check(candidates, trajectory, target_lat, target_lon, target_alt, t,
                launch_dt=None):
@@ -342,12 +330,26 @@ def full_check(candidates, trajectory, target_lat, target_lon, target_alt, t,
     return threats
 
 
-def scan_windows(candidates, trajectory, target_lat, target_lon, target_alt,
-                 start_dt, end_dt, proximity_km):
-    t_total = time.perf_counter()
-    coarse_step = timedelta(minutes=10)
-    fine_step = timedelta(minutes=1)
+def _prepare_window_worker(documents, trajectory, target_alt, proximity_km):
+    """Build process-local Skyfield objects once; pass frozen radii from parent."""
+    global _window_worker_state
+    items = [(get_sat(doc) if has_sat else None, doc, radius)
+             for doc, radius, has_sat in documents]
+    failed = any(has_sat and item[0] is None
+                 for item, (_, _, has_sat) in zip(items, documents))
+    _window_worker_state = items, trajectory, target_alt, proximity_km, failed
 
+
+def _window_launch_obstructed(launch_dt):
+    items, trajectory, alt, proximity, failed = _window_worker_state
+    return failed or count_threats_fast(items, trajectory, alt, ts.from_datetime(launch_dt),
+                                        proximity, stop_after_first=True) > 0
+
+
+def scan_windows(candidates, trajectory, target_lat, target_lon, target_alt,
+                 start_dt, end_dt, proximity_km, launch_step_seconds=LAUNCH_STEP_SECONDS,
+                 workers=None):
+    t_total = time.perf_counter()
     traj_lons = [wp["lon"] for wp in trajectory]
     lon_min, lon_max = min(traj_lons), max(traj_lons)
     lon_pad = 15.0
@@ -376,102 +378,24 @@ def scan_windows(candidates, trajectory, target_lat, target_lon, target_alt,
              time.perf_counter() - t0, tle_count,
              len(scan_items) - tle_count, geo_skipped, len(scan_items), len(_sat_cache))
 
-    time_steps = []
-    cursor = start_dt
-    while cursor <= end_dt:
-        time_steps.append(cursor)
-        cursor += coarse_step
+    def is_obstructed(launch_dt):
+        t = ts.from_datetime(launch_dt)
+        return count_threats_fast(scan_items, trajectory, target_alt, t, proximity_km,
+                                  stop_after_first=True) > 0
 
-    log.info("safe-windows | coarse scan: %d time steps (every %dm over %s → %s)",
-             len(time_steps), int(coarse_step.total_seconds() // 60),
-             start_dt.strftime("%H:%M"), end_dt.strftime("%H:%M %b %d"))
-
-    def check_time(cursor_time):
-        t = ts.from_datetime(cursor_time)
-        return (cursor_time, count_threats_fast(scan_items, trajectory, target_alt, t, proximity_km))
-
-    t0 = time.perf_counter()
-    with concurrent.futures.ThreadPoolExecutor(max_workers=os.cpu_count() or 4) as executor:
-        coarse_results = list(executor.map(check_time, time_steps))
-    coarse_elapsed = time.perf_counter() - t0
-
-    threat_steps = sum(1 for _, c in coarse_results if c > 0)
-    clear_steps = len(coarse_results) - threat_steps
-    log.info("safe-windows | coarse done: %.2fs — %d clear, %d with threats (%.1fms/step)",
-             coarse_elapsed, clear_steps, threat_steps,
-             (coarse_elapsed / max(len(time_steps), 1)) * 1000)
-
-    raw_windows = []
-    in_window = False
-    window_start = None
-
-    for dt_val, count in coarse_results:
-        if count == 0 and not in_window:
-            window_start = dt_val
-            in_window = True
-        elif count > 0 and in_window:
-            raw_windows.append((window_start, dt_val))
-            in_window = False
-
-    if in_window:
-        raw_windows.append((window_start, end_dt))
-
-    log.info("safe-windows | raw windows found: %d", len(raw_windows))
-
-    t0 = time.perf_counter()
-    refine_calls = 0
-    windows = []
-    for wi, (raw_start, raw_end) in enumerate(raw_windows[:5]):
-        refined_start = raw_start
-        check = raw_start - coarse_step
-        while check < raw_start:
-            check += fine_step
-            if check >= raw_start:
-                break
-            t = ts.from_datetime(check)
-            refine_calls += 1
-            if count_threats_fast(scan_items, trajectory, target_alt, t, proximity_km) == 0:
-                refined_start = check
-                break
-
-        refined_end = raw_end
-        check = raw_end
-        limit = raw_end + coarse_step
-        while check < limit:
-            t = ts.from_datetime(check)
-            refine_calls += 1
-            if count_threats_fast(scan_items, trajectory, target_alt, t, proximity_km) > 0:
-                break
-            refined_end = check
-            check += fine_step
-
-        verify_cursor = refined_start + fine_step
-        while verify_cursor < refined_end:
-            t = ts.from_datetime(verify_cursor)
-            refine_calls += 1
-            if count_threats_fast(scan_items, trajectory, target_alt, t, proximity_km) > 0:
-                refined_end = verify_cursor
-                break
-            verify_cursor += fine_step
-
-        # Clamp boundaries to requested range (fixes F1 overshoot)
-        final_start = max(refined_start, start_dt)
-        final_end = min(refined_end, end_dt)
-
-        duration = (final_end - final_start).total_seconds() / 60
-        if duration >= 15:
-            windows.append({
-                "start": final_start.isoformat(),
-                "end": final_end.isoformat(),
-                "duration_minutes": round(duration),
-            })
-            log.info("safe-windows | window #%d: %s → %s (%dmin)",
-                     wi + 1, refined_start.strftime("%H:%M"), refined_end.strftime("%H:%M"), round(duration))
-
-    refine_elapsed = time.perf_counter() - t0
-    log.info("safe-windows | refine done: %.2fs — %d calls", refine_elapsed, refine_calls)
-
-    windows.sort(key=lambda w: -w["duration_minutes"])
-    total_elapsed = time.perf_counter() - t_total
-    log.info("safe-windows | TOTAL: %.2fs — returning %d windows", total_elapsed, len(windows[:5]))
-    return windows[:5]
+    workers = min(os.cpu_count() or 4, 4) if workers is None else workers
+    if workers == 1:
+        windows = find_windows(is_obstructed, start_dt, end_dt, workers=1,
+                               launch_step_seconds=launch_step_seconds)
+    else:
+        documents = [(doc, radius, sat is not None) for sat, doc, radius in scan_items]
+        # Spawn works on Windows too and avoids inheriting thread/BLAS state.
+        with ProcessPoolExecutor(max_workers=workers, mp_context=get_context('spawn'),
+                                 initializer=_prepare_window_worker,
+                                 initargs=(documents, trajectory, target_alt, proximity_km)) as executor:
+            windows = find_windows(is_obstructed, start_dt, end_dt, workers=1,
+                                   launch_step_seconds=launch_step_seconds,
+                                   check_many=lambda points: executor.map(_window_launch_obstructed, points))
+    log.info("safe-windows | TOTAL: %.2fs — returning %d windows",
+             time.perf_counter() - t_total, len(windows))
+    return windows

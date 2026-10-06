@@ -1,0 +1,121 @@
+{
+  "created_at_utc": "2026-10-06T11:57:28.595451+00:00",
+  "status": "complete",
+  "branch": "fix/refine-close-approaches",
+  "base_commit": "50fb28f61a2fef1a1f29ea1d92e2089333fb24cc",
+  "research_commit": "8fef312648e542060256b94fef2cbce49be4e161",
+  "source_sha256": {
+    "backend/scanner.py": "ce31b4e2e02566ecafe41feb18bf88dbd31e842cfeae88746a4cda8cfd1d5218",
+    "backend/encounters.py": "3b96d2520a69eb72c99a1eeb4f83dd08ed2677670738168b5c357f3a93aa54b4",
+    "backend/windows.py": "5e4cc72b7786904e800e12f8ba8ab4a74840f6a78517e7bbb41110637b2d404c",
+    "backend/orbital.py": "2b899ef6c5fcf717c2253df58ab14880d3869f1a18f88201d5357e1b9bf3d9ba",
+    "backend/tests/test_encounters.py": "94b0f2f316e992c31ecebb25b3a144e1a21c24490ffa64c212892f3ef4c9ed11",
+    "backend/tests/test_windows.py": "c2ed4ac3b39832159f8457c6a252f645b3482218a96a0c4567a70e5a3844c8dc",
+    "backend/tests/test_verification.py": "410e4c190e30ea5019bd173c24dc0df0e0b06ca24400023dbc77429b60bfdc13",
+    "validation/verify_iss_windows.py": "12ed265367b9fdc30bdcd2983c62caf0794cb7864975fc9721fe91df0338a842"
+  },
+  "recovery": {
+    "reason": "Previous scratch checkout and uncommitted validation artifacts were unavailable.",
+    "byte_identical_core_modules": [
+      "backend/encounters.py",
+      "backend/windows.py"
+    ],
+    "scanner": "Reapplied recorded patches to fix/scanner-accuracy; full previous checksum unavailable.",
+    "focused_tests": "18 tests reproduced from recorded source; 15 encounter/scanner tests rebuilt from recorded descriptions.",
+    "historical_results_reused": false
+  },
+  "focused_tests": {
+    "command": "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python -m unittest discover -s backend/tests -v",
+    "passed": 33,
+    "failed": 0,
+    "elapsed_seconds": 3.12,
+    "log": "focused_tests.log"
+  },
+  "environment": {
+    "python": "3.12.14",
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+    "logical_cpus": 9,
+    "cpu_max": "800000 100000",
+    "packages": {
+      "numpy": "2.3.5",
+      "skyfield": "1.55",
+      "sgp4": "2.27",
+      "pymongo": "4.18.2"
+    },
+    "blas_threads": 1,
+    "omp_threads": 1
+  },
+  "scope": "Frozen 6-hour ISS model; exact-clock launch checks, post-ascent flight, 11,997 altitude-filtered candidates.",
+  "commands": {
+    "search": "verify_iss_windows.py --phase search --horizon-hours 6 --launch-step-s 10 --workers 4",
+    "minute_reference": "verify_iss_windows.py --phase dense --horizon-hours 6 --launch-step-s 60 --workers 3",
+    "archived_pair_replay": "validate_encounters.py --research-root ../OPAS-research/research",
+    "runtime_observer": "trace_search_runtime.py --search iss_search.json",
+    "fine_reference": "verify_iss_windows.py --phase dense --launches-file fine_plan.json --launch-step-s 10 --workers 4",
+    "comparison": "compare_iss_verification.py --production iss_search.json --dense iss_reference.json",
+    "launch_sampling": "compare_launch_sampling.py --minute iss_minute_reference.json --reference iss_reference.json --production iss_search.json",
+    "resolution_control": "check_dense_resolution.py --research-root ../OPAS-research/research --reference iss_reference.json",
+    "report": "write_rerun_report.py --run-directory validation/results/rerun_20261006T115728Z"
+  },
+  "runtime_context": "Instrumented production search (4 spawned processes) and dense minute reference (3 threads) overlap; the supplementary archived pair replay also ran for 90.911s during them. Fine reference uses 4 threads. CPU quota is 8 cores; BLAS/OMP use one thread. Elapsed timings describe this shared-load run, not isolated latency. Reported elapsed_seconds starts after snapshot input setup and ends after phase classification; command startup and final report serialization are excluded.",
+  "archived_pair_replay": {
+    "status": "complete",
+    "snapshot_sha256": "c13469e0cee49549504c9de7e45388c926e32ebe5c3b3ec6ccb81855838b1fa8",
+    "unsafe_pairs": 451,
+    "clear_pairs": 3089,
+    "missed_unsafe_pairs": 0,
+    "false_alarm_pairs": 0,
+    "scope": "Archived independent ~1s reference pairs inside the 6h horizon and production post-ascent scope; clear controls within radius+20km.",
+    "elapsed_seconds": 90.911,
+    "source_sha256": "bb8002dd2c28c696d74c9eaca37ab184ce315d32fb63f3fef43ff5dc7c50f08e"
+  },
+  "validation_helper_sha256": {
+    "validation/check_dense_resolution.py": "fcd07d6d1fe0d1c963322afca19430a6e893ba1d6cbf86f659794ac3c9045efb",
+    "validation/compare_iss_verification.py": "a6e76ea180fe5029f078fa780d5083b3c1fbf4df7e9d8404cee3398a357cce06",
+    "validation/compare_launch_sampling.py": "e99c2befdcb2f9d92f379ade3fc61094200c1c7080af7f0bdf4093aef60a232f",
+    "validation/merge_iss_reference.py": "8526aef90683e91e1c75e91d74551faf412620762043c2168a2d1db1370864cb",
+    "validation/plan_fine_launches.py": "9dfb3ab0e0ee221c7a07286631b42115564445ec727362802d4979cc2d04c64b",
+    "validation/trace_search_runtime.py": "987aeb37a206d004ccbc8475ec6a62d058d9af61fad914bb0d21e527506c2df5",
+    "validation/validate_encounters.py": "bb8002dd2c28c696d74c9eaca37ab184ce315d32fb63f3fef43ff5dc7c50f08e",
+    "validation/verify_iss_windows.py": "12ed265367b9fdc30bdcd2983c62caf0794cb7864975fc9721fe91df0338a842",
+    "validation/write_rerun_report.py": "d343431c1a56f27f8399c31aae9176e31681de397749fc58be150acd18b4dc72"
+  },
+  "last_updated_at_utc": "2026-10-06T12:06:35.878273+00:00",
+  "completed_at_utc": "2026-10-06T12:17:37.246607+00:00",
+  "snapshot_sha256": "c13469e0cee49549504c9de7e45388c926e32ebe5c3b3ec6ccb81855838b1fa8",
+  "frozen_launch_horizon_utc": {
+    "start": "2026-09-21T08:52:54.811735+00:00",
+    "end": "2026-09-21T14:52:54.811735+00:00"
+  },
+  "accuracy": {
+    "checked_launch_samples": 691,
+    "production_clear_samples": 565,
+    "false_safe_samples": 0,
+    "false_alarm_samples": 0,
+    "observed_false_safe_percentage": 0.0,
+    "classification_agreement_percentage": 100.0
+  },
+  "measurements": {
+    "Focused tests": {
+      "coverage": "33 passed",
+      "elapsed_seconds": 3.12
+    },
+    "Actual six-hour ISS window search": {
+      "coverage": "691 launch checks",
+      "elapsed_seconds": 1106.109
+    },
+    "Independent ISS reference": {
+      "coverage": "736 launch checks",
+      "elapsed_seconds": 948.989
+    },
+    "Archived research pair replay": {
+      "coverage": "451 unsafe + 3089 nearby clear",
+      "elapsed_seconds": 90.911
+    },
+    "Direct ~0.2 s resolution control": {
+      "coverage": "6 selected pairs",
+      "elapsed_seconds": 7.23
+    }
+  },
+  "report_sha256": "d1b76f427077bf3d23e92ea1f786dc3d098ff06f47058d8beebf0bf8be2066ba"
+}

@@ -1,0 +1,19 @@
+{
+  "status": "complete",
+  "poll_seconds": 0.1,
+  "observer_started_at_utc": "2026-10-06T11:59:21.018483+00:00",
+  "last_minute_only_progress": {
+    "checks": 316,
+    "elapsed_seconds": 516.46
+  },
+  "first_fine_progress": {
+    "completed_checks": 320,
+    "elapsed_seconds": 523.416
+  },
+  "phase_boundary_observed": true,
+  "total_seconds": 1106.109,
+  "minute_discovery_checks": 316,
+  "finer_checks": 375,
+  "minute_discovery_seconds": 516.46,
+  "finer_checks_seconds": 589.649
+}

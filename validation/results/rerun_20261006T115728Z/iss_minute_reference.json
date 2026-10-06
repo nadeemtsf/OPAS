@@ -1,0 +1,3277 @@
+{
+  "phase": "dense",
+  "status": "complete",
+  "snapshot_sha256": "c13469e0cee49549504c9de7e45388c926e32ebe5c3b3ec6ccb81855838b1fa8",
+  "candidate_count": 11997,
+  "launch_count": 361,
+  "scope": "exact clock launch grid across the complete horizon; frozen post-ascent model",
+  "launch_step_seconds": 60,
+  "candidate_windows": [],
+  "workers": 3,
+  "launches": [
+    {
+      "launch_time": "2026-09-21T08:52:54.811735+00:00",
+      "offset_s": 0.0,
+      "closest_norad_id": 69762,
+      "minimum_distance_km": 6.508304601127988,
+      "screening_radius_km": 10.226688724762731,
+      "clearance_margin_km": -3.718384123634743,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T08:53:54.811735+00:00",
+      "offset_s": 60.0,
+      "closest_norad_id": 100404,
+      "minimum_distance_km": 13.957115991278224,
+      "screening_radius_km": 10.492084939762732,
+      "clearance_margin_km": 3.465031051515492,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T08:54:54.811735+00:00",
+      "offset_s": 120.0,
+      "closest_norad_id": 100379,
+      "minimum_distance_km": 27.721855783340484,
+      "screening_radius_km": 10.192804009762732,
+      "clearance_margin_km": 17.529051773577752,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T08:55:54.811735+00:00",
+      "offset_s": 180.0,
+      "closest_norad_id": 100414,
+      "minimum_distance_km": 16.576504366020323,
+      "screening_radius_km": 10.23345282476273,
+      "clearance_margin_km": 6.3430515412575925,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T08:56:54.811735+00:00",
+      "offset_s": 240.0,
+      "closest_norad_id": 69992,
+      "minimum_distance_km": 7.332912961279451,
+      "screening_radius_km": 10.419431049762732,
+      "clearance_margin_km": -3.086518088483281,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T08:57:54.811735+00:00",
+      "offset_s": 300.0,
+      "closest_norad_id": 100025,
+      "minimum_distance_km": 43.21385868999298,
+      "screening_radius_km": 10.24624908476273,
+      "clearance_margin_km": 32.96760960523025,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T08:58:54.811735+00:00",
+      "offset_s": 360.0,
+      "closest_norad_id": 65091,
+      "minimum_distance_km": 42.87270118893857,
+      "screening_radius_km": 10.574129289762732,
+      "clearance_margin_km": 32.29857189917584,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T08:59:54.811735+00:00",
+      "offset_s": 420.0,
+      "closest_norad_id": 45183,
+      "minimum_distance_km": 17.54950839536556,
+      "screening_radius_km": 10.439066814762732,
+      "clearance_margin_km": 7.110441580602828,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:00:54.811735+00:00",
+      "offset_s": 480.0,
+      "closest_norad_id": 56946,
+      "minimum_distance_km": 34.13861412350764,
+      "screening_radius_km": 10.48767642976273,
+      "clearance_margin_km": 23.650937693744908,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:01:54.811735+00:00",
+      "offset_s": 540.0,
+      "closest_norad_id": 53668,
+      "minimum_distance_km": 7.697177594398263,
+      "screening_radius_km": 10.226688724762731,
+      "clearance_margin_km": -2.529511130364468,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T09:02:54.811735+00:00",
+      "offset_s": 600.0,
+      "closest_norad_id": 100287,
+      "minimum_distance_km": 3.944912742838536,
+      "screening_radius_km": 10.203563699762732,
+      "clearance_margin_km": -6.258650956924196,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T09:03:54.811735+00:00",
+      "offset_s": 660.0,
+      "closest_norad_id": 29110,
+      "minimum_distance_km": 31.053842466589366,
+      "screening_radius_km": 10.245751334762732,
+      "clearance_margin_km": 20.808091131826636,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:04:54.811735+00:00",
+      "offset_s": 720.0,
+      "closest_norad_id": 69988,
+      "minimum_distance_km": 26.4098878249066,
+      "screening_radius_km": 10.416721914762732,
+      "clearance_margin_km": 15.993165910143869,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:05:54.811735+00:00",
+      "offset_s": 780.0,
+      "closest_norad_id": 100016,
+      "minimum_distance_km": 21.42413514435376,
+      "screening_radius_km": 10.211476669762732,
+      "clearance_margin_km": 11.212658474591027,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:06:54.811735+00:00",
+      "offset_s": 840.0,
+      "closest_norad_id": 52757,
+      "minimum_distance_km": 13.896588806930545,
+      "screening_radius_km": 10.319243489762732,
+      "clearance_margin_km": 3.577345317167813,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:07:54.811735+00:00",
+      "offset_s": 900.0,
+      "closest_norad_id": 39453,
+      "minimum_distance_km": 3.3987651290069683,
+      "screening_radius_km": 10.224437189762732,
+      "clearance_margin_km": -6.825672060755764,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T09:08:54.811735+00:00",
+      "offset_s": 960.0,
+      "closest_norad_id": 23986,
+      "minimum_distance_km": 7.883935951945979,
+      "screening_radius_km": 10.495042649762732,
+      "clearance_margin_km": -2.611106697816753,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T09:09:54.811735+00:00",
+      "offset_s": 1020.0,
+      "closest_norad_id": 100295,
+      "minimum_distance_km": 32.242696905878994,
+      "screening_radius_km": 10.943157599762731,
+      "clearance_margin_km": 21.299539306116262,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:10:54.811735+00:00",
+      "offset_s": 1080.0,
+      "closest_norad_id": 59396,
+      "minimum_distance_km": 18.345563784490214,
+      "screening_radius_km": 10.472949014762731,
+      "clearance_margin_km": 7.872614769727482,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:11:54.811735+00:00",
+      "offset_s": 1140.0,
+      "closest_norad_id": 13809,
+      "minimum_distance_km": 21.223283550640232,
+      "screening_radius_km": 10.554230834762732,
+      "clearance_margin_km": 10.6690527158775,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:12:54.811735+00:00",
+      "offset_s": 1200.0,
+      "closest_norad_id": 43880,
+      "minimum_distance_km": 8.152888495793018,
+      "screening_radius_km": 11.78980346476273,
+      "clearance_margin_km": -3.6369149689697124,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T09:13:54.811735+00:00",
+      "offset_s": 1260.0,
+      "closest_norad_id": 56744,
+      "minimum_distance_km": 31.18495871124544,
+      "screening_radius_km": 10.220188269762732,
+      "clearance_margin_km": 20.964770441482706,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:14:54.811735+00:00",
+      "offset_s": 1320.0,
+      "closest_norad_id": 100273,
+      "minimum_distance_km": 40.76765100208369,
+      "screening_radius_km": 14.88677214976273,
+      "clearance_margin_km": 25.880878852320958,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:15:54.811735+00:00",
+      "offset_s": 1380.0,
+      "closest_norad_id": 60945,
+      "minimum_distance_km": 28.156414590333952,
+      "screening_radius_km": 10.200354079762732,
+      "clearance_margin_km": 17.95606051057122,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:16:54.811735+00:00",
+      "offset_s": 1440.0,
+      "closest_norad_id": 61229,
+      "minimum_distance_km": 21.871846799662492,
+      "screening_radius_km": 10.221348109762731,
+      "clearance_margin_km": 11.650498689899761,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:17:54.811735+00:00",
+      "offset_s": 1500.0,
+      "closest_norad_id": 53761,
+      "minimum_distance_km": 21.49605901552069,
+      "screening_radius_km": 10.25286607976273,
+      "clearance_margin_km": 11.243192935757959,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:18:54.811735+00:00",
+      "offset_s": 1560.0,
+      "closest_norad_id": 52751,
+      "minimum_distance_km": 32.81087390512258,
+      "screening_radius_km": 10.221493764762732,
+      "clearance_margin_km": 22.589380140359843,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:19:54.811735+00:00",
+      "offset_s": 1620.0,
+      "closest_norad_id": 60492,
+      "minimum_distance_km": 32.77272352685523,
+      "screening_radius_km": 10.449391154762731,
+      "clearance_margin_km": 22.3233323720925,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:20:54.811735+00:00",
+      "offset_s": 1680.0,
+      "closest_norad_id": 100084,
+      "minimum_distance_km": 7.904087317943088,
+      "screening_radius_km": 10.30908640476273,
+      "clearance_margin_km": -2.4049990868196423,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T09:21:54.811735+00:00",
+      "offset_s": 1740.0,
+      "closest_norad_id": 65316,
+      "minimum_distance_km": 28.01689554207271,
+      "screening_radius_km": 10.222203089762731,
+      "clearance_margin_km": 17.79469245230998,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:22:54.811735+00:00",
+      "offset_s": 1800.0,
+      "closest_norad_id": 60487,
+      "minimum_distance_km": 38.108046650293986,
+      "screening_radius_km": 10.676008824762732,
+      "clearance_margin_km": 27.432037825531253,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:23:54.811735+00:00",
+      "offset_s": 1860.0,
+      "closest_norad_id": 55137,
+      "minimum_distance_km": 10.783857575741834,
+      "screening_radius_km": 10.218676664762732,
+      "clearance_margin_km": 0.5651809109791017,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:24:54.811735+00:00",
+      "offset_s": 1920.0,
+      "closest_norad_id": 47179,
+      "minimum_distance_km": 20.219473123389513,
+      "screening_radius_km": 10.408643544762732,
+      "clearance_margin_km": 9.81082957862678,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:25:54.811735+00:00",
+      "offset_s": 1980.0,
+      "closest_norad_id": 62371,
+      "minimum_distance_km": 16.03096955167956,
+      "screening_radius_km": 10.596447274762731,
+      "clearance_margin_km": 5.43452227691683,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:26:54.811735+00:00",
+      "offset_s": 2040.0,
+      "closest_norad_id": 41774,
+      "minimum_distance_km": 34.74973894428123,
+      "screening_radius_km": 10.252433949762732,
+      "clearance_margin_km": 24.4973049945185,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:27:54.811735+00:00",
+      "offset_s": 2100.0,
+      "closest_norad_id": 56953,
+      "minimum_distance_km": 27.79114320777712,
+      "screening_radius_km": 10.348626539762732,
+      "clearance_margin_km": 17.44251666801439,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:28:54.811735+00:00",
+      "offset_s": 2160.0,
+      "closest_norad_id": 64888,
+      "minimum_distance_km": 19.833492430707416,
+      "screening_radius_km": 10.227410709762731,
+      "clearance_margin_km": 9.606081720944685,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:29:54.811735+00:00",
+      "offset_s": 2220.0,
+      "closest_norad_id": 44805,
+      "minimum_distance_km": 10.45473649650366,
+      "screening_radius_km": 10.63438605976273,
+      "clearance_margin_km": -0.1796495632590709,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T09:30:54.811735+00:00",
+      "offset_s": 2280.0,
+      "closest_norad_id": 41849,
+      "minimum_distance_km": 28.495592803773153,
+      "screening_radius_km": 10.559578384762732,
+      "clearance_margin_km": 17.93601441901042,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:31:54.811735+00:00",
+      "offset_s": 2340.0,
+      "closest_norad_id": 56209,
+      "minimum_distance_km": 14.413424235025943,
+      "screening_radius_km": 10.208998934762732,
+      "clearance_margin_km": 4.20442530026321,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:32:54.811735+00:00",
+      "offset_s": 2400.0,
+      "closest_norad_id": 45185,
+      "minimum_distance_km": 22.38675738880355,
+      "screening_radius_km": 10.460941659762732,
+      "clearance_margin_km": 11.925815729040817,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:33:54.811735+00:00",
+      "offset_s": 2460.0,
+      "closest_norad_id": 59908,
+      "minimum_distance_km": 27.401045373354776,
+      "screening_radius_km": 10.406994414762732,
+      "clearance_margin_km": 16.994050958592045,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:34:54.811735+00:00",
+      "offset_s": 2520.0,
+      "closest_norad_id": 46702,
+      "minimum_distance_km": 23.022754567563407,
+      "screening_radius_km": 10.215880104762732,
+      "clearance_margin_km": 12.806874462800675,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:35:54.811735+00:00",
+      "offset_s": 2580.0,
+      "closest_norad_id": 46348,
+      "minimum_distance_km": 26.926972186489234,
+      "screening_radius_km": 10.211073914762732,
+      "clearance_margin_km": 16.715898271726502,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:36:54.811735+00:00",
+      "offset_s": 2640.0,
+      "closest_norad_id": 35443,
+      "minimum_distance_km": 3.624349864578572,
+      "screening_radius_km": 13.242454069762731,
+      "clearance_margin_km": -9.61810420518416,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T09:37:54.811735+00:00",
+      "offset_s": 2700.0,
+      "closest_norad_id": 100194,
+      "minimum_distance_km": 17.46204125469348,
+      "screening_radius_km": 10.242619104762731,
+      "clearance_margin_km": 7.21942214993075,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:38:54.811735+00:00",
+      "offset_s": 2760.0,
+      "closest_norad_id": 61744,
+      "minimum_distance_km": 15.903940347159297,
+      "screening_radius_km": 10.240774419762731,
+      "clearance_margin_km": 5.663165927396566,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:39:54.811735+00:00",
+      "offset_s": 2820.0,
+      "closest_norad_id": 56186,
+      "minimum_distance_km": 14.984742981260464,
+      "screening_radius_km": 10.205623689762731,
+      "clearance_margin_km": 4.779119291497732,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:40:54.811735+00:00",
+      "offset_s": 2880.0,
+      "closest_norad_id": 100228,
+      "minimum_distance_km": 19.159501852810024,
+      "screening_radius_km": 10.247759784762732,
+      "clearance_margin_km": 8.911742068047293,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:41:54.811735+00:00",
+      "offset_s": 2940.0,
+      "closest_norad_id": 54209,
+      "minimum_distance_km": 40.48100986989848,
+      "screening_radius_km": 10.562063064762732,
+      "clearance_margin_km": 29.918946805135747,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:42:54.811735+00:00",
+      "offset_s": 3000.0,
+      "closest_norad_id": 48951,
+      "minimum_distance_km": 17.092567512132998,
+      "screening_radius_km": 10.433447689762732,
+      "clearance_margin_km": 6.659119822370267,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:43:54.811735+00:00",
+      "offset_s": 3060.0,
+      "closest_norad_id": 60507,
+      "minimum_distance_km": 22.343331267390862,
+      "screening_radius_km": 10.440530959762732,
+      "clearance_margin_km": 11.90280030762813,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:44:54.811735+00:00",
+      "offset_s": 3120.0,
+      "closest_norad_id": 45543,
+      "minimum_distance_km": 17.792644178473832,
+      "screening_radius_km": 10.383665184762732,
+      "clearance_margin_km": 7.4089789937111,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:45:54.811735+00:00",
+      "offset_s": 3180.0,
+      "closest_norad_id": 100090,
+      "minimum_distance_km": 36.55257592893716,
+      "screening_radius_km": 10.298998334762732,
+      "clearance_margin_km": 26.253577594174427,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:46:54.811735+00:00",
+      "offset_s": 3240.0,
+      "closest_norad_id": 60488,
+      "minimum_distance_km": 23.871385048784575,
+      "screening_radius_km": 10.212196754762731,
+      "clearance_margin_km": 13.659188294021844,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:47:54.811735+00:00",
+      "offset_s": 3300.0,
+      "closest_norad_id": 66554,
+      "minimum_distance_km": 36.59211754266548,
+      "screening_radius_km": 10.228533634762732,
+      "clearance_margin_km": 26.363583907902743,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:48:54.811735+00:00",
+      "offset_s": 3360.0,
+      "closest_norad_id": 100225,
+      "minimum_distance_km": 19.2621079356358,
+      "screening_radius_km": 11.117002354762732,
+      "clearance_margin_km": 8.145105580873068,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:49:54.811735+00:00",
+      "offset_s": 3420.0,
+      "closest_norad_id": 61769,
+      "minimum_distance_km": 42.01697247244839,
+      "screening_radius_km": 10.236640294762731,
+      "clearance_margin_km": 31.780332177685658,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:50:54.811735+00:00",
+      "offset_s": 3480.0,
+      "closest_norad_id": 69798,
+      "minimum_distance_km": 8.866236529277948,
+      "screening_radius_km": 10.64775491976273,
+      "clearance_margin_km": -1.7815183904847824,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T09:51:54.811735+00:00",
+      "offset_s": 3540.0,
+      "closest_norad_id": 67091,
+      "minimum_distance_km": 28.57197499941232,
+      "screening_radius_km": 10.226688724762731,
+      "clearance_margin_km": 18.345286274649588,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:52:54.811735+00:00",
+      "offset_s": 3600.0,
+      "closest_norad_id": 62683,
+      "minimum_distance_km": 24.54074107778494,
+      "screening_radius_km": 10.372519909762731,
+      "clearance_margin_km": 14.168221168022209,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:53:54.811735+00:00",
+      "offset_s": 3660.0,
+      "closest_norad_id": 45197,
+      "minimum_distance_km": 20.711558819139967,
+      "screening_radius_km": 10.454690114762732,
+      "clearance_margin_km": 10.256868704377235,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:54:54.811735+00:00",
+      "offset_s": 3720.0,
+      "closest_norad_id": 100487,
+      "minimum_distance_km": 38.35469980346526,
+      "screening_radius_km": 10.221530004762732,
+      "clearance_margin_km": 28.133169798702525,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:55:54.811735+00:00",
+      "offset_s": 3780.0,
+      "closest_norad_id": 100384,
+      "minimum_distance_km": 7.9502066627553,
+      "screening_radius_km": 10.203759774762732,
+      "clearance_margin_km": -2.253553112007432,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T09:56:54.811735+00:00",
+      "offset_s": 3840.0,
+      "closest_norad_id": 45189,
+      "minimum_distance_km": 17.48726842443383,
+      "screening_radius_km": 10.453627009762732,
+      "clearance_margin_km": 7.033641414671097,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:57:54.811735+00:00",
+      "offset_s": 3900.0,
+      "closest_norad_id": 60526,
+      "minimum_distance_km": 13.946341943850133,
+      "screening_radius_km": 10.43491802976273,
+      "clearance_margin_km": 3.511423914087402,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:58:54.811735+00:00",
+      "offset_s": 3960.0,
+      "closest_norad_id": 61786,
+      "minimum_distance_km": 25.56720818117814,
+      "screening_radius_km": 10.234670709762732,
+      "clearance_margin_km": 15.33253747141541,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T09:59:54.811735+00:00",
+      "offset_s": 4020.0,
+      "closest_norad_id": 55012,
+      "minimum_distance_km": 22.679917567607976,
+      "screening_radius_km": 10.880826814762731,
+      "clearance_margin_km": 11.799090752845245,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:00:54.811735+00:00",
+      "offset_s": 4080.0,
+      "closest_norad_id": 100196,
+      "minimum_distance_km": 23.566283348526355,
+      "screening_radius_km": 10.20182930476273,
+      "clearance_margin_km": 13.364454043763624,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:01:54.811735+00:00",
+      "offset_s": 4140.0,
+      "closest_norad_id": 38299,
+      "minimum_distance_km": 4.835369675584651,
+      "screening_radius_km": 11.143534174762731,
+      "clearance_margin_km": -6.30816449917808,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T10:02:54.811735+00:00",
+      "offset_s": 4200.0,
+      "closest_norad_id": 59776,
+      "minimum_distance_km": 26.982276884092876,
+      "screening_radius_km": 10.856303439762732,
+      "clearance_margin_km": 16.125973444330143,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:03:54.811735+00:00",
+      "offset_s": 4260.0,
+      "closest_norad_id": 64886,
+      "minimum_distance_km": 5.759118593122781,
+      "screening_radius_km": 10.217502979762731,
+      "clearance_margin_km": -4.45838438663995,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T10:04:54.811735+00:00",
+      "offset_s": 4320.0,
+      "closest_norad_id": 100427,
+      "minimum_distance_km": 39.11537044092532,
+      "screening_radius_km": 10.85593581476273,
+      "clearance_margin_km": 28.259434626162587,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:05:54.811735+00:00",
+      "offset_s": 4380.0,
+      "closest_norad_id": 45580,
+      "minimum_distance_km": 13.36578014045712,
+      "screening_radius_km": 10.21868512476273,
+      "clearance_margin_km": 3.14709501569439,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:06:54.811735+00:00",
+      "offset_s": 4440.0,
+      "closest_norad_id": 48915,
+      "minimum_distance_km": 15.247237565224331,
+      "screening_radius_km": 10.428009599762731,
+      "clearance_margin_km": 4.8192279654616,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:07:54.811735+00:00",
+      "offset_s": 4500.0,
+      "closest_norad_id": 40908,
+      "minimum_distance_km": 1.9649737180471891,
+      "screening_radius_km": 10.206075664762732,
+      "clearance_margin_km": -8.241101946715544,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T10:08:54.811735+00:00",
+      "offset_s": 4560.0,
+      "closest_norad_id": 60518,
+      "minimum_distance_km": 19.87715580836259,
+      "screening_radius_km": 11.078763964762732,
+      "clearance_margin_km": 8.798391843599859,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:09:54.811735+00:00",
+      "offset_s": 4620.0,
+      "closest_norad_id": 100291,
+      "minimum_distance_km": 21.83718541033696,
+      "screening_radius_km": 10.343773114762731,
+      "clearance_margin_km": 11.49341229557423,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:10:54.811735+00:00",
+      "offset_s": 4680.0,
+      "closest_norad_id": 57680,
+      "minimum_distance_km": 24.59339233423506,
+      "screening_radius_km": 10.226688724762731,
+      "clearance_margin_km": 14.366703609472328,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:11:54.811735+00:00",
+      "offset_s": 4740.0,
+      "closest_norad_id": 68028,
+      "minimum_distance_km": 12.74766064015251,
+      "screening_radius_km": 10.382921349762732,
+      "clearance_margin_km": 2.364739290389778,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:12:54.811735+00:00",
+      "offset_s": 4800.0,
+      "closest_norad_id": 60478,
+      "minimum_distance_km": 22.251260649650767,
+      "screening_radius_km": 10.592500414762732,
+      "clearance_margin_km": 11.658760234888035,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:13:54.811735+00:00",
+      "offset_s": 4860.0,
+      "closest_norad_id": 100027,
+      "minimum_distance_km": 7.058568745055171,
+      "screening_radius_km": 10.190605234762732,
+      "clearance_margin_km": -3.132036489707561,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T10:14:54.811735+00:00",
+      "offset_s": 4920.0,
+      "closest_norad_id": 43022,
+      "minimum_distance_km": 25.27738505011304,
+      "screening_radius_km": 10.234996099762732,
+      "clearance_margin_km": 15.042388950350308,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:15:54.811735+00:00",
+      "offset_s": 4980.0,
+      "closest_norad_id": 62655,
+      "minimum_distance_km": 15.20340000843871,
+      "screening_radius_km": 10.591070959762732,
+      "clearance_margin_km": 4.612329048675978,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:16:54.811735+00:00",
+      "offset_s": 5040.0,
+      "closest_norad_id": 60474,
+      "minimum_distance_km": 28.42588796237057,
+      "screening_radius_km": 10.430176779762732,
+      "clearance_margin_km": 17.995711182607838,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:17:54.811735+00:00",
+      "offset_s": 5100.0,
+      "closest_norad_id": 39467,
+      "minimum_distance_km": 15.301889883600168,
+      "screening_radius_km": 10.504537624762731,
+      "clearance_margin_km": 4.797352258837437,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:18:54.811735+00:00",
+      "offset_s": 5160.0,
+      "closest_norad_id": 65843,
+      "minimum_distance_km": 42.535399957957864,
+      "screening_radius_km": 10.572591834762731,
+      "clearance_margin_km": 31.96280812319513,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:19:54.811735+00:00",
+      "offset_s": 5220.0,
+      "closest_norad_id": 47358,
+      "minimum_distance_km": 32.12419962333521,
+      "screening_radius_km": 10.448074674762731,
+      "clearance_margin_km": 21.67612494857248,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:20:54.811735+00:00",
+      "offset_s": 5280.0,
+      "closest_norad_id": 53143,
+      "minimum_distance_km": 32.61113637745094,
+      "screening_radius_km": 10.18502784476273,
+      "clearance_margin_km": 22.42610853268821,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:21:54.811735+00:00",
+      "offset_s": 5340.0,
+      "closest_norad_id": 20547,
+      "minimum_distance_km": 14.357075983705755,
+      "screening_radius_km": 10.222964029762732,
+      "clearance_margin_km": 4.134111953943023,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:22:54.811735+00:00",
+      "offset_s": 5400.0,
+      "closest_norad_id": 100283,
+      "minimum_distance_km": 7.713914827983651,
+      "screening_radius_km": 10.437082979762732,
+      "clearance_margin_km": -2.7231681517790802,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T10:23:54.811735+00:00",
+      "offset_s": 5460.0,
+      "closest_norad_id": 61768,
+      "minimum_distance_km": 6.179597928960184,
+      "screening_radius_km": 10.226440929762731,
+      "clearance_margin_km": -4.046843000802547,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T10:24:54.811735+00:00",
+      "offset_s": 5520.0,
+      "closest_norad_id": 55103,
+      "minimum_distance_km": 9.392949017245302,
+      "screening_radius_km": 10.45665127476273,
+      "clearance_margin_km": -1.0637022575174289,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T10:25:54.811735+00:00",
+      "offset_s": 5580.0,
+      "closest_norad_id": 100233,
+      "minimum_distance_km": 14.122853681626902,
+      "screening_radius_km": 10.394112574762731,
+      "clearance_margin_km": 3.7287411068641703,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:26:54.811735+00:00",
+      "offset_s": 5640.0,
+      "closest_norad_id": 100412,
+      "minimum_distance_km": 17.182970605917312,
+      "screening_radius_km": 10.204090099762732,
+      "clearance_margin_km": 6.97888050615458,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:27:54.811735+00:00",
+      "offset_s": 5700.0,
+      "closest_norad_id": 100080,
+      "minimum_distance_km": 14.948952935498806,
+      "screening_radius_km": 10.392610239762732,
+      "clearance_margin_km": 4.556342695736074,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:28:54.811735+00:00",
+      "offset_s": 5760.0,
+      "closest_norad_id": 56204,
+      "minimum_distance_km": 16.589217295776027,
+      "screening_radius_km": 10.222009279762732,
+      "clearance_margin_km": 6.367208016013295,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:29:54.811735+00:00",
+      "offset_s": 5820.0,
+      "closest_norad_id": 26103,
+      "minimum_distance_km": 15.920168361709313,
+      "screening_radius_km": 10.47981899476273,
+      "clearance_margin_km": 5.440349366946583,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:30:54.811735+00:00",
+      "offset_s": 5880.0,
+      "closest_norad_id": 100498,
+      "minimum_distance_km": 18.523316566381236,
+      "screening_radius_km": 13.440501884762732,
+      "clearance_margin_km": 5.082814681618505,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:31:54.811735+00:00",
+      "offset_s": 5940.0,
+      "closest_norad_id": 53830,
+      "minimum_distance_km": 46.42041556716584,
+      "screening_radius_km": 10.224472264762731,
+      "clearance_margin_km": 36.19594330240311,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:32:54.811735+00:00",
+      "offset_s": 6000.0,
+      "closest_norad_id": 64885,
+      "minimum_distance_km": 7.992215211298491,
+      "screening_radius_km": 10.210038364762731,
+      "clearance_margin_km": -2.2178231534642396,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T10:33:54.811735+00:00",
+      "offset_s": 6060.0,
+      "closest_norad_id": 100409,
+      "minimum_distance_km": 29.54124305549835,
+      "screening_radius_km": 10.39512100976273,
+      "clearance_margin_km": 19.146122045735616,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:34:54.811735+00:00",
+      "offset_s": 6120.0,
+      "closest_norad_id": 66379,
+      "minimum_distance_km": 38.204023614630145,
+      "screening_radius_km": 10.205158374762732,
+      "clearance_margin_km": 27.998865239867413,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:35:54.811735+00:00",
+      "offset_s": 6180.0,
+      "closest_norad_id": 100219,
+      "minimum_distance_km": 23.91956876231515,
+      "screening_radius_km": 10.390812229762732,
+      "clearance_margin_km": 13.52875653255242,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:36:54.811735+00:00",
+      "offset_s": 6240.0,
+      "closest_norad_id": 62826,
+      "minimum_distance_km": 27.085198620006004,
+      "screening_radius_km": 10.541691784762731,
+      "clearance_margin_km": 16.54350683524327,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:37:54.811735+00:00",
+      "offset_s": 6300.0,
+      "closest_norad_id": 53815,
+      "minimum_distance_km": 24.976853828990755,
+      "screening_radius_km": 10.196492839762731,
+      "clearance_margin_km": 14.780360989228024,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:38:54.811735+00:00",
+      "offset_s": 6360.0,
+      "closest_norad_id": 69979,
+      "minimum_distance_km": 23.233672348984395,
+      "screening_radius_km": 10.256120234762731,
+      "clearance_margin_km": 12.977552114221664,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:39:54.811735+00:00",
+      "offset_s": 6420.0,
+      "closest_norad_id": 53668,
+      "minimum_distance_km": 9.101364317359238,
+      "screening_radius_km": 10.226688724762731,
+      "clearance_margin_km": -1.1253244074034932,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T10:40:54.811735+00:00",
+      "offset_s": 6480.0,
+      "closest_norad_id": 66112,
+      "minimum_distance_km": 43.91301374927039,
+      "screening_radius_km": 10.53076823976273,
+      "clearance_margin_km": 33.38224550950766,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:41:54.811735+00:00",
+      "offset_s": 6540.0,
+      "closest_norad_id": 100290,
+      "minimum_distance_km": 6.032522872907568,
+      "screening_radius_km": 10.204691369762731,
+      "clearance_margin_km": -4.172168496855163,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T10:42:54.811735+00:00",
+      "offset_s": 6600.0,
+      "closest_norad_id": 100284,
+      "minimum_distance_km": 24.309153461960868,
+      "screening_radius_km": 10.430193119762732,
+      "clearance_margin_km": 13.878960342198136,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:43:54.811735+00:00",
+      "offset_s": 6660.0,
+      "closest_norad_id": 100416,
+      "minimum_distance_km": 12.142069373939826,
+      "screening_radius_km": 10.198340754762732,
+      "clearance_margin_km": 1.9437286191770937,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:44:54.811735+00:00",
+      "offset_s": 6720.0,
+      "closest_norad_id": 100420,
+      "minimum_distance_km": 20.61293712515179,
+      "screening_radius_km": 10.230288024762732,
+      "clearance_margin_km": 10.38264910038906,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:45:54.811735+00:00",
+      "offset_s": 6780.0,
+      "closest_norad_id": 100378,
+      "minimum_distance_km": 35.880576150320245,
+      "screening_radius_km": 10.22071122476273,
+      "clearance_margin_km": 25.659864925557514,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:46:54.811735+00:00",
+      "offset_s": 6840.0,
+      "closest_norad_id": 67102,
+      "minimum_distance_km": 26.91788582672745,
+      "screening_radius_km": 10.226688724762731,
+      "clearance_margin_km": 16.69119710196472,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:47:54.811735+00:00",
+      "offset_s": 6900.0,
+      "closest_norad_id": 54203,
+      "minimum_distance_km": 48.23423302858646,
+      "screening_radius_km": 10.540160354762731,
+      "clearance_margin_km": 37.694072673823726,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:48:54.811735+00:00",
+      "offset_s": 6960.0,
+      "closest_norad_id": 100278,
+      "minimum_distance_km": 33.720094057769685,
+      "screening_radius_km": 14.036669874762731,
+      "clearance_margin_km": 19.683424183006956,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:49:54.811735+00:00",
+      "offset_s": 7020.0,
+      "closest_norad_id": 100411,
+      "minimum_distance_km": 23.662781164730262,
+      "screening_radius_km": 10.389941684762732,
+      "clearance_margin_km": 13.27283947996753,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:50:54.811735+00:00",
+      "offset_s": 7080.0,
+      "closest_norad_id": 54922,
+      "minimum_distance_km": 3.699949236837402,
+      "screening_radius_km": 11.76942066976273,
+      "clearance_margin_km": -8.06947143292533,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T10:51:54.811735+00:00",
+      "offset_s": 7140.0,
+      "closest_norad_id": 100091,
+      "minimum_distance_km": 11.564083898382192,
+      "screening_radius_km": 10.311796159762732,
+      "clearance_margin_km": 1.2522877386194597,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:52:54.811735+00:00",
+      "offset_s": 7200.0,
+      "closest_norad_id": 66667,
+      "minimum_distance_km": 45.32641019781191,
+      "screening_radius_km": 11.201711304762732,
+      "clearance_margin_km": 34.12469889304918,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:53:54.811735+00:00",
+      "offset_s": 7260.0,
+      "closest_norad_id": 45701,
+      "minimum_distance_km": 26.461193094158407,
+      "screening_radius_km": 10.403923074762732,
+      "clearance_margin_km": 16.057270019395673,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:54:54.811735+00:00",
+      "offset_s": 7320.0,
+      "closest_norad_id": 66118,
+      "minimum_distance_km": 44.00523297825429,
+      "screening_radius_km": 10.89344721976273,
+      "clearance_margin_km": 33.111785758491564,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:55:54.811735+00:00",
+      "offset_s": 7380.0,
+      "closest_norad_id": 53761,
+      "minimum_distance_km": 15.747820902897105,
+      "screening_radius_km": 10.25286607976273,
+      "clearance_margin_km": 5.494954823134375,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:56:54.811735+00:00",
+      "offset_s": 7440.0,
+      "closest_norad_id": 60509,
+      "minimum_distance_km": 18.36290917010275,
+      "screening_radius_km": 10.575976139762732,
+      "clearance_margin_km": 7.786933030340018,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:57:54.811735+00:00",
+      "offset_s": 7500.0,
+      "closest_norad_id": 45677,
+      "minimum_distance_km": 25.028027619414466,
+      "screening_radius_km": 10.365860709762732,
+      "clearance_margin_km": 14.662166909651734,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:58:54.811735+00:00",
+      "offset_s": 7560.0,
+      "closest_norad_id": 23986,
+      "minimum_distance_km": 21.801155464090176,
+      "screening_radius_km": 10.495042649762732,
+      "clearance_margin_km": 11.306112814327443,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T10:59:54.811735+00:00",
+      "offset_s": 7620.0,
+      "closest_norad_id": 51876,
+      "minimum_distance_km": 42.02023166485375,
+      "screening_radius_km": 10.404268099762731,
+      "clearance_margin_km": 31.615963565091022,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:00:54.811735+00:00",
+      "offset_s": 7680.0,
+      "closest_norad_id": 66098,
+      "minimum_distance_km": 42.761791236657686,
+      "screening_radius_km": 10.557301069762731,
+      "clearance_margin_km": 32.204490166894956,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:01:54.811735+00:00",
+      "offset_s": 7740.0,
+      "closest_norad_id": 55104,
+      "minimum_distance_km": 11.316774255685148,
+      "screening_radius_km": 10.219020314762732,
+      "clearance_margin_km": 1.0977539409224164,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:02:54.811735+00:00",
+      "offset_s": 7800.0,
+      "closest_norad_id": 47179,
+      "minimum_distance_km": 23.8698434084312,
+      "screening_radius_km": 10.408643544762732,
+      "clearance_margin_km": 13.461199863668469,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:03:54.811735+00:00",
+      "offset_s": 7860.0,
+      "closest_norad_id": 55135,
+      "minimum_distance_km": 26.66581973996726,
+      "screening_radius_km": 10.216780454762732,
+      "clearance_margin_km": 16.449039285204528,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:04:54.811735+00:00",
+      "offset_s": 7920.0,
+      "closest_norad_id": 41774,
+      "minimum_distance_km": 13.382806447728754,
+      "screening_radius_km": 10.252433949762732,
+      "clearance_margin_km": 3.1303724979660217,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:05:54.811735+00:00",
+      "offset_s": 7980.0,
+      "closest_norad_id": 45087,
+      "minimum_distance_km": 18.350680689094563,
+      "screening_radius_km": 10.215429509762732,
+      "clearance_margin_km": 8.135251179331831,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:06:54.811735+00:00",
+      "offset_s": 8040.0,
+      "closest_norad_id": 45406,
+      "minimum_distance_km": 16.85485036755675,
+      "screening_radius_km": 10.289333519762732,
+      "clearance_margin_km": 6.565516847794019,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:07:54.811735+00:00",
+      "offset_s": 8100.0,
+      "closest_norad_id": 46077,
+      "minimum_distance_km": 19.557360448836054,
+      "screening_radius_km": 10.361774419762732,
+      "clearance_margin_km": 9.195586029073322,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:08:54.811735+00:00",
+      "offset_s": 8160.0,
+      "closest_norad_id": 62401,
+      "minimum_distance_km": 22.808661325178495,
+      "screening_radius_km": 10.213267889762731,
+      "clearance_margin_km": 12.595393435415764,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:09:54.811735+00:00",
+      "offset_s": 8220.0,
+      "closest_norad_id": 100406,
+      "minimum_distance_km": 11.018740760752458,
+      "screening_radius_km": 10.383468744762732,
+      "clearance_margin_km": 0.6352720159897256,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:10:54.811735+00:00",
+      "offset_s": 8280.0,
+      "closest_norad_id": 100431,
+      "minimum_distance_km": 36.370921256023315,
+      "screening_radius_km": 10.38311637976273,
+      "clearance_margin_km": 25.987804876260583,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:11:54.811735+00:00",
+      "offset_s": 8340.0,
+      "closest_norad_id": 46702,
+      "minimum_distance_km": 16.054430225882548,
+      "screening_radius_km": 10.215880104762732,
+      "clearance_margin_km": 5.838550121119816,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:12:54.811735+00:00",
+      "offset_s": 8400.0,
+      "closest_norad_id": 100293,
+      "minimum_distance_km": 11.474376128223772,
+      "screening_radius_km": 10.195053464762731,
+      "clearance_margin_km": 1.2793226634610413,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:13:54.811735+00:00",
+      "offset_s": 8460.0,
+      "closest_norad_id": 69976,
+      "minimum_distance_km": 15.913996438750868,
+      "screening_radius_km": 10.437636989762732,
+      "clearance_margin_km": 5.476359448988136,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:14:54.811735+00:00",
+      "offset_s": 8520.0,
+      "closest_norad_id": 62385,
+      "minimum_distance_km": 41.226814088890336,
+      "screening_radius_km": 10.59419076476273,
+      "clearance_margin_km": 30.632623324127607,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:15:54.811735+00:00",
+      "offset_s": 8580.0,
+      "closest_norad_id": 45185,
+      "minimum_distance_km": 20.1350420547372,
+      "screening_radius_km": 10.460941659762732,
+      "clearance_margin_km": 9.67410039497447,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:16:54.811735+00:00",
+      "offset_s": 8640.0,
+      "closest_norad_id": 100393,
+      "minimum_distance_km": 16.522419172148748,
+      "screening_radius_km": 10.403950464762731,
+      "clearance_margin_km": 6.1184687073860164,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:17:54.811735+00:00",
+      "offset_s": 8700.0,
+      "closest_norad_id": 45397,
+      "minimum_distance_km": 44.69022062408242,
+      "screening_radius_km": 10.413511324762732,
+      "clearance_margin_km": 34.27670929931969,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:18:54.811735+00:00",
+      "offset_s": 8760.0,
+      "closest_norad_id": 56835,
+      "minimum_distance_km": 30.667148331164356,
+      "screening_radius_km": 10.226688724762731,
+      "clearance_margin_km": 20.440459606401625,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:19:54.811735+00:00",
+      "offset_s": 8820.0,
+      "closest_norad_id": 57655,
+      "minimum_distance_km": 14.052720084311016,
+      "screening_radius_km": 10.222764409762732,
+      "clearance_margin_km": 3.829955674548284,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:20:54.811735+00:00",
+      "offset_s": 8880.0,
+      "closest_norad_id": 25619,
+      "minimum_distance_km": 10.760466655358407,
+      "screening_radius_km": 10.341453959762731,
+      "clearance_margin_km": 0.41901269559567567,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:21:54.811735+00:00",
+      "offset_s": 8940.0,
+      "closest_norad_id": 17191,
+      "minimum_distance_km": 18.225965288490272,
+      "screening_radius_km": 10.44896932976273,
+      "clearance_margin_km": 7.776995958727541,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:22:54.811735+00:00",
+      "offset_s": 9000.0,
+      "closest_norad_id": 64484,
+      "minimum_distance_km": 43.336494647375446,
+      "screening_radius_km": 10.28804813476273,
+      "clearance_margin_km": 33.04844651261271,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:23:54.811735+00:00",
+      "offset_s": 9060.0,
+      "closest_norad_id": 45229,
+      "minimum_distance_km": 25.768389560228727,
+      "screening_radius_km": 10.202647309762732,
+      "clearance_margin_km": 15.565742250465995,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:24:54.811735+00:00",
+      "offset_s": 9120.0,
+      "closest_norad_id": 100459,
+      "minimum_distance_km": 32.93958651028398,
+      "screening_radius_km": 10.240979414762732,
+      "clearance_margin_km": 22.698607095521247,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:25:54.811735+00:00",
+      "offset_s": 9180.0,
+      "closest_norad_id": 64888,
+      "minimum_distance_km": 6.490115380817706,
+      "screening_radius_km": 10.227410709762731,
+      "clearance_margin_km": -3.7372953289450255,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T11:26:54.811735+00:00",
+      "offset_s": 9240.0,
+      "closest_norad_id": 59141,
+      "minimum_distance_km": 12.897902117368139,
+      "screening_radius_km": 10.498575634762732,
+      "clearance_margin_km": 2.3993264826054066,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:27:54.811735+00:00",
+      "offset_s": 9300.0,
+      "closest_norad_id": 57294,
+      "minimum_distance_km": 2.6200381894881435,
+      "screening_radius_km": 10.226688724762731,
+      "clearance_margin_km": -7.6066505352745875,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T11:28:54.811735+00:00",
+      "offset_s": 9360.0,
+      "closest_norad_id": 62683,
+      "minimum_distance_km": 28.43209692043005,
+      "screening_radius_km": 10.372519909762731,
+      "clearance_margin_km": 18.05957701066732,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:29:54.811735+00:00",
+      "offset_s": 9420.0,
+      "closest_norad_id": 58295,
+      "minimum_distance_km": 30.784733904941223,
+      "screening_radius_km": 10.206954799762732,
+      "clearance_margin_km": 20.577779105178493,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:30:54.811735+00:00",
+      "offset_s": 9480.0,
+      "closest_norad_id": 66554,
+      "minimum_distance_km": 39.94216519521168,
+      "screening_radius_km": 10.228533634762732,
+      "clearance_margin_km": 29.713631560448945,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:31:54.811735+00:00",
+      "offset_s": 9540.0,
+      "closest_norad_id": 100475,
+      "minimum_distance_km": 15.87567340232205,
+      "screening_radius_km": 12.563297604762731,
+      "clearance_margin_km": 3.3123757975593193,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:32:54.811735+00:00",
+      "offset_s": 9600.0,
+      "closest_norad_id": 60519,
+      "minimum_distance_km": 19.470306866474637,
+      "screening_radius_km": 10.208276284762732,
+      "clearance_margin_km": 9.262030581711905,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:33:54.811735+00:00",
+      "offset_s": 9660.0,
+      "closest_norad_id": 60023,
+      "minimum_distance_km": 43.73279321942966,
+      "screening_radius_km": 10.192329954762732,
+      "clearance_margin_km": 33.540463264666926,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:34:54.811735+00:00",
+      "offset_s": 9720.0,
+      "closest_norad_id": 41771,
+      "minimum_distance_km": 29.610670280420468,
+      "screening_radius_km": 10.40639369976273,
+      "clearance_margin_km": 19.204276580657737,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:35:54.811735+00:00",
+      "offset_s": 9780.0,
+      "closest_norad_id": 100299,
+      "minimum_distance_km": 23.481314091158207,
+      "screening_radius_km": 10.542722134762732,
+      "clearance_margin_km": 12.938591956395475,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:36:54.811735+00:00",
+      "offset_s": 9840.0,
+      "closest_norad_id": 100501,
+      "minimum_distance_km": 9.694764531993862,
+      "screening_radius_km": 10.221672384762732,
+      "clearance_margin_km": -0.5269078527688702,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T11:37:54.811735+00:00",
+      "offset_s": 9900.0,
+      "closest_norad_id": 41336,
+      "minimum_distance_km": 14.138894628677317,
+      "screening_radius_km": 10.303022974762731,
+      "clearance_margin_km": 3.8358716539145856,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:38:54.811735+00:00",
+      "offset_s": 9960.0,
+      "closest_norad_id": 100220,
+      "minimum_distance_km": 31.89331500790913,
+      "screening_radius_km": 10.209612204762731,
+      "clearance_margin_km": 21.6837028031464,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:39:54.811735+00:00",
+      "offset_s": 10020.0,
+      "closest_norad_id": 38761,
+      "minimum_distance_km": 24.081331029589023,
+      "screening_radius_km": 11.685246059762731,
+      "clearance_margin_km": 12.396084969826292,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:40:54.811735+00:00",
+      "offset_s": 10080.0,
+      "closest_norad_id": 32203,
+      "minimum_distance_km": 22.432205309544432,
+      "screening_radius_km": 10.196935014762731,
+      "clearance_margin_km": 12.235270294781701,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:41:54.811735+00:00",
+      "offset_s": 10140.0,
+      "closest_norad_id": 48915,
+      "minimum_distance_km": 13.051229486257897,
+      "screening_radius_km": 10.428009599762731,
+      "clearance_margin_km": 2.623219886495166,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:42:54.811735+00:00",
+      "offset_s": 10200.0,
+      "closest_norad_id": 100451,
+      "minimum_distance_km": 36.293079922088474,
+      "screening_radius_km": 11.082145099762732,
+      "clearance_margin_km": 25.21093482232574,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:43:54.811735+00:00",
+      "offset_s": 10260.0,
+      "closest_norad_id": 62649,
+      "minimum_distance_km": 8.403713420730133,
+      "screening_radius_km": 10.430055539762732,
+      "clearance_margin_km": -2.0263421190325985,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T11:44:54.811735+00:00",
+      "offset_s": 10320.0,
+      "closest_norad_id": 57429,
+      "minimum_distance_km": 10.539714489970104,
+      "screening_radius_km": 10.20320093976273,
+      "clearance_margin_km": 0.33651355020737306,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:45:54.811735+00:00",
+      "offset_s": 10380.0,
+      "closest_norad_id": 40908,
+      "minimum_distance_km": 33.25970310438003,
+      "screening_radius_km": 10.206075664762732,
+      "clearance_margin_km": 23.053627439617298,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:46:54.811735+00:00",
+      "offset_s": 10440.0,
+      "closest_norad_id": 45538,
+      "minimum_distance_km": 13.32279064148572,
+      "screening_radius_km": 10.410253579762731,
+      "clearance_margin_km": 2.912537061722988,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:47:54.811735+00:00",
+      "offset_s": 10500.0,
+      "closest_norad_id": 50813,
+      "minimum_distance_km": 24.522198709290706,
+      "screening_radius_km": 10.405215594762732,
+      "clearance_margin_km": 14.116983114527974,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:48:54.811735+00:00",
+      "offset_s": 10560.0,
+      "closest_norad_id": 64680,
+      "minimum_distance_km": 44.75187596472596,
+      "screening_radius_km": 10.474226764762731,
+      "clearance_margin_km": 34.27764919996323,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:49:54.811735+00:00",
+      "offset_s": 10620.0,
+      "closest_norad_id": 45580,
+      "minimum_distance_km": 20.555510870835917,
+      "screening_radius_km": 10.21868512476273,
+      "clearance_margin_km": 10.336825746073186,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:50:54.811735+00:00",
+      "offset_s": 10680.0,
+      "closest_norad_id": 45689,
+      "minimum_distance_km": 30.95891877035547,
+      "screening_radius_km": 10.416563429762732,
+      "clearance_margin_km": 20.54235534059274,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:51:54.811735+00:00",
+      "offset_s": 10740.0,
+      "closest_norad_id": 100422,
+      "minimum_distance_km": 7.019172822638693,
+      "screening_radius_km": 10.402266754762731,
+      "clearance_margin_km": -3.383093932124038,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T11:52:54.811735+00:00",
+      "offset_s": 10800.0,
+      "closest_norad_id": 100138,
+      "minimum_distance_km": 27.11567086620086,
+      "screening_radius_km": 10.363038494762732,
+      "clearance_margin_km": 16.752632371438125,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:53:54.811735+00:00",
+      "offset_s": 10860.0,
+      "closest_norad_id": 100088,
+      "minimum_distance_km": 33.830513298867366,
+      "screening_radius_km": 10.326353329762732,
+      "clearance_margin_km": 23.504159969104634,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:54:54.811735+00:00",
+      "offset_s": 10920.0,
+      "closest_norad_id": 100022,
+      "minimum_distance_km": 5.613450573354658,
+      "screening_radius_km": 10.190830064762732,
+      "clearance_margin_km": -4.577379491408074,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T11:55:54.811735+00:00",
+      "offset_s": 10980.0,
+      "closest_norad_id": 61327,
+      "minimum_distance_km": 17.129702397211645,
+      "screening_radius_km": 10.212852314762731,
+      "clearance_margin_km": 6.916850082448914,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:56:54.811735+00:00",
+      "offset_s": 11040.0,
+      "closest_norad_id": 100011,
+      "minimum_distance_km": 6.088125627751558,
+      "screening_radius_km": 10.254238969762731,
+      "clearance_margin_km": -4.166113342011173,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T11:57:54.811735+00:00",
+      "offset_s": 11100.0,
+      "closest_norad_id": 40701,
+      "minimum_distance_km": 5.260830970483785,
+      "screening_radius_km": 10.196704744762732,
+      "clearance_margin_km": -4.935873774278947,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T11:58:54.811735+00:00",
+      "offset_s": 11160.0,
+      "closest_norad_id": 51061,
+      "minimum_distance_km": 15.070199873885192,
+      "screening_radius_km": 10.232279349762731,
+      "clearance_margin_km": 4.837920524122461,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T11:59:54.811735+00:00",
+      "offset_s": 11220.0,
+      "closest_norad_id": 57582,
+      "minimum_distance_km": 34.62836972204788,
+      "screening_radius_km": 10.20046408976273,
+      "clearance_margin_km": 24.427905632285146,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:00:54.811735+00:00",
+      "offset_s": 11280.0,
+      "closest_norad_id": 14209,
+      "minimum_distance_km": 17.62735893776589,
+      "screening_radius_km": 10.211661024762732,
+      "clearance_margin_km": 7.415697913003159,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:01:54.811735+00:00",
+      "offset_s": 11340.0,
+      "closest_norad_id": 100377,
+      "minimum_distance_km": 12.791407969538321,
+      "screening_radius_km": 10.194766264762732,
+      "clearance_margin_km": 2.596641704775589,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:02:54.811735+00:00",
+      "offset_s": 11400.0,
+      "closest_norad_id": 55009,
+      "minimum_distance_km": 20.103016595666915,
+      "screening_radius_km": 10.232661299762732,
+      "clearance_margin_km": 9.870355295904183,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:03:54.811735+00:00",
+      "offset_s": 11460.0,
+      "closest_norad_id": 51843,
+      "minimum_distance_km": 21.552561392381453,
+      "screening_radius_km": 10.195260969762732,
+      "clearance_margin_km": 11.35730042261872,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:04:54.811735+00:00",
+      "offset_s": 11520.0,
+      "closest_norad_id": 100390,
+      "minimum_distance_km": 18.910027076977375,
+      "screening_radius_km": 10.226194019762731,
+      "clearance_margin_km": 8.683833057214644,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:05:54.811735+00:00",
+      "offset_s": 11580.0,
+      "closest_norad_id": 100388,
+      "minimum_distance_km": 26.272562718443602,
+      "screening_radius_km": 10.193565834762731,
+      "clearance_margin_km": 16.078996883680873,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:06:54.811735+00:00",
+      "offset_s": 11640.0,
+      "closest_norad_id": 100283,
+      "minimum_distance_km": 7.077812597091887,
+      "screening_radius_km": 10.437082979762732,
+      "clearance_margin_km": -3.3592703826708448,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T12:07:54.811735+00:00",
+      "offset_s": 11700.0,
+      "closest_norad_id": 45696,
+      "minimum_distance_km": 15.900422117164078,
+      "screening_radius_km": 10.604475929762732,
+      "clearance_margin_km": 5.295946187401347,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:08:54.811735+00:00",
+      "offset_s": 11760.0,
+      "closest_norad_id": 35381,
+      "minimum_distance_km": 35.22469959825547,
+      "screening_radius_km": 11.127074949762731,
+      "clearance_margin_km": 24.09762464849274,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:09:54.811735+00:00",
+      "offset_s": 11820.0,
+      "closest_norad_id": 45074,
+      "minimum_distance_km": 29.757579532143673,
+      "screening_radius_km": 10.226753224762732,
+      "clearance_margin_km": 19.53082630738094,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:10:54.811735+00:00",
+      "offset_s": 11880.0,
+      "closest_norad_id": 69975,
+      "minimum_distance_km": 30.949861716097782,
+      "screening_radius_km": 10.225021524762731,
+      "clearance_margin_km": 20.72484019133505,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:11:54.811735+00:00",
+      "offset_s": 11940.0,
+      "closest_norad_id": 52465,
+      "minimum_distance_km": 42.4661214440242,
+      "screening_radius_km": 10.506597974762732,
+      "clearance_margin_km": 31.95952346926147,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:12:54.811735+00:00",
+      "offset_s": 12000.0,
+      "closest_norad_id": 60630,
+      "minimum_distance_km": 11.836511888992288,
+      "screening_radius_km": 10.352858684762731,
+      "clearance_margin_km": 1.4836532042295563,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:13:54.811735+00:00",
+      "offset_s": 12060.0,
+      "closest_norad_id": 67586,
+      "minimum_distance_km": 19.329794294640667,
+      "screening_radius_km": 10.457513284762731,
+      "clearance_margin_km": 8.872281009877936,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:14:54.811735+00:00",
+      "offset_s": 12120.0,
+      "closest_norad_id": 100191,
+      "minimum_distance_km": 22.857327852216873,
+      "screening_radius_km": 10.31692717976273,
+      "clearance_margin_km": 12.540400672454142,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:15:54.811735+00:00",
+      "offset_s": 12180.0,
+      "closest_norad_id": 100414,
+      "minimum_distance_km": 7.553333584210909,
+      "screening_radius_km": 10.23345282476273,
+      "clearance_margin_km": -2.6801192405518215,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T12:16:54.811735+00:00",
+      "offset_s": 12240.0,
+      "closest_norad_id": 100292,
+      "minimum_distance_km": 7.581313123514185,
+      "screening_radius_km": 10.336498824762732,
+      "clearance_margin_km": -2.7551857012485463,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T12:17:54.811735+00:00",
+      "offset_s": 12300.0,
+      "closest_norad_id": 58605,
+      "minimum_distance_km": 6.827877429732168,
+      "screening_radius_km": 10.702390794762731,
+      "clearance_margin_km": -3.8745133650305634,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T12:18:54.811735+00:00",
+      "offset_s": 12360.0,
+      "closest_norad_id": 60486,
+      "minimum_distance_km": 19.51243877885349,
+      "screening_radius_km": 11.163020489762731,
+      "clearance_margin_km": 8.349418289090758,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:19:54.811735+00:00",
+      "offset_s": 12420.0,
+      "closest_norad_id": 38184,
+      "minimum_distance_km": 14.2900606521009,
+      "screening_radius_km": 10.707815409762732,
+      "clearance_margin_km": 3.5822452423381677,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:20:54.811735+00:00",
+      "offset_s": 12480.0,
+      "closest_norad_id": 58340,
+      "minimum_distance_km": 5.986828145656764,
+      "screening_radius_km": 11.064912209762731,
+      "clearance_margin_km": -5.078084064105967,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T12:21:54.811735+00:00",
+      "offset_s": 12540.0,
+      "closest_norad_id": 100447,
+      "minimum_distance_km": 4.364063278686874,
+      "screening_radius_km": 10.221712639762732,
+      "clearance_margin_km": -5.8576493610758575,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T12:22:54.811735+00:00",
+      "offset_s": 12600.0,
+      "closest_norad_id": 58301,
+      "minimum_distance_km": 10.131841515488047,
+      "screening_radius_km": 10.909644114762731,
+      "clearance_margin_km": -0.7778025992746844,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T12:23:54.811735+00:00",
+      "offset_s": 12660.0,
+      "closest_norad_id": 45415,
+      "minimum_distance_km": 28.202418192122668,
+      "screening_radius_km": 10.394280234762732,
+      "clearance_margin_km": 17.808137957359936,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:24:54.811735+00:00",
+      "offset_s": 12720.0,
+      "closest_norad_id": 100416,
+      "minimum_distance_km": 6.713415927108154,
+      "screening_radius_km": 10.198340754762732,
+      "clearance_margin_km": -3.484924827654578,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T12:25:54.811735+00:00",
+      "offset_s": 12780.0,
+      "closest_norad_id": 100290,
+      "minimum_distance_km": 4.777868806469151,
+      "screening_radius_km": 10.204691369762731,
+      "clearance_margin_km": -5.42682256329358,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T12:26:54.811735+00:00",
+      "offset_s": 12840.0,
+      "closest_norad_id": 55975,
+      "minimum_distance_km": 23.293432852740764,
+      "screening_radius_km": 10.21964000476273,
+      "clearance_margin_km": 13.073792847978034,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:27:54.811735+00:00",
+      "offset_s": 12900.0,
+      "closest_norad_id": 43160,
+      "minimum_distance_km": 44.02379545116256,
+      "screening_radius_km": 10.233131934762731,
+      "clearance_margin_km": 33.79066351639983,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:28:54.811735+00:00",
+      "offset_s": 12960.0,
+      "closest_norad_id": 45412,
+      "minimum_distance_km": 12.963277331671886,
+      "screening_radius_km": 10.393036679762732,
+      "clearance_margin_km": 2.5702406519091543,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:29:54.811735+00:00",
+      "offset_s": 13020.0,
+      "closest_norad_id": 45201,
+      "minimum_distance_km": 23.479695301946595,
+      "screening_radius_km": 10.47152511476273,
+      "clearance_margin_km": 13.008170187183865,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:30:54.811735+00:00",
+      "offset_s": 13080.0,
+      "closest_norad_id": 100411,
+      "minimum_distance_km": 10.627861101451867,
+      "screening_radius_km": 10.389941684762732,
+      "clearance_margin_km": 0.23791941668913452,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:31:54.811735+00:00",
+      "offset_s": 13140.0,
+      "closest_norad_id": 60556,
+      "minimum_distance_km": 32.178172655507936,
+      "screening_radius_km": 10.410926484762731,
+      "clearance_margin_km": 21.767246170745203,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:32:54.811735+00:00",
+      "offset_s": 13200.0,
+      "closest_norad_id": 100450,
+      "minimum_distance_km": 17.085784755033764,
+      "screening_radius_km": 11.187041284762731,
+      "clearance_margin_km": 5.898743470271032,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:33:54.811735+00:00",
+      "offset_s": 13260.0,
+      "closest_norad_id": 47362,
+      "minimum_distance_km": 20.053887251041758,
+      "screening_radius_km": 10.368821654762732,
+      "clearance_margin_km": 9.685065596279026,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:34:54.811735+00:00",
+      "offset_s": 13320.0,
+      "closest_norad_id": 44538,
+      "minimum_distance_km": 17.416112537109036,
+      "screening_radius_km": 10.216349749762731,
+      "clearance_margin_km": 7.199762787346305,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:35:54.811735+00:00",
+      "offset_s": 13380.0,
+      "closest_norad_id": 48023,
+      "minimum_distance_km": 33.54870688790659,
+      "screening_radius_km": 10.502763894762731,
+      "clearance_margin_km": 23.04594299314386,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:36:54.811735+00:00",
+      "offset_s": 13440.0,
+      "closest_norad_id": 53897,
+      "minimum_distance_km": 31.760425877934644,
+      "screening_radius_km": 10.226688724762731,
+      "clearance_margin_km": 21.533737153171913,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:37:54.811735+00:00",
+      "offset_s": 13500.0,
+      "closest_norad_id": 48111,
+      "minimum_distance_km": 32.21073313415559,
+      "screening_radius_km": 10.481627984762731,
+      "clearance_margin_km": 21.729105149392858,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:38:54.811735+00:00",
+      "offset_s": 13560.0,
+      "closest_norad_id": 100018,
+      "minimum_distance_km": 22.86379554984363,
+      "screening_radius_km": 10.20685170976273,
+      "clearance_margin_km": 12.6569438400809,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:39:54.811735+00:00",
+      "offset_s": 13620.0,
+      "closest_norad_id": 64894,
+      "minimum_distance_km": 11.164116569871362,
+      "screening_radius_km": 10.20550879976273,
+      "clearance_margin_km": 0.9586077701086317,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:40:54.811735+00:00",
+      "offset_s": 13680.0,
+      "closest_norad_id": 58280,
+      "minimum_distance_km": 35.855057788885844,
+      "screening_radius_km": 10.567312089762732,
+      "clearance_margin_km": 25.287745699123114,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:41:54.811735+00:00",
+      "offset_s": 13740.0,
+      "closest_norad_id": 100430,
+      "minimum_distance_km": 26.717855133893178,
+      "screening_radius_km": 10.389039894762732,
+      "clearance_margin_km": 16.328815239130446,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:42:54.811735+00:00",
+      "offset_s": 13800.0,
+      "closest_norad_id": 59908,
+      "minimum_distance_km": 18.46367272585965,
+      "screening_radius_km": 10.406994414762732,
+      "clearance_margin_km": 8.056678311096917,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:43:54.811735+00:00",
+      "offset_s": 13860.0,
+      "closest_norad_id": 41849,
+      "minimum_distance_km": 27.103470707287567,
+      "screening_radius_km": 10.559578384762732,
+      "clearance_margin_km": 16.543892322524833,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:44:54.811735+00:00",
+      "offset_s": 13920.0,
+      "closest_norad_id": 53020,
+      "minimum_distance_km": 43.19660753313601,
+      "screening_radius_km": 10.425913389762732,
+      "clearance_margin_km": 32.77069414337328,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:45:54.811735+00:00",
+      "offset_s": 13980.0,
+      "closest_norad_id": 49950,
+      "minimum_distance_km": 20.877814234860345,
+      "screening_radius_km": 10.588721774762732,
+      "clearance_margin_km": 10.289092460097613,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:46:54.811735+00:00",
+      "offset_s": 14040.0,
+      "closest_norad_id": 62371,
+      "minimum_distance_km": 37.54420757548181,
+      "screening_radius_km": 10.596447274762731,
+      "clearance_margin_km": 26.947760300719082,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:47:54.811735+00:00",
+      "offset_s": 14100.0,
+      "closest_norad_id": 41166,
+      "minimum_distance_km": 29.04265364489915,
+      "screening_radius_km": 12.588423949762731,
+      "clearance_margin_km": 16.45422969513642,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:48:54.811735+00:00",
+      "offset_s": 14160.0,
+      "closest_norad_id": 69976,
+      "minimum_distance_km": 34.53046918582027,
+      "screening_radius_km": 10.437636989762732,
+      "clearance_margin_km": 24.092832196057543,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:49:54.811735+00:00",
+      "offset_s": 14220.0,
+      "closest_norad_id": 47435,
+      "minimum_distance_km": 25.109239809845775,
+      "screening_radius_km": 10.24980384476273,
+      "clearance_margin_km": 14.859435965083044,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:50:54.811735+00:00",
+      "offset_s": 14280.0,
+      "closest_norad_id": 46077,
+      "minimum_distance_km": 1.2623624177263368,
+      "screening_radius_km": 10.361774419762732,
+      "clearance_margin_km": -9.099412002036395,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T12:51:54.811735+00:00",
+      "offset_s": 14340.0,
+      "closest_norad_id": 56966,
+      "minimum_distance_km": 18.01075762075269,
+      "screening_radius_km": 10.212013504762732,
+      "clearance_margin_km": 7.798744115989956,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:52:54.811735+00:00",
+      "offset_s": 14400.0,
+      "closest_norad_id": 14064,
+      "minimum_distance_km": 12.150917168590192,
+      "screening_radius_km": 10.697581789762731,
+      "clearance_margin_km": 1.453335378827461,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:53:54.811735+00:00",
+      "offset_s": 14460.0,
+      "closest_norad_id": 45660,
+      "minimum_distance_km": 24.580819545169483,
+      "screening_radius_km": 10.233141124762732,
+      "clearance_margin_km": 14.347678420406751,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:54:54.811735+00:00",
+      "offset_s": 14520.0,
+      "closest_norad_id": 61746,
+      "minimum_distance_km": 28.37288608794134,
+      "screening_radius_km": 10.240336054762732,
+      "clearance_margin_km": 18.132550033178607,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:55:54.811735+00:00",
+      "offset_s": 14580.0,
+      "closest_norad_id": 56835,
+      "minimum_distance_km": 21.280057878723735,
+      "screening_radius_km": 10.226688724762731,
+      "clearance_margin_km": 11.053369153961004,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:56:54.811735+00:00",
+      "offset_s": 14640.0,
+      "closest_norad_id": 100438,
+      "minimum_distance_km": 23.988632112353354,
+      "screening_radius_km": 10.242198204762731,
+      "clearance_margin_km": 13.746433907590623,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:57:54.811735+00:00",
+      "offset_s": 14700.0,
+      "closest_norad_id": 43758,
+      "minimum_distance_km": 28.03776643091042,
+      "screening_radius_km": 10.211748854762732,
+      "clearance_margin_km": 17.826017576147688,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:58:54.811735+00:00",
+      "offset_s": 14760.0,
+      "closest_norad_id": 57199,
+      "minimum_distance_km": 25.03961595738426,
+      "screening_radius_km": 10.214157639762732,
+      "clearance_margin_km": 14.825458317621528,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T12:59:54.811735+00:00",
+      "offset_s": 14820.0,
+      "closest_norad_id": 100090,
+      "minimum_distance_km": 21.521947482517508,
+      "screening_radius_km": 10.298998334762732,
+      "clearance_margin_km": 11.222949147754775,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:00:54.811735+00:00",
+      "offset_s": 14880.0,
+      "closest_norad_id": 100459,
+      "minimum_distance_km": 32.49286307394967,
+      "screening_radius_km": 10.240979414762732,
+      "clearance_margin_km": 22.251883659186937,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:01:54.811735+00:00",
+      "offset_s": 14940.0,
+      "closest_norad_id": 46494,
+      "minimum_distance_km": 2.2901473808240747,
+      "screening_radius_km": 10.217534674762732,
+      "clearance_margin_km": -7.927387293938657,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T13:02:54.811735+00:00",
+      "offset_s": 15000.0,
+      "closest_norad_id": 50032,
+      "minimum_distance_km": 17.548208445553747,
+      "screening_radius_km": 10.49679478476273,
+      "clearance_margin_km": 7.051413660791017,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:03:54.811735+00:00",
+      "offset_s": 15060.0,
+      "closest_norad_id": 62729,
+      "minimum_distance_km": 27.183679794293152,
+      "screening_radius_km": 10.208856109762731,
+      "clearance_margin_km": 16.97482368453042,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:04:54.811735+00:00",
+      "offset_s": 15120.0,
+      "closest_norad_id": 58295,
+      "minimum_distance_km": 30.732616265408616,
+      "screening_radius_km": 10.206954799762732,
+      "clearance_margin_km": 20.525661465645882,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:05:54.811735+00:00",
+      "offset_s": 15180.0,
+      "closest_norad_id": 52487,
+      "minimum_distance_km": 43.16277247818211,
+      "screening_radius_km": 10.392485124762732,
+      "clearance_margin_km": 32.77028735341938,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:06:54.811735+00:00",
+      "offset_s": 15240.0,
+      "closest_norad_id": 58019,
+      "minimum_distance_km": 13.060239037978524,
+      "screening_radius_km": 10.206709074762731,
+      "clearance_margin_km": 2.8535299632157933,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:07:54.811735+00:00",
+      "offset_s": 15300.0,
+      "closest_norad_id": 57294,
+      "minimum_distance_km": 34.991818933686844,
+      "screening_radius_km": 10.226688724762731,
+      "clearance_margin_km": 24.765130208924113,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:08:54.811735+00:00",
+      "offset_s": 15360.0,
+      "closest_norad_id": 59768,
+      "minimum_distance_km": 42.54921017683904,
+      "screening_radius_km": 10.450986654762731,
+      "clearance_margin_km": 32.09822352207631,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:09:54.811735+00:00",
+      "offset_s": 15420.0,
+      "closest_norad_id": 59577,
+      "minimum_distance_km": 19.351235194612794,
+      "screening_radius_km": 10.440400419762732,
+      "clearance_margin_km": 8.910834774850063,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:10:54.811735+00:00",
+      "offset_s": 15480.0,
+      "closest_norad_id": 45744,
+      "minimum_distance_km": 33.43054278344526,
+      "screening_radius_km": 10.438592794762732,
+      "clearance_margin_km": 22.991949988682528,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:11:54.811735+00:00",
+      "offset_s": 15540.0,
+      "closest_norad_id": 55012,
+      "minimum_distance_km": 6.991893097578332,
+      "screening_radius_km": 10.880826814762731,
+      "clearance_margin_km": -3.8889337171843987,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T13:12:54.811735+00:00",
+      "offset_s": 15600.0,
+      "closest_norad_id": 45663,
+      "minimum_distance_km": 34.44356337093126,
+      "screening_radius_km": 11.100208064762732,
+      "clearance_margin_km": 23.343355306168526,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:13:54.811735+00:00",
+      "offset_s": 15660.0,
+      "closest_norad_id": 45064,
+      "minimum_distance_km": 34.72104292677478,
+      "screening_radius_km": 10.659315689762732,
+      "clearance_margin_km": 24.061727237012047,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:14:54.811735+00:00",
+      "offset_s": 15720.0,
+      "closest_norad_id": 100475,
+      "minimum_distance_km": 13.351038237820953,
+      "screening_radius_km": 12.563297604762731,
+      "clearance_margin_km": 0.7877406330582222,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:15:54.811735+00:00",
+      "offset_s": 15780.0,
+      "closest_norad_id": 39574,
+      "minimum_distance_km": 23.04515307051167,
+      "screening_radius_km": 10.30699978476273,
+      "clearance_margin_km": 12.73815328574894,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:16:54.811735+00:00",
+      "offset_s": 15840.0,
+      "closest_norad_id": 64888,
+      "minimum_distance_km": 18.1900439870827,
+      "screening_radius_km": 10.227410709762731,
+      "clearance_margin_km": 7.962633277319968,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:17:54.811735+00:00",
+      "offset_s": 15900.0,
+      "closest_norad_id": 49772,
+      "minimum_distance_km": 28.86509271574232,
+      "screening_radius_km": 10.276098139762732,
+      "clearance_margin_km": 18.58899457597959,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:18:54.811735+00:00",
+      "offset_s": 15960.0,
+      "closest_norad_id": 55056,
+      "minimum_distance_km": 44.862913129382356,
+      "screening_radius_km": 10.615368174762732,
+      "clearance_margin_km": 34.24754495461963,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:19:54.811735+00:00",
+      "offset_s": 16020.0,
+      "closest_norad_id": 100299,
+      "minimum_distance_km": 3.5718713673529443,
+      "screening_radius_km": 10.542722134762732,
+      "clearance_margin_km": -6.970850767409788,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T13:20:54.811735+00:00",
+      "offset_s": 16080.0,
+      "closest_norad_id": 100214,
+      "minimum_distance_km": 16.161640817736338,
+      "screening_radius_km": 10.724546954762731,
+      "clearance_margin_km": 5.437093862973606,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:21:54.811735+00:00",
+      "offset_s": 16140.0,
+      "closest_norad_id": 100487,
+      "minimum_distance_km": 14.655539730781653,
+      "screening_radius_km": 10.221530004762732,
+      "clearance_margin_km": 4.434009726018921,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:22:54.811735+00:00",
+      "offset_s": 16200.0,
+      "closest_norad_id": 60747,
+      "minimum_distance_km": 8.54291825050103,
+      "screening_radius_km": 10.202066034762732,
+      "clearance_margin_km": -1.6591477842617017,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T13:23:54.811735+00:00",
+      "offset_s": 16260.0,
+      "closest_norad_id": 40698,
+      "minimum_distance_km": 18.937137168168956,
+      "screening_radius_km": 10.39291532476273,
+      "clearance_margin_km": 8.544221843406225,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:24:54.811735+00:00",
+      "offset_s": 16320.0,
+      "closest_norad_id": 100223,
+      "minimum_distance_km": 16.705053828776094,
+      "screening_radius_km": 10.497234989762731,
+      "clearance_margin_km": 6.207818839013363,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:25:54.811735+00:00",
+      "offset_s": 16380.0,
+      "closest_norad_id": 48128,
+      "minimum_distance_km": 16.73183563001209,
+      "screening_radius_km": 10.40999907976273,
+      "clearance_margin_km": 6.321836550249358,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:26:54.811735+00:00",
+      "offset_s": 16440.0,
+      "closest_norad_id": 58903,
+      "minimum_distance_km": 21.457442584733034,
+      "screening_radius_km": 10.394002134762731,
+      "clearance_margin_km": 11.063440449970303,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:27:54.811735+00:00",
+      "offset_s": 16500.0,
+      "closest_norad_id": 67253,
+      "minimum_distance_km": 27.687327563434284,
+      "screening_radius_km": 10.20060269476273,
+      "clearance_margin_km": 17.48672486867155,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:28:54.811735+00:00",
+      "offset_s": 16560.0,
+      "closest_norad_id": 69618,
+      "minimum_distance_km": 29.0512752641459,
+      "screening_radius_km": 10.831181499762732,
+      "clearance_margin_km": 18.22009376438317,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:29:54.811735+00:00",
+      "offset_s": 16620.0,
+      "closest_norad_id": 60206,
+      "minimum_distance_km": 16.29291401648871,
+      "screening_radius_km": 10.230441819762731,
+      "clearance_margin_km": 6.062472196725977,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:30:54.811735+00:00",
+      "offset_s": 16680.0,
+      "closest_norad_id": 100424,
+      "minimum_distance_km": 3.3886083519958508,
+      "screening_radius_km": 10.274306069762732,
+      "clearance_margin_km": -6.885697717766881,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T13:31:54.811735+00:00",
+      "offset_s": 16740.0,
+      "closest_norad_id": 42838,
+      "minimum_distance_km": 32.49647271481657,
+      "screening_radius_km": 10.459944014762732,
+      "clearance_margin_km": 22.036528700053836,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:32:54.811735+00:00",
+      "offset_s": 16800.0,
+      "closest_norad_id": 40701,
+      "minimum_distance_km": 6.522558549730713,
+      "screening_radius_km": 10.196704744762732,
+      "clearance_margin_km": -3.6741461950320193,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T13:33:54.811735+00:00",
+      "offset_s": 16860.0,
+      "closest_norad_id": 45535,
+      "minimum_distance_km": 21.387221556723755,
+      "screening_radius_km": 10.418037719762731,
+      "clearance_margin_km": 10.969183836961024,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:34:54.811735+00:00",
+      "offset_s": 16920.0,
+      "closest_norad_id": 48120,
+      "minimum_distance_km": 5.50274788131125,
+      "screening_radius_km": 10.43030093976273,
+      "clearance_margin_km": -4.927553058451481,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T13:35:54.811735+00:00",
+      "offset_s": 16980.0,
+      "closest_norad_id": 100011,
+      "minimum_distance_km": 5.031696483059229,
+      "screening_radius_km": 10.254238969762731,
+      "clearance_margin_km": -5.222542486703502,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T13:36:54.811735+00:00",
+      "offset_s": 17040.0,
+      "closest_norad_id": 57582,
+      "minimum_distance_km": 22.17847223817387,
+      "screening_radius_km": 10.20046408976273,
+      "clearance_margin_km": 11.97800814841114,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:37:54.811735+00:00",
+      "offset_s": 17100.0,
+      "closest_norad_id": 100218,
+      "minimum_distance_km": 23.702513726493947,
+      "screening_radius_km": 10.363968594762731,
+      "clearance_margin_km": 13.338545131731216,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:38:54.811735+00:00",
+      "offset_s": 17160.0,
+      "closest_norad_id": 68028,
+      "minimum_distance_km": 9.470898908656904,
+      "screening_radius_km": 10.382921349762732,
+      "clearance_margin_km": -0.9120224411058278,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T13:39:54.811735+00:00",
+      "offset_s": 17220.0,
+      "closest_norad_id": 45222,
+      "minimum_distance_km": 21.39756404506588,
+      "screening_radius_km": 10.544022084762732,
+      "clearance_margin_km": 10.853541960303149,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:40:54.811735+00:00",
+      "offset_s": 17280.0,
+      "closest_norad_id": 100421,
+      "minimum_distance_km": 1.758445522829293,
+      "screening_radius_km": 10.271176249762732,
+      "clearance_margin_km": -8.51273072693344,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T13:41:54.811735+00:00",
+      "offset_s": 17340.0,
+      "closest_norad_id": 66633,
+      "minimum_distance_km": 42.58182908454755,
+      "screening_radius_km": 10.46968403976273,
+      "clearance_margin_km": 32.11214504478482,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:42:54.811735+00:00",
+      "offset_s": 17400.0,
+      "closest_norad_id": 20547,
+      "minimum_distance_km": 13.49084692417269,
+      "screening_radius_km": 10.222964029762732,
+      "clearance_margin_km": 3.267882894409958,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:43:54.811735+00:00",
+      "offset_s": 17460.0,
+      "closest_norad_id": 35381,
+      "minimum_distance_km": 15.9548698455448,
+      "screening_radius_km": 11.127074949762731,
+      "clearance_margin_km": 4.82779489578207,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:44:54.811735+00:00",
+      "offset_s": 17520.0,
+      "closest_norad_id": 100233,
+      "minimum_distance_km": 15.372654880663228,
+      "screening_radius_km": 10.394112574762731,
+      "clearance_margin_km": 4.978542305900497,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:45:54.811735+00:00",
+      "offset_s": 17580.0,
+      "closest_norad_id": 66021,
+      "minimum_distance_km": 45.09936109473587,
+      "screening_radius_km": 10.570694684762731,
+      "clearance_margin_km": 34.52866640997314,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:46:54.811735+00:00",
+      "offset_s": 17640.0,
+      "closest_norad_id": 58900,
+      "minimum_distance_km": 31.99464298584555,
+      "screening_radius_km": 10.420000744762731,
+      "clearance_margin_km": 21.57464224108282,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:47:54.811735+00:00",
+      "offset_s": 17700.0,
+      "closest_norad_id": 57410,
+      "minimum_distance_km": 32.66311938010765,
+      "screening_radius_km": 10.226688724762731,
+      "clearance_margin_km": 22.43643065534492,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:48:54.811735+00:00",
+      "offset_s": 17760.0,
+      "closest_norad_id": 59065,
+      "minimum_distance_km": 10.395218096315823,
+      "screening_radius_km": 10.215917129762731,
+      "clearance_margin_km": 0.17930096655309136,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:49:54.811735+00:00",
+      "offset_s": 17820.0,
+      "closest_norad_id": 48298,
+      "minimum_distance_km": 15.18472323125844,
+      "screening_radius_km": 10.408064304762732,
+      "clearance_margin_km": 4.776658926495708,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:50:54.811735+00:00",
+      "offset_s": 17880.0,
+      "closest_norad_id": 60630,
+      "minimum_distance_km": 15.177985387538522,
+      "screening_radius_km": 10.352858684762731,
+      "clearance_margin_km": 4.8251267027757905,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:51:54.811735+00:00",
+      "offset_s": 17940.0,
+      "closest_norad_id": 32791,
+      "minimum_distance_km": 41.061280494583386,
+      "screening_radius_km": 10.409093619762732,
+      "clearance_margin_km": 30.652186874820654,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:52:54.811735+00:00",
+      "offset_s": 18000.0,
+      "closest_norad_id": 54787,
+      "minimum_distance_km": 44.384863838306856,
+      "screening_radius_km": 10.410856064762731,
+      "clearance_margin_km": 33.97400777354412,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:53:54.811735+00:00",
+      "offset_s": 18060.0,
+      "closest_norad_id": 59209,
+      "minimum_distance_km": 43.10927750637359,
+      "screening_radius_km": 10.463863769762732,
+      "clearance_margin_km": 32.645413736610855,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:54:54.811735+00:00",
+      "offset_s": 18120.0,
+      "closest_norad_id": 39453,
+      "minimum_distance_km": 13.422348600219848,
+      "screening_radius_km": 10.224437189762732,
+      "clearance_margin_km": 3.1979114104571167,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:55:54.811735+00:00",
+      "offset_s": 18180.0,
+      "closest_norad_id": 100415,
+      "minimum_distance_km": 4.069125420929299,
+      "screening_radius_km": 10.395601839762731,
+      "clearance_margin_km": -6.326476418833432,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T13:56:54.811735+00:00",
+      "offset_s": 18240.0,
+      "closest_norad_id": 100019,
+      "minimum_distance_km": 11.664682731890949,
+      "screening_radius_km": 10.215491974762731,
+      "clearance_margin_km": 1.4491907571282177,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:57:54.811735+00:00",
+      "offset_s": 18300.0,
+      "closest_norad_id": 48098,
+      "minimum_distance_km": 22.446298947393153,
+      "screening_radius_km": 10.23231584476273,
+      "clearance_margin_km": 12.213983102630422,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:58:54.811735+00:00",
+      "offset_s": 18360.0,
+      "closest_norad_id": 100013,
+      "minimum_distance_km": 24.616231999082075,
+      "screening_radius_km": 10.213977799762732,
+      "clearance_margin_km": 14.402254199319342,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T13:59:54.811735+00:00",
+      "offset_s": 18420.0,
+      "closest_norad_id": 60517,
+      "minimum_distance_km": 24.669268988414075,
+      "screening_radius_km": 11.164686094762732,
+      "clearance_margin_km": 13.504582893651342,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:00:54.811735+00:00",
+      "offset_s": 18480.0,
+      "closest_norad_id": 59290,
+      "minimum_distance_km": 20.15821483210935,
+      "screening_radius_km": 10.40761081976273,
+      "clearance_margin_km": 9.75060401234662,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:01:54.811735+00:00",
+      "offset_s": 18540.0,
+      "closest_norad_id": 60481,
+      "minimum_distance_km": 36.17853528903008,
+      "screening_radius_km": 10.581044254762732,
+      "clearance_margin_km": 25.59749103426735,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:02:54.811735+00:00",
+      "offset_s": 18600.0,
+      "closest_norad_id": 33599,
+      "minimum_distance_km": 10.191406085575192,
+      "screening_radius_km": 13.254858029762731,
+      "clearance_margin_km": -3.0634519441875394,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T14:03:54.811735+00:00",
+      "offset_s": 18660.0,
+      "closest_norad_id": 46355,
+      "minimum_distance_km": 10.735566398744234,
+      "screening_radius_km": 10.601724079762732,
+      "clearance_margin_km": 0.13384231898150212,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:04:54.811735+00:00",
+      "offset_s": 18720.0,
+      "closest_norad_id": 14208,
+      "minimum_distance_km": 21.12436904103187,
+      "screening_radius_km": 10.238478904762731,
+      "clearance_margin_km": 10.885890136269138,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:05:54.811735+00:00",
+      "offset_s": 18780.0,
+      "closest_norad_id": 100428,
+      "minimum_distance_km": 3.714460977662331,
+      "screening_radius_km": 10.489126804762732,
+      "clearance_margin_km": -6.774665827100401,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T14:06:54.811735+00:00",
+      "offset_s": 18840.0,
+      "closest_norad_id": 69472,
+      "minimum_distance_km": 23.216883088187956,
+      "screening_radius_km": 10.530826339762731,
+      "clearance_margin_km": 12.686056748425225,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:07:54.811735+00:00",
+      "offset_s": 18900.0,
+      "closest_norad_id": 100416,
+      "minimum_distance_km": 1.625543645678909,
+      "screening_radius_km": 10.198340754762732,
+      "clearance_margin_km": -8.572797109083822,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T14:08:54.811735+00:00",
+      "offset_s": 18960.0,
+      "closest_norad_id": 54109,
+      "minimum_distance_km": 9.123638744829652,
+      "screening_radius_km": 10.577714764762732,
+      "clearance_margin_km": -1.4540760199330798,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T14:09:54.811735+00:00",
+      "offset_s": 19020.0,
+      "closest_norad_id": 35602,
+      "minimum_distance_km": 21.99419886623922,
+      "screening_radius_km": 10.650597809762731,
+      "clearance_margin_km": 11.343601056476489,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:10:54.811735+00:00",
+      "offset_s": 19080.0,
+      "closest_norad_id": 17911,
+      "minimum_distance_km": 36.79267298251967,
+      "screening_radius_km": 10.406419924762732,
+      "clearance_margin_km": 26.38625305775694,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:11:54.811735+00:00",
+      "offset_s": 19140.0,
+      "closest_norad_id": 59000,
+      "minimum_distance_km": 45.64793722677999,
+      "screening_radius_km": 10.208092244762732,
+      "clearance_margin_km": 35.439844982017256,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:12:54.811735+00:00",
+      "offset_s": 19200.0,
+      "closest_norad_id": 100287,
+      "minimum_distance_km": 31.846915680537407,
+      "screening_radius_km": 10.203563699762732,
+      "clearance_margin_km": 21.643351980774675,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:13:54.811735+00:00",
+      "offset_s": 19260.0,
+      "closest_norad_id": 58823,
+      "minimum_distance_km": 12.044310420982743,
+      "screening_radius_km": 10.216519189762732,
+      "clearance_margin_km": 1.8277912312200115,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:14:54.811735+00:00",
+      "offset_s": 19320.0,
+      "closest_norad_id": 100278,
+      "minimum_distance_km": 30.171808573831118,
+      "screening_radius_km": 14.036669874762731,
+      "clearance_margin_km": 16.135138699068385,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:15:54.811735+00:00",
+      "offset_s": 19380.0,
+      "closest_norad_id": 61522,
+      "minimum_distance_km": 27.857681204484578,
+      "screening_radius_km": 10.455822069762732,
+      "clearance_margin_km": 17.401859134721846,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:16:54.811735+00:00",
+      "offset_s": 19440.0,
+      "closest_norad_id": 41914,
+      "minimum_distance_km": 21.244044858391074,
+      "screening_radius_km": 10.203963674762731,
+      "clearance_margin_km": 11.040081183628343,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:17:54.811735+00:00",
+      "offset_s": 19500.0,
+      "closest_norad_id": 59908,
+      "minimum_distance_km": 14.003960591795227,
+      "screening_radius_km": 10.406994414762732,
+      "clearance_margin_km": 3.5969661770324954,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:18:54.811735+00:00",
+      "offset_s": 19560.0,
+      "closest_norad_id": 38764,
+      "minimum_distance_km": 32.830286705886216,
+      "screening_radius_km": 11.015935094762732,
+      "clearance_margin_km": 21.814351611123485,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:19:54.811735+00:00",
+      "offset_s": 19620.0,
+      "closest_norad_id": 43084,
+      "minimum_distance_km": 35.053207862130755,
+      "screening_radius_km": 10.225028524762731,
+      "clearance_margin_km": 24.828179337368024,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:20:54.811735+00:00",
+      "offset_s": 19680.0,
+      "closest_norad_id": 39307,
+      "minimum_distance_km": 9.571385694734388,
+      "screening_radius_km": 10.661667344762732,
+      "clearance_margin_km": -1.0902816500283432,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T14:21:54.811735+00:00",
+      "offset_s": 19740.0,
+      "closest_norad_id": 63442,
+      "minimum_distance_km": 45.63434781230767,
+      "screening_radius_km": 10.261672924762731,
+      "clearance_margin_km": 35.37267488754493,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:22:54.811735+00:00",
+      "offset_s": 19800.0,
+      "closest_norad_id": 100385,
+      "minimum_distance_km": 5.1493458579925475,
+      "screening_radius_km": 10.211515199762731,
+      "clearance_margin_km": -5.062169341770184,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T14:23:54.811735+00:00",
+      "offset_s": 19860.0,
+      "closest_norad_id": 56209,
+      "minimum_distance_km": 16.211640752713645,
+      "screening_radius_km": 10.208998934762732,
+      "clearance_margin_km": 6.002641817950913,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:24:54.811735+00:00",
+      "offset_s": 19920.0,
+      "closest_norad_id": 54346,
+      "minimum_distance_km": 6.476374965803273,
+      "screening_radius_km": 10.536618594762732,
+      "clearance_margin_km": -4.0602436289594594,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T14:25:54.811735+00:00",
+      "offset_s": 19980.0,
+      "closest_norad_id": 61163,
+      "minimum_distance_km": 33.072055956368175,
+      "screening_radius_km": 11.758137164762731,
+      "clearance_margin_km": 21.313918791605445,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:26:54.811735+00:00",
+      "offset_s": 20040.0,
+      "closest_norad_id": 56966,
+      "minimum_distance_km": 17.391784517709016,
+      "screening_radius_km": 10.212013504762732,
+      "clearance_margin_km": 7.179771012946285,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:27:54.811735+00:00",
+      "offset_s": 20100.0,
+      "closest_norad_id": 46702,
+      "minimum_distance_km": 19.92960292941296,
+      "screening_radius_km": 10.215880104762732,
+      "clearance_margin_km": 9.71372282465023,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:28:54.811735+00:00",
+      "offset_s": 20160.0,
+      "closest_norad_id": 100494,
+      "minimum_distance_km": 33.02899399008339,
+      "screening_radius_km": 13.382538674762731,
+      "clearance_margin_km": 19.64645531532066,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:29:54.811735+00:00",
+      "offset_s": 20220.0,
+      "closest_norad_id": 61746,
+      "minimum_distance_km": 5.071256016796784,
+      "screening_radius_km": 10.240336054762732,
+      "clearance_margin_km": -5.169080037965948,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T14:30:54.811735+00:00",
+      "offset_s": 20280.0,
+      "closest_norad_id": 54694,
+      "minimum_distance_km": 43.95660982166015,
+      "screening_radius_km": 10.212155369762732,
+      "clearance_margin_km": 33.74445445189742,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:31:54.811735+00:00",
+      "offset_s": 20340.0,
+      "closest_norad_id": 52502,
+      "minimum_distance_km": 42.878664247522345,
+      "screening_radius_km": 10.365533734762732,
+      "clearance_margin_km": 32.513130512759616,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:32:54.811735+00:00",
+      "offset_s": 20400.0,
+      "closest_norad_id": 59717,
+      "minimum_distance_km": 42.30942738695413,
+      "screening_radius_km": 10.778168859762731,
+      "clearance_margin_km": 31.531258527191397,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:33:54.811735+00:00",
+      "offset_s": 20460.0,
+      "closest_norad_id": 47435,
+      "minimum_distance_km": 22.802448036558314,
+      "screening_radius_km": 10.24980384476273,
+      "clearance_margin_km": 12.552644191795583,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:34:54.811735+00:00",
+      "offset_s": 20520.0,
+      "closest_norad_id": 58180,
+      "minimum_distance_km": 10.831658173014105,
+      "screening_radius_km": 10.53165050976273,
+      "clearance_margin_km": 0.3000076632513746,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:35:54.811735+00:00",
+      "offset_s": 20580.0,
+      "closest_norad_id": 52614,
+      "minimum_distance_km": 22.31641650478134,
+      "screening_radius_km": 10.403759929762732,
+      "clearance_margin_km": 11.912656575018609,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:36:54.811735+00:00",
+      "offset_s": 20640.0,
+      "closest_norad_id": 100387,
+      "minimum_distance_km": 20.012713356989185,
+      "screening_radius_km": 10.206761079762732,
+      "clearance_margin_km": 9.805952277226453,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:37:54.811735+00:00",
+      "offset_s": 20700.0,
+      "closest_norad_id": 51133,
+      "minimum_distance_km": 32.18683146203837,
+      "screening_radius_km": 10.18502784476273,
+      "clearance_margin_km": 22.00180361727564,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:38:54.811735+00:00",
+      "offset_s": 20760.0,
+      "closest_norad_id": 100232,
+      "minimum_distance_km": 35.21618698738954,
+      "screening_radius_km": 10.216530194762731,
+      "clearance_margin_km": 24.99965679262681,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:39:54.811735+00:00",
+      "offset_s": 20820.0,
+      "closest_norad_id": 46292,
+      "minimum_distance_km": 19.405307693260923,
+      "screening_radius_km": 10.698460879762731,
+      "clearance_margin_km": 8.706846813498192,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:40:54.811735+00:00",
+      "offset_s": 20880.0,
+      "closest_norad_id": 58295,
+      "minimum_distance_km": 30.952285616594352,
+      "screening_radius_km": 10.206954799762732,
+      "clearance_margin_km": 20.74533081683162,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:41:54.811735+00:00",
+      "offset_s": 20940.0,
+      "closest_norad_id": 45187,
+      "minimum_distance_km": 35.70683564073673,
+      "screening_radius_km": 10.18502784476273,
+      "clearance_margin_km": 25.521807795974,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:42:54.811735+00:00",
+      "offset_s": 21000.0,
+      "closest_norad_id": 100002,
+      "minimum_distance_km": 8.512108068807578,
+      "screening_radius_km": 10.23181411476273,
+      "clearance_margin_km": -1.719706045955153,
+      "obstructed": true
+    },
+    {
+      "launch_time": "2026-09-21T14:43:54.811735+00:00",
+      "offset_s": 21060.0,
+      "closest_norad_id": 46342,
+      "minimum_distance_km": 12.166459073895618,
+      "screening_radius_km": 10.523804119762731,
+      "clearance_margin_km": 1.6426549541328868,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:44:54.811735+00:00",
+      "offset_s": 21120.0,
+      "closest_norad_id": 33504,
+      "minimum_distance_km": 36.929614648722115,
+      "screening_radius_km": 10.43240303976273,
+      "clearance_margin_km": 26.497211608959383,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:45:54.811735+00:00",
+      "offset_s": 21180.0,
+      "closest_norad_id": 45230,
+      "minimum_distance_km": 27.278972909703942,
+      "screening_radius_km": 10.26433600476273,
+      "clearance_margin_km": 17.014636904941213,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:46:54.811735+00:00",
+      "offset_s": 21240.0,
+      "closest_norad_id": 62677,
+      "minimum_distance_km": 23.528919384215182,
+      "screening_radius_km": 10.565041049762732,
+      "clearance_margin_km": 12.96387833445245,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:47:54.811735+00:00",
+      "offset_s": 21300.0,
+      "closest_norad_id": 60526,
+      "minimum_distance_km": 40.07492908462494,
+      "screening_radius_km": 10.43491802976273,
+      "clearance_margin_km": 29.64001105486221,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:48:54.811735+00:00",
+      "offset_s": 21360.0,
+      "closest_norad_id": 58336,
+      "minimum_distance_km": 17.209840828398963,
+      "screening_radius_km": 10.55945000476273,
+      "clearance_margin_km": 6.650390823636233,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:49:54.811735+00:00",
+      "offset_s": 21420.0,
+      "closest_norad_id": 45663,
+      "minimum_distance_km": 24.954920469967313,
+      "screening_radius_km": 11.100208064762732,
+      "clearance_margin_km": 13.85471240520458,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:50:54.811735+00:00",
+      "offset_s": 21480.0,
+      "closest_norad_id": 13819,
+      "minimum_distance_km": 11.877261996810958,
+      "screening_radius_km": 10.39488066476273,
+      "clearance_margin_km": 1.4823813320482273,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:51:54.811735+00:00",
+      "offset_s": 21540.0,
+      "closest_norad_id": 63298,
+      "minimum_distance_km": 15.879964320332796,
+      "screening_radius_km": 10.203845389762732,
+      "clearance_margin_km": 5.676118930570064,
+      "obstructed": false
+    },
+    {
+      "launch_time": "2026-09-21T14:52:54.811735+00:00",
+      "offset_s": 21600.0,
+      "closest_norad_id": 38761,
+      "minimum_distance_km": 1.8358528126018427,
+      "screening_radius_km": 11.685246059762731,
+      "clearance_margin_km": -9.849393247160888,
+      "obstructed": true
+    }
+  ],
+  "source_sha256": {
+    "backend/scanner.py": "ce31b4e2e02566ecafe41feb18bf88dbd31e842cfeae88746a4cda8cfd1d5218",
+    "backend/encounters.py": "3b96d2520a69eb72c99a1eeb4f83dd08ed2677670738168b5c357f3a93aa54b4",
+    "backend/windows.py": "5e4cc72b7786904e800e12f8ba8ab4a74840f6a78517e7bbb41110637b2d404c",
+    "backend/orbital.py": "2b899ef6c5fcf717c2253df58ab14880d3869f1a18f88201d5357e1b9bf3d9ba",
+    "validation/verify_iss_windows.py": "12ed265367b9fdc30bdcd2983c62caf0794cb7864975fc9721fe91df0338a842"
+  },
+  "completed_objects": 11997,
+  "unsafe_launches_so_far": 62,
+  "direct_near_threshold_pairs": 74,
+  "dense_flight_step_s": 1.0000791160501012,
+  "dense_scope_start_s": 600.0474696300607,
+  "numerical_caveat": "1s object ephemeris interpolation; <=radius+20m pairs directly repropagated; dense parabola remains approximate",
+  "elapsed_seconds": 548.961,
+  "obstructed_launches": 62
+}
