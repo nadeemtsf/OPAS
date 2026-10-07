@@ -1,0 +1,14 @@
+{
+  "status": "incomplete",
+  "reason": "Cloud execution disconnected during capture rerun; later stop check found no surviving task processes. No complete result or manifest was produced.",
+  "preset": "sso",
+  "request_directory": "570bda69537d",
+  "recorded_disk_checks": 192,
+  "benchmark_checkpoint_checks": 100,
+  "artifact_sha256": {
+    "optimized_sso.json": "21dba1d056aeb23b99fd0fe0002fe4be3fccd8a8d83344b51cbd653562908234",
+    "optimized_sso.log": "73e11f2ecaa15df88bebc654b7e8452db057cb8a4ace506d1922b9feb6becd53",
+    "570bda69537d/launches.jsonl": "89a4eb4bd8cd75e72cafacd91f19471ceac4bbc545d8faf7c15166f5ebd3b177",
+    "570bda69537d/inputs.json.gz": "f7717806bcc423ea5e818b99ca9e5a3eea9630eb8f705f5910a9eee36e9dd404"
+  }
+}

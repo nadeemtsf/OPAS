@@ -1,0 +1,33 @@
+{
+  "status": "complete",
+  "scope": "Capture integrity and matching recorded inputs/checks; not an additional propagation rerun.",
+  "presets": {
+    "iss": {
+      "capture_directory": "captures/875023d586a7",
+      "objects": 11997,
+      "checks": 691,
+      "manifest_verified": true,
+      "catalogue_trajectory_horizon_radii_equal": true,
+      "classifications_windows_equal": true,
+      "measured_production_sources_equal": true
+    },
+    "starlink": {
+      "capture_directory": "captures/a451a9dbe265",
+      "objects": 13478,
+      "checks": 418,
+      "manifest_verified": true,
+      "catalogue_trajectory_horizon_radii_equal": true,
+      "classifications_windows_equal": true,
+      "measured_production_sources_equal": true
+    },
+    "sso": {
+      "capture_directory": "captures/3dfba08d3cba",
+      "objects": 4753,
+      "checks": 271,
+      "manifest_verified": true,
+      "catalogue_trajectory_horizon_radii_equal": true,
+      "classifications_windows_equal": true,
+      "measured_production_sources_equal": true
+    }
+  }
+}

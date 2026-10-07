@@ -1,0 +1,53 @@
+         406996 function calls (382907 primitive calls) in 12.368 seconds
+
+   Ordered by: cumulative time
+   List reduced from 388 to 45 due to restriction <45>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+      278    0.070    0.000   10.762    0.039 batch_prediction.py:17(batch_positions)
+      278    9.433    0.034    9.433    0.034 {method '_sgp4' of 'sgp4.vallado_cpp.SatrecArray' objects}
+      278    0.004    0.000    8.803    0.032 wrapper.py:38(sgp4)
+35447/11450    0.549    0.000    4.145    0.000 scan_plan.py:46(predictions)
+      4/1    0.103    0.026    4.139    4.139 scanner.py:114(count_threats_fast)
+     1709    0.002    0.000    1.860    0.001 einsumfunc.py:1057(einsum)
+     1709    1.846    0.001    1.846    0.001 {built-in method numpy._core._multiarray_umath.c_einsum}
+    36559    0.016    0.000    0.108    0.000 fromnumeric.py:2477(any)
+    36559    0.029    0.000    0.093    0.000 fromnumeric.py:89(_wrapreduction_any_all)
+      562    0.077    0.000    0.079    0.000 _function_base_impl.py:1391(diff)
+        7    0.000    0.000    0.067    0.010 sgp4lib.py:315(rotation_at)
+    70/35    0.000    0.000    0.067    0.002 descriptorlib.py:9(__get__)
+        3    0.000    0.000    0.066    0.022 batch_prediction.py:13(frame_rotations)
+        7    0.000    0.000    0.065    0.009 timelib.py:855(gast)
+    37129    0.064    0.000    0.064    0.000 {method 'reduce' of 'numpy.ufunc' objects}
+        7    0.000    0.000    0.062    0.009 timelib.py:785(_nutation_angles_radians)
+        7    0.000    0.000    0.062    0.009 nutationlib.py:26(iau2000a_radians)
+        7    0.055    0.008    0.062    0.009 nutationlib.py:236(iau2000a)
+        3    0.027    0.009    0.039    0.013 scan_plan.py:18(__init__)
+        1    0.000    0.000    0.039    0.039 monitor.py:66(target)
+        1    0.000    0.000    0.039    0.039 monitor.py:201(_run)
+      279    0.001    0.000    0.014    0.000 fromnumeric.py:2241(clip)
+      287    0.001    0.000    0.013    0.000 fromnumeric.py:51(_wrapfunc)
+      279    0.001    0.000    0.012    0.000 {method 'clip' of 'numpy.ndarray' objects}
+      279    0.011    0.000    0.011    0.000 _methods.py:98(_clip)
+      279    0.009    0.000    0.010    0.000 numeric.py:98(zeros_like)
+       42    0.006    0.000    0.006    0.000 {method 'dot' of 'numpy.ndarray' objects}
+      282    0.001    0.000    0.006    0.000 timelib.py:704(_leap_seconds)
+      570    0.001    0.000    0.006    0.000 {method 'all' of 'numpy.ndarray' objects}
+      299    0.001    0.000    0.006    0.000 _compatibility.py:9(interp)
+      570    0.000    0.000    0.005    0.000 _methods.py:66(_all)
+    73142    0.005    0.000    0.005    0.000 {built-in method builtins.len}
+    35994    0.004    0.000    0.004    0.000 {built-in method builtins.min}
+    36561    0.004    0.000    0.004    0.000 {method 'items' of 'dict' objects}
+      299    0.001    0.000    0.004    0.000 _function_base_impl.py:1527(interp)
+      605    0.003    0.000    0.003    0.000 {built-in method numpy.asarray}
+        1    0.000    0.000    0.003    0.003 encounters.py:33(has_close_approach)
+     1608    0.002    0.000    0.003    0.000 proximity.py:18(geodetic_to_ecef)
+    36559    0.003    0.000    0.003    0.000 fromnumeric.py:2472(_any_dispatcher)
+        4    0.000    0.000    0.003    0.001 encounters.py:68(distances)
+        7    0.002    0.000    0.002    0.000 nutationlib.py:100(equation_of_the_equinoxes_complimentary_terms)
+    36010    0.002    0.000    0.002    0.000 {built-in method builtins.isinstance}
+        4    0.000    0.000    0.002    0.001 prediction.py:6(satellite_positions)
+     8552    0.002    0.000    0.002    0.000 einsumfunc.py:1049(_einsum_dispatcher)
+        4    0.000    0.000    0.002    0.001 vectorlib.py:73(at)
+
+

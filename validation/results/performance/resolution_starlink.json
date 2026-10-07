@@ -1,0 +1,79 @@
+{
+  "status": "complete",
+  "preset": "starlink",
+  "scope": "Selected near-threshold pairs only; not a full-catalogue 0.2s reference.",
+  "flight_step_seconds": 0.1999974552139404,
+  "cases": [
+    {
+      "offset_s": 21165.0,
+      "norad_id": 43819,
+      "radius_km": 10.22869371476273,
+      "reference_distance_km": 10.229271466136135,
+      "fine_distance_km": 10.23082549456874,
+      "distance_change_m": 1.5540284326043263,
+      "reference_obstructed": false,
+      "fine_obstructed": false,
+      "production_pair_obstructed": false
+    },
+    {
+      "offset_s": 18580.0,
+      "norad_id": 55416,
+      "radius_km": 10.226688724762731,
+      "reference_distance_km": 10.234383181686987,
+      "fine_distance_km": 10.233434085846092,
+      "distance_change_m": -0.9490958408946426,
+      "reference_obstructed": false,
+      "fine_obstructed": false,
+      "production_pair_obstructed": false
+    },
+    {
+      "offset_s": 15125.0,
+      "norad_id": 100143,
+      "radius_km": 10.397697749762731,
+      "reference_distance_km": 10.417026960338477,
+      "fine_distance_km": 10.419367751558891,
+      "distance_change_m": 2.3407912204138626,
+      "reference_obstructed": false,
+      "fine_obstructed": false,
+      "production_pair_obstructed": false
+    },
+    {
+      "offset_s": 140.0,
+      "norad_id": 69542,
+      "radius_km": 10.965797654762731,
+      "reference_distance_km": 10.962272894244261,
+      "fine_distance_km": 10.931732876316753,
+      "distance_change_m": -30.5400179275086,
+      "reference_obstructed": true,
+      "fine_obstructed": true,
+      "production_pair_obstructed": true
+    },
+    {
+      "offset_s": 6145.0,
+      "norad_id": 39438,
+      "radius_km": 10.526310004762731,
+      "reference_distance_km": 10.521407786350514,
+      "fine_distance_km": 10.519963238466955,
+      "distance_change_m": -1.4445478835583003,
+      "reference_obstructed": true,
+      "fine_obstructed": true,
+      "production_pair_obstructed": true
+    },
+    {
+      "offset_s": 20600.0,
+      "norad_id": 48755,
+      "radius_km": 10.489584124762732,
+      "reference_distance_km": 10.476109620371531,
+      "fine_distance_km": 10.474623706241628,
+      "distance_change_m": -1.4859141299030654,
+      "reference_obstructed": true,
+      "fine_obstructed": true,
+      "production_pair_obstructed": true
+    }
+  ],
+  "classification_changes": 0,
+  "production_pair_disagreements": 0,
+  "elapsed_seconds": 7.006746068000211,
+  "source_sha256": "2a2a783bbb2e68709831bac72ffdc2960b6218ed106afc20685e407acadad2fd",
+  "snapshot_sha256": "c13469e0cee49549504c9de7e45388c926e32ebe5c3b3ec6ccb81855838b1fa8"
+}

@@ -1,0 +1,4 @@
+-r ../backend/requirements-dev.txt
+skyfield==1.55
+sgp4==2.27
+numpy==2.3.5

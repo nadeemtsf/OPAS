@@ -1,0 +1,88 @@
+{
+  "status": "complete",
+  "profile_scope": "Three complete-catalogue ISS launches at offsets 0,60,120 seconds; two clear, one obstructed. cProfile adds measurement overhead.",
+  "worker_scope": "Four ISS launches; wall-minus-compute includes spawn, initialization, serialization and scheduling; not a pure overhead counter.",
+  "findings": "Raw SGP4 remains the largest cost. Batching removes repeated per-object frame construction and broad-screen calls. Fixed mission setup is small. Worker startup is seconds on this host; the exact Windows 2436-second request cannot be attributed without its host profile and inputs.",
+  "measurements": {
+    "baseline_profile": {
+      "elapsed_seconds": 21.4396865359995,
+      "classifications": [
+        {
+          "offset_s": 0,
+          "obstructed": true,
+          "seconds": 7.057988463000584
+        },
+        {
+          "offset_s": 60,
+          "obstructed": false,
+          "seconds": 7.023212048999994
+        },
+        {
+          "offset_s": 120,
+          "obstructed": false,
+          "seconds": 7.155755964000491
+        }
+      ],
+      "source_sha256": {
+        "scanner.py": "24ccf91fb22b0b5ad9ea6bc91a5d932b054817f9e02c32c2eff53600ed83c32a",
+        "encounters.py": "ad5de627baf89488d4055e6650f5a5ac90e6c8d1c120faa5adbac585c5216040",
+        "prediction.py": "70356d60684ff9cb5f99dc45cd22628f7a924abf7b4d4744575d75670ba44f80",
+        "windows.py": "7faa3e20726bd38c4caab1875b24aa56971f8e7f003eddab077cee0d28485f63",
+        "orbital.py": "2b899ef6c5fcf717c2253df58ab14880d3869f1a18f88201d5357e1b9bf3d9ba"
+      }
+    },
+    "optimized_profile": {
+      "elapsed_seconds": 12.562264421000691,
+      "classifications": [
+        {
+          "offset_s": 0,
+          "obstructed": true,
+          "seconds": 4.226585600999897
+        },
+        {
+          "offset_s": 60,
+          "obstructed": false,
+          "seconds": 4.158591862999856
+        },
+        {
+          "offset_s": 120,
+          "obstructed": false,
+          "seconds": 3.986680824999894
+        }
+      ],
+      "source_sha256": {
+        "scanner.py": "094a00e7295a0db7cec9af1096f819e6bbd180cf7677408945b09282af8bff3c",
+        "encounters.py": "ad5de627baf89488d4055e6650f5a5ac90e6c8d1c120faa5adbac585c5216040",
+        "prediction.py": "70356d60684ff9cb5f99dc45cd22628f7a924abf7b4d4744575d75670ba44f80",
+        "windows.py": "c38b346991bf2286596c9bec552b3565e8aba4efcd0778d4a6812ff410c4db10",
+        "orbital.py": "2b899ef6c5fcf717c2253df58ab14880d3869f1a18f88201d5357e1b9bf3d9ba",
+        "batch_prediction.py": "7d0064f4679527ccc1ae6307594c29df8f2f8d64fef637ffd1f0eaff8c426212",
+        "scan_plan.py": "4f36358c8655bf651fe33d540dc43c82c2111f2ce3b48fa31e9ea3e9fc59244b"
+      }
+    },
+    "baseline_workers_1": {
+      "elapsed_seconds": 26.380372951000027,
+      "compute_sum_seconds": 25.266290991999995,
+      "largest_check_seconds": 6.506176797999615,
+      "wall_less_serial_sum_or_parallel_max_seconds": 1.114081959000032
+    },
+    "baseline_workers_4": {
+      "elapsed_seconds": 11.227414773999953,
+      "compute_sum_seconds": 28.214328721999664,
+      "largest_check_seconds": 7.373816520999753,
+      "wall_less_serial_sum_or_parallel_max_seconds": 3.8535982530002
+    },
+    "optimized_workers_1": {
+      "elapsed_seconds": 16.915221801999905,
+      "compute_sum_seconds": 15.763655922999533,
+      "largest_check_seconds": 4.039634182000555,
+      "wall_less_serial_sum_or_parallel_max_seconds": 1.1515658790003727
+    },
+    "optimized_workers_4": {
+      "elapsed_seconds": 8.001545103000353,
+      "compute_sum_seconds": 16.129358149000836,
+      "largest_check_seconds": 4.137247399000444,
+      "wall_less_serial_sum_or_parallel_max_seconds": 3.8642977039999096
+    }
+  }
+}

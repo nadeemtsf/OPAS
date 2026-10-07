@@ -8,6 +8,7 @@ node_modules/
 *.so
 *.egg-info/
 backend/native/build/
+backend/run-evidence/
 
 # IDE and Editor folders
 .claude/

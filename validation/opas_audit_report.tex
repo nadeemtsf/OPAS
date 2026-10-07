@@ -17,7 +17,7 @@
 \title{Auditing the OPAS Orbital Proximity Alert System's Safe-Window Scanner}
 \author[1]{Nadim Baboun}
 \affil[1]{Al-Quds University}
-\date{6 October 2026}
+\date{7 October 2026}
 
 \begin{document}
 
@@ -53,9 +53,9 @@ orbital uncertainty, ascent coverage and further runtime work remain open.
 The Orbital Proximity Alert System (OPAS) is a lightweight web tool for
 screening planned satellite and rocket trajectories for proximity to
 tracked objects\footnote{Source repository:
-\url{https://github.com/nadeemtsf/OPAS}. The follow-up commits documented
-here were local at the time of this report; their measurements should not
-be attributed to the repository's default branch.}. Given a launch site,
+\url{https://github.com/nadeemtsf/OPAS}. The follow-up measurements belong to the
+\texttt{fix/refine-close-approaches} branch, not the repository's default
+branch.}. Given a launch site,
 target altitude and inclination, its \texttt{/safe-windows} endpoint
 returns candidate launch-time intervals that its model classifies as
 clear. OPAS ingests TLE sets from Space-Track, propagates object positions
@@ -439,7 +439,7 @@ scanner-only comparison. Follow-up agreement compares identical timestamps.
 
 \subsection{Supplementary replay, integration and runtime}
 
-On the final integration version, archived pair replay detected all 451
+On the earlier integration version, archived pair replay detected all 451
 selected unsafe pairs and retained all 3,089 nearby clear controls, with
 zero disagreements across ISS, Starlink and SSO. Six additional nearby
 pairs had archived closest approaches before the production flight scope
@@ -449,7 +449,7 @@ Starlink or SSO window-finder rerun. The six selected approximately
 production pair disagreements; this does not establish that the entire
 catalogue was checked at that resolution.
 
-Integration checks passed: 38 backend tests in 6.789~s, nine frontend
+Earlier integration checks passed: 38 backend tests in 6.789~s, nine frontend
 timestamp tests across UTC, Jerusalem and New York, and frontend build
 and lint. These are software checks, not physical safety validation.
 
@@ -460,6 +460,50 @@ replay under an eight-core CPU quota; BLAS/OpenMP used one thread.
 Timings include instrumented classification phases but exclude input
 setup, startup and final serialization. They describe shared load, not
 isolated latency or a controlled original-scanner speed comparison.
+
+\subsection{Later profiling and full preset comparison}
+
+Matched six-hour searches compare the pre-optimization branch with exact
+batched SGP4, shared Skyfield transforms and reused mission geometry. Radii,
+altitude selection, interval refinement and strict prediction errors remain
+unchanged. Profiling identified repeated orbital-position calculations as
+the main cost; worker initialization and scheduling contributed seconds on
+this host. A separate endpoint regression now retains near-qualifying
+10-second runs for checked 5-second endpoints without reducing the required
+900-second duration.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Later matched searches: runtime and independent sampled agreement.}
+\label{tab:performance}
+\begin{tabular}{lrrrr}
+\toprule
+Preset & Before (s) & After (s) & Agreement & False-safe \\
+\midrule
+ISS (420 km) & 1292.461 & 707.157 & 691/691 & 0/565 \\
+Starlink (550 km) & 708.826 & 436.498 & 418/418 & 0/281 \\
+SSO (705 km) & 163.709 & 99.228 & 271/271 & 0/144 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+All 1,380 checked classifications are unchanged, with zero disagreements
+against a separate approximately one-second flight reference. The reference
+covers all 4,321 five-second launch times per preset, finding no qualifying
+15-minute span in ISS, Starlink or SSO. Forty-two unfiltered full-catalogue
+controls and 18 selected approximately 0.2-second pair controls also agree.
+The final software suite passes 77 backend and 25 frontend tests, build and
+lint. Exact-input captures and complete journals pass checksum/count audits.
+
+The main workloads ran sequentially with four workers and one BLAS/OpenMP
+thread under the same eight-core quota; small software controls overlapped
+parts of the initial series, and capture reruns followed a workspace
+reconnect. Times include scanner/worker preparation and capture, excluding
+snapshot reading and trajectory generation. They are
+single observed runs, separate from the earlier shared-load timings and the
+fresh Windows run, whose exact inputs were unavailable. Agreement remains
+sampled-model evidence; no positive real-catalogue window was available.
 
 \section{Discussion}
 \label{sec:discussion}
@@ -525,8 +569,10 @@ fix, not validation of that endpoint's risk model.
 \textbf{Vehicle model and ascent.} The vehicle follows OPAS's simplified
 orbit construction, which includes a schematic initial altitude ramp.
 Safe-window flight checking starts after approximately 600~s, so ascent
-safety is not established. The production and dense-reference starts
-are slightly different because each rounds to its own flight grid.
+safety is not established. Earlier production and dense-reference starts
+differ slightly because of flight-grid rounding; the later preset reference includes the exact
+production start. The finer reference regenerates the nominal vehicle,
+whereas production interpolates stored waypoints.
 Neither represents a vehicle-specific guided launch trajectory.
 
 \textbf{Catalogue filtering and physical uncertainty.} The existing
@@ -544,9 +590,10 @@ resolution controls support the investigated cases, not a universal
 mathematical guarantee for arbitrary trajectories or invalid orbital data.
 
 \textbf{Validation coverage.} All measurements use one snapshot, with
-different coverage across stages. Full follow-up window searches are not
-reported for Starlink, SSO, polar or GEO, and the ISS search yielded no
-qualifying positive window.
+different coverage across stages. The later full-horizon references cover
+ISS, Starlink and SSO; polar and GEO follow-up searches remain unreported.
+None of the three later presets
+yielded a qualifying positive window.
 
 \textbf{Historical conventions.} Archived offsets drift slightly from
 clock minutes. Original comparisons retain those offsets and sample-based
@@ -555,13 +602,14 @@ Comparison with exact-clock results requires matching timestamps.
 
 \textbf{Search and versions.} The follow-up removes the historical
 first-five-candidate restriction and splits unsafe runs, but coarse
-discovery is not a continuous-time completeness proof. Final integration
-checks remain separate from the earlier full numerical search.
+discovery is not a continuous-time completeness proof. Earlier integration
+checks remain separate from the earlier full search;
+the later matched stage records its own source hashes and reference coverage.
 
 \textbf{Threshold and runtime.} The radius and age penalty remain
-engineering assumptions. The performance measurements reflect overlapping
-instrumented calculations on one environment; no isolated latency,
-controlled speedup or post-integration full-search timing is established.
+engineering assumptions. Earlier timings reflect overlapping instrumented
+calculations. The later matched stage measures speedup on one environment, with main workloads
+sequential; single-run timings do not establish Windows or general latency.
 
 \section{Conclusion and Future Work}
 \label{sec:conclusion}
@@ -583,8 +631,9 @@ not continuous or physical safety.
 Remaining work includes bounding intervening launch times and refinement
 error, modeling vehicle-specific ascent, calibrating uncertainty and
 evaluating anisotropic screening. Broader snapshots, presets and positive
-returned-window cases are needed. Runtime improvements require controlled
-benchmarks while preserving the verification criterion.
+returned-window cases are needed. Later matched benchmarks reduce runtime
+while preserving checked classifications; broader runtime measurements
+remain needed.
 
 \appendix
 \section{Evidence and Reproducibility Records}

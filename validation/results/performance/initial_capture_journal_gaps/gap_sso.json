@@ -1,0 +1,23 @@
+{
+  "preset": "sso",
+  "recorded_journal_checks": 268,
+  "benchmark_checks": 271,
+  "missing_checks": [
+    {
+      "offset_s": 11100.0,
+      "launch_time": "2026-09-21T11:57:54.811735+00:00",
+      "obstructed": false
+    },
+    {
+      "offset_s": 11160.0,
+      "launch_time": "2026-09-21T11:58:54.811735+00:00",
+      "obstructed": true
+    },
+    {
+      "offset_s": 11220.0,
+      "launch_time": "2026-09-21T11:59:54.811735+00:00",
+      "obstructed": true
+    }
+  ],
+  "note": "Original files preserved unchanged. Cause of the missing append records was not established; final atomic journals and count audits were added. New captures rerun separately."
+}

@@ -1,0 +1,179 @@
+{
+  "status": "complete",
+  "phase": "dense",
+  "preset": "iss",
+  "snapshot_sha256": "c13469e0cee49549504c9de7e45388c926e32ebe5c3b3ec6ccb81855838b1fa8",
+  "t0": "2026-09-21T08:52:54.811735+00:00",
+  "parameters": {
+    "lat": 28.573,
+    "lon": -80.649,
+    "alt_km": 420,
+    "inclination": 51.6,
+    "hours": 6
+  },
+  "candidate_count": 11997,
+  "launch_count": 14,
+  "workers": 4,
+  "launch_step_seconds": 5,
+  "dense_flight_step_s": 1.0000791160501012,
+  "flight_start_seconds": 603.3560647056598,
+  "flight_end_seconds": 5569.440597283014,
+  "prefilter_stride": 1,
+  "scope": "Whole horizon at exact launch grid; nominal post-ascent model. Recorded distances concern dense-checked pairs; distant pairs excluded by measured displacement bounds.",
+  "source_sha256": {
+    "validation/reference_presets.py": "48afa49833231983c16df4d50fab4d9950cf7442a64e4f51402774cff9ef0fd2",
+    "validation/verify_iss_windows.py": "12ed265367b9fdc30bdcd2983c62caf0794cb7864975fc9721fe91df0338a842",
+    "backend/orbital.py": "2b899ef6c5fcf717c2253df58ab14880d3869f1a18f88201d5357e1b9bf3d9ba",
+    "backend/proximity.py": "d94ba443edb8b5682982b8062623ebf53cb3d15f5c3b93d92f63f2cf13fb397a"
+  },
+  "completed_objects": 11997,
+  "obstructed_so_far": 5,
+  "elapsed_seconds_so_far": 228.01276049699936,
+  "launches": [
+    {
+      "offset_s": 0.0,
+      "launch_time": "2026-09-21T08:52:54.811735+00:00",
+      "closest_norad_id": 69762,
+      "minimum_distance_km": 6.508304601127988,
+      "screening_radius_km": 10.226688724762731,
+      "clearance_margin_km": -3.718384123634743,
+      "obstructed": true,
+      "clearance_margin_lower_bound_km": -3.718384123634743
+    },
+    {
+      "offset_s": 550.0,
+      "launch_time": "2026-09-21T09:02:04.811735+00:00",
+      "closest_norad_id": 30764,
+      "minimum_distance_km": 10.348306584504284,
+      "screening_radius_km": 10.388263914762732,
+      "clearance_margin_km": -0.0399573302584475,
+      "obstructed": true,
+      "clearance_margin_lower_bound_km": -0.0399573302584475
+    },
+    {
+      "offset_s": 1800.0,
+      "launch_time": "2026-09-21T09:22:54.811735+00:00",
+      "closest_norad_id": 60487,
+      "minimum_distance_km": 38.108046650293986,
+      "screening_radius_km": 10.676008824762732,
+      "clearance_margin_km": 27.432037825531253,
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 27.432037825531253
+    },
+    {
+      "offset_s": 2200.0,
+      "launch_time": "2026-09-21T09:29:34.811735+00:00",
+      "closest_norad_id": 38764,
+      "minimum_distance_km": 11.071508517304524,
+      "screening_radius_km": 11.015935094762732,
+      "clearance_margin_km": 0.05557342254179254,
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 0.05557342254179254
+    },
+    {
+      "offset_s": 3600.0,
+      "launch_time": "2026-09-21T09:52:54.811735+00:00",
+      "closest_norad_id": 62683,
+      "minimum_distance_km": 24.54074107778494,
+      "screening_radius_km": 10.372519909762731,
+      "clearance_margin_km": 14.168221168022209,
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 14.168221168022209
+    },
+    {
+      "offset_s": 7200.0,
+      "launch_time": "2026-09-21T10:52:54.811735+00:00",
+      "closest_norad_id": 66667,
+      "minimum_distance_km": 45.32641019781191,
+      "screening_radius_km": 11.201711304762732,
+      "clearance_margin_km": 34.12469889304918,
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 34.12469889304918
+    },
+    {
+      "offset_s": 10625.0,
+      "launch_time": "2026-09-21T11:49:59.811735+00:00",
+      "closest_norad_id": 56201,
+      "minimum_distance_km": 10.25976061035223,
+      "screening_radius_km": 10.196204944762732,
+      "clearance_margin_km": 0.06355566558949732,
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 0.06355566558949732
+    },
+    {
+      "offset_s": 10800.0,
+      "launch_time": "2026-09-21T11:52:54.811735+00:00",
+      "closest_norad_id": 100138,
+      "minimum_distance_km": 27.11567086620086,
+      "screening_radius_km": 10.363038494762732,
+      "clearance_margin_km": 16.752632371438125,
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 16.752632371438125
+    },
+    {
+      "offset_s": 14400.0,
+      "launch_time": "2026-09-21T12:52:54.811735+00:00",
+      "closest_norad_id": 14064,
+      "minimum_distance_km": 12.150917168590192,
+      "screening_radius_km": 10.697581789762731,
+      "clearance_margin_km": 1.453335378827461,
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 1.453335378827461
+    },
+    {
+      "offset_s": 17790.0,
+      "launch_time": "2026-09-21T13:49:24.811735+00:00",
+      "closest_norad_id": 100294,
+      "minimum_distance_km": 10.472073922732354,
+      "screening_radius_km": 10.437708034762732,
+      "clearance_margin_km": 0.03436588796962248,
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 0.03436588796962248
+    },
+    {
+      "offset_s": 18000.0,
+      "launch_time": "2026-09-21T13:52:54.811735+00:00",
+      "closest_norad_id": 54787,
+      "minimum_distance_km": 44.384863838306856,
+      "screening_radius_km": 10.410856064762731,
+      "clearance_margin_km": 33.97400777354412,
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 33.97400777354412
+    },
+    {
+      "offset_s": 18310.0,
+      "launch_time": "2026-09-21T13:58:04.811735+00:00",
+      "closest_norad_id": 100447,
+      "minimum_distance_km": 10.174550556127574,
+      "screening_radius_km": 10.221712639762732,
+      "clearance_margin_km": -0.047162083635157614,
+      "obstructed": true,
+      "clearance_margin_lower_bound_km": -0.047162083635157614
+    },
+    {
+      "offset_s": 18465.0,
+      "launch_time": "2026-09-21T14:00:39.811735+00:00",
+      "closest_norad_id": 100439,
+      "minimum_distance_km": 10.209945591162928,
+      "screening_radius_km": 10.252557304762732,
+      "clearance_margin_km": -0.04261171359980409,
+      "obstructed": true,
+      "clearance_margin_lower_bound_km": -0.04261171359980409
+    },
+    {
+      "offset_s": 21600.0,
+      "launch_time": "2026-09-21T14:52:54.811735+00:00",
+      "closest_norad_id": 38761,
+      "minimum_distance_km": 1.8358528126018427,
+      "screening_radius_km": 11.685246059762731,
+      "clearance_margin_km": -9.849393247160888,
+      "obstructed": true,
+      "clearance_margin_lower_bound_km": -9.849393247160888
+    }
+  ],
+  "elapsed_seconds": 228.01381617199968,
+  "dense_pairs": 167958,
+  "direct_near_threshold_pairs": 6,
+  "clear": 9,
+  "obstructed": 5
+}

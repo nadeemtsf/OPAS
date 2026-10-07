@@ -1,0 +1,80 @@
+MongoDB connection check failed: localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 0.001s, Topology Description: <TopologyDescription id: 6ac55e3551c7d06e4b25e137, topology_type: Unknown, servers: [<ServerDescription ('localhost', 1) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+{
+  "status": "complete",
+  "preset": "sso",
+  "scope": "Selected near-threshold pairs only; not a full-catalogue 0.2s reference.",
+  "flight_step_seconds": 0.2000032201450708,
+  "cases": [
+    {
+      "offset_s": 2400.0,
+      "norad_id": 35806,
+      "radius_km": 11.050853764762731,
+      "reference_distance_km": 11.053313293038949,
+      "fine_distance_km": 11.05416573762026,
+      "distance_change_m": 0.8524445813105075,
+      "reference_obstructed": false,
+      "fine_obstructed": false,
+      "production_pair_obstructed": false
+    },
+    {
+      "offset_s": 4270.0,
+      "norad_id": 34376,
+      "radius_km": 10.351520229762732,
+      "reference_distance_km": 10.354872100604618,
+      "fine_distance_km": 10.354512509038004,
+      "distance_change_m": -0.3595915666139149,
+      "reference_obstructed": false,
+      "fine_obstructed": false,
+      "production_pair_obstructed": false
+    },
+    {
+      "offset_s": 13895.0,
+      "norad_id": 61404,
+      "radius_km": 10.398108809762732,
+      "reference_distance_km": 10.40303043462597,
+      "fine_distance_km": 10.402868940789144,
+      "distance_change_m": -0.16149383682595442,
+      "reference_obstructed": false,
+      "fine_obstructed": false,
+      "production_pair_obstructed": false
+    },
+    {
+      "offset_s": 20625.0,
+      "norad_id": 1433,
+      "radius_km": 10.225428569762732,
+      "reference_distance_km": 10.221555104765674,
+      "fine_distance_km": 10.2205841359717,
+      "distance_change_m": -0.9709687939736256,
+      "reference_obstructed": true,
+      "fine_obstructed": true,
+      "production_pair_obstructed": true
+    },
+    {
+      "offset_s": 13665.0,
+      "norad_id": 60623,
+      "radius_km": 10.22270496976273,
+      "reference_distance_km": 10.217455816456448,
+      "fine_distance_km": 10.214909836073499,
+      "distance_change_m": -2.5459803829495087,
+      "reference_obstructed": true,
+      "fine_obstructed": true,
+      "production_pair_obstructed": true
+    },
+    {
+      "offset_s": 1300.0,
+      "norad_id": 34035,
+      "radius_km": 10.42328307476273,
+      "reference_distance_km": 10.408800245434776,
+      "fine_distance_km": 10.407243495800483,
+      "distance_change_m": -1.5567496342931975,
+      "reference_obstructed": true,
+      "fine_obstructed": true,
+      "production_pair_obstructed": true
+    }
+  ],
+  "classification_changes": 0,
+  "production_pair_disagreements": 0,
+  "elapsed_seconds": 6.785650007000186,
+  "source_sha256": "2a2a783bbb2e68709831bac72ffdc2960b6218ed106afc20685e407acadad2fd",
+  "snapshot_sha256": "c13469e0cee49549504c9de7e45388c926e32ebe5c3b3ec6ccb81855838b1fa8"
+}

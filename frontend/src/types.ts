@@ -66,6 +66,8 @@ export interface SafeWindow {
 }
 
 export interface WindowDiagnostics {
+  evidence?: { inputs_sha256_uncompressed: string; inputs_url: string;
+    checks_url: string; result_url: string };
   request_id: string;
   status: "running" | "complete" | "incomplete";
   phase: string;
@@ -78,6 +80,7 @@ export interface WindowDiagnostics {
   obstructed_launch_samples?: number;
   candidate_spans?: number;
   qualifying_spans?: number;
+  near_qualifying_spans?: number;
   returned_windows?: number;
   extra_validation_checks?: number;
   validation_obstructed_samples?: number;

@@ -1,0 +1,26 @@
+MongoDB connection check failed: localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms), Timeout: 0.001s, Topology Description: <TopologyDescription id: 6ac55e2827f8e6cbcbe5bc01, topology_type: Unknown, servers: [<ServerDescription ('localhost', 1) server_type: Unknown, rtt: None, error=AutoReconnect('localhost:1: [Errno 111] Connection refused (configured timeouts: socketTimeoutMS: 20000.0ms, connectTimeoutMS: 20000.0ms)')>]>
+sso 200 4753 5.36
+sso 400 4753 9.18
+sso 600 4753 13.04
+sso 800 4753 17.36
+sso 1000 4753 21.32
+sso 1200 4753 25.13
+sso 1400 4753 28.88
+sso 1600 4753 32.67
+sso 1800 4753 36.61
+sso 2000 4753 40.23
+sso 2200 4753 44.07
+sso 2400 4753 47.79
+sso 2600 4753 51.54
+sso 2800 4753 55.37
+sso 3000 4753 59.16
+sso 3200 4753 62.85
+sso 3400 4753 66.52
+sso 3600 4753 70.21
+sso 3800 4753 74.08
+sso 4000 4753 77.85
+sso 4200 4753 81.69
+sso 4400 4753 85.6
+sso 4600 4753 89.39
+sso 4753 4753 92.19
+sso complete 92.18663133100017

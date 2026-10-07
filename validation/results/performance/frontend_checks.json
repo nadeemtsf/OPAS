@@ -1,0 +1,14 @@
+{
+  "test": {
+    "exit_code": 0,
+    "elapsed_seconds": 0.6112473140001384
+  },
+  "build": {
+    "exit_code": 0,
+    "elapsed_seconds": 3.506890296000165
+  },
+  "lint": {
+    "exit_code": 0,
+    "elapsed_seconds": 2.0441575060003743
+  }
+}

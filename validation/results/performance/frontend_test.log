@@ -1,0 +1,38 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> frontend@0.0.0 test
+> node --test tests/*.test.mjs
+
+✔ checked window keeps its exact timestamp in UTC (1.798919ms)
+✔ manually entered time is interpreted as UTC in UTC (0.299903ms)
+✔ checked window keeps its exact timestamp in Asia/Jerusalem (0.347374ms)
+✔ manually entered time is interpreted as UTC in Asia/Jerusalem (0.196992ms)
+✔ checked window keeps its exact timestamp in America/New_York (0.323929ms)
+✔ manually entered time is interpreted as UTC in America/New_York (0.178544ms)
+✔ a manual edit replaces the previously selected window timestamp (0.187908ms)
+✔ a selected offset timestamp displays UTC without changing the checked instant (0.187457ms)
+✔ invalid time input cannot become a collision-check timestamp (0.646785ms)
+✔ fragmented SSE progress, heartbeat and final verified result are parsed (15.545214ms)
+✔ error event is incomplete, never a successful empty result (1.876879ms)
+✔ a truncated stream cannot accept partial verification (0.470155ms)
+✔ a backend without a progress endpoint cannot silently supply unchecked windows (1.101819ms)
+✔ non-success HTTP errors retain the server's explanation (0.684802ms)
+✔ client rejects missing coverage report (0.166516ms)
+✔ client rejects incomplete search (0.105897ms)
+✔ client rejects inconsistent sample counts (0.091195ms)
+✔ client rejects negative sample counts (0.132887ms)
+✔ client rejects unsafe launch (0.508501ms)
+✔ client rejects unchecked endpoint (0.119727ms)
+✔ client rejects missing launch samples (0.084725ms)
+✔ client rejects excessive launch gap (0.068451ms)
+✔ client rejects invalid duration (0.07426ms)
+✔ client rejects outside requested horizon (0.072447ms)
+✔ a completed search with no qualifying window has valid diagnostics (0.098926ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 412.186773

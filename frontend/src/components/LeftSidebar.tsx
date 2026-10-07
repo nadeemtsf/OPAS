@@ -1,5 +1,5 @@
 import type { SafeWindow, WindowDiagnostics } from "../types";
-import { PRESETS } from "../constants";
+import { API_BASE, PRESETS } from "../constants";
 
 interface Props {
   preset: number;
@@ -42,7 +42,7 @@ const phases: Record<string, string> = {
   coarse_discovery: "Discovering candidate regions",
   minute_discovery: "Checking minute launches",
   fine_verification: "Checking candidate launches every 10 seconds",
-  window_validation: "Validating qualifying spans every 5 seconds",
+  window_validation: "Checking spans and endpoints every 5 seconds",
   complete: "Verification completed",
 };
 
@@ -185,6 +185,8 @@ export function LeftSidebar(props: Props) {
               )}
               <p>Extra 5s checks: {props.windowDiagnostics.extra_validation_checks ?? 0}<br />
                 New obstructions: {props.windowDiagnostics.validation_obstructed_samples ?? 0}</p>
+              {(props.windowDiagnostics.near_qualifying_spans ?? 0) > 0 &&
+                <p>Spans close to 15 minutes: {props.windowDiagnostics.near_qualifying_spans}</p>}
               <p className="text-gray-400">Clearance applies to sampled launches in the post-ascent model.</p>
               <details>
                 <summary className="cursor-pointer text-blue-300">Request and model details</summary>
@@ -198,6 +200,14 @@ export function LeftSidebar(props: Props) {
               <button onClick={() => downloadDiagnostics(props)} className="text-blue-300 underline cursor-pointer">
                 Download check details
               </button>
+              {props.windowDiagnostics.evidence && props.windowDiagnostics.status !== "running" && <div className="flex flex-col gap-1">
+                <a href={`${API_BASE}${props.windowDiagnostics.evidence.inputs_url}`} className="text-blue-300 underline">
+                  Download run inputs
+                </a>
+                <a href={`${API_BASE}${props.windowDiagnostics.evidence.checks_url}`} className="text-blue-300 underline">
+                  Download launch checks
+                </a>
+              </div>}
             </>
           )}
         </section>

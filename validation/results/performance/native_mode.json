@@ -1,0 +1,17 @@
+{
+  "status": "complete",
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+  "extension_sha256": "573b5b8cb2be6111cfc6a76bfffa908bd77e292cb4b2784ddd2dee1f4eb636fe",
+  "native_source_sha256": "990b2e72f4ef1164dde137eeebe92baa2868749218fef2460f29dd46d7d4b5a7",
+  "tests": {
+    "status": "complete",
+    "successful": true,
+    "tests_run": 77,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "elapsed_seconds": 13.336,
+    "failure_details": []
+  },
+  "scope": "Suite with optional opas_math extension importable. Window scanner uses NumPy/Skyfield/SGP4 in both availability modes; these are not two different geometry implementations."
+}

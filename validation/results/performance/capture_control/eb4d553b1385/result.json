@@ -1,0 +1,97 @@
+{
+  "search_hours": 1,
+  "candidates_checked": 1,
+  "windows": [
+    {
+      "start": "2026-10-06T20:00:34.989630+00:00",
+      "end": "2026-10-06T21:00:34.989630+00:00",
+      "duration_minutes": 60.0,
+      "verification": {
+        "status": "passed",
+        "checked_launches": 721,
+        "max_launch_gap_seconds": 5.0,
+        "unsafe_launches": 0,
+        "duration_seconds": 3600.0,
+        "endpoints_checked": true,
+        "horizon_checked": true,
+        "duration_checked": true,
+        "coverage_checked": true
+      }
+    }
+  ],
+  "diagnostics": {
+    "request_id": "eb4d553b1385",
+    "status": "complete",
+    "phase": "complete",
+    "parameters": {
+      "target_lat": 28.573,
+      "target_lon": -80.649,
+      "target_alt": 400.0,
+      "inclination": 51.6,
+      "search_hours": 1
+    },
+    "elapsed_seconds": 1.314,
+    "search_start_utc": "2026-10-06T20:00:34.989630+00:00",
+    "search_end_utc": "2026-10-06T21:00:34.989630+00:00",
+    "candidates_checked": 1,
+    "catalogue_sha256": "58b9761918f4f02e791ff1918abe407344f8175330b8f2eba293035285b5f2ba",
+    "catalogue_query_seconds": 0.0,
+    "altitude_filter_km": [
+      300.0,
+      500.0
+    ],
+    "trajectory_waypoints": 601,
+    "flight_start_seconds": 600.692635,
+    "flight_end_seconds": 5544.855096,
+    "scope": "Sampled launches in the nominal post-ascent model. Intervening launch times, ascent and physical uncertainty are not certified.",
+    "evidence": {
+      "inputs_sha256_uncompressed": "f6175c10052b89a3ca804f76820ea3ab4538cde5f92efc5d3f7ab6374c1afe16",
+      "inputs_url": "/safe-windows/evidence/eb4d553b1385/inputs",
+      "checks_url": "/safe-windows/evidence/eb4d553b1385/checks",
+      "result_url": "/safe-windows/evidence/eb4d553b1385/result"
+    },
+    "tle_objects": 0,
+    "static_objects": 1,
+    "static_objects_excluded": 0,
+    "scan_items": 1,
+    "radius_min_km": 10.0,
+    "radius_max_km": 10.0,
+    "oldest_tle_age_days": null,
+    "future_epoch_objects": 0,
+    "workers": 4,
+    "checked_launch_samples": 721,
+    "clear_launch_samples": 721,
+    "obstructed_launch_samples": 0,
+    "candidate_spans": 1,
+    "qualifying_spans": 1,
+    "returned_windows": 1,
+    "launch_step_seconds": 10,
+    "verification_step_seconds": 5,
+    "extra_validation_checks": 360,
+    "validation_obstructed_samples": 0,
+    "independent_reference": false,
+    "phase_completed": 360,
+    "phase_total": 360,
+    "detector_compute_seconds": 0.155,
+    "detector_mean_seconds": 0.0,
+    "last_launch_checked": "2026-10-06T21:00:29.989630+00:00",
+    "near_qualifying_spans": 0,
+    "minute_discovery_checks": 61,
+    "fine_verification_checks": 300,
+    "window_checks": [
+      {
+        "start": "2026-10-06T20:00:34.989630+00:00",
+        "end": "2026-10-06T21:00:34.989630+00:00",
+        "status": "passed",
+        "checked_launches": 721,
+        "max_launch_gap_seconds": 5.0,
+        "unsafe_launches": 0,
+        "duration_seconds": 3600.0,
+        "endpoints_checked": true,
+        "horizon_checked": true,
+        "duration_checked": true,
+        "coverage_checked": true
+      }
+    ]
+  }
+}

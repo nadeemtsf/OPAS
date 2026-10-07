@@ -31,7 +31,7 @@ The frozen six-hour ISS replay found agreement at all 691 production launch chec
 
 For the exact files behind each table in the revised audit report, use the [report evidence index](validation/EVIDENCE.md). It maps historical research, the corrected duration recount, the full ISS search and later integration checks to their records and code versions.
 
-The app now adds runtime diagnostics and 5-second checks of qualifying spans. These changes follow the measured research versions above; their focused checks do not constitute a new full six-hour benchmark. See [runtime checks and testing instructions](validation/RUNTIME_CHECKS.md).
+The app now captures exact request inputs and individual checks, batches SGP4 propagation and validates qualifying/near-qualifying spans every 5 seconds. See [runtime checks](validation/RUNTIME_CHECKS.md) and [performance validation](validation/PERFORMANCE.md) for downloads, offline replay, the checklist and the separate preset benchmarks.
 
 Windows describe checked launch times in the post-ascent model. The current search uses an altitude filter of ±100 km and starts checking the flight at approximately 600 seconds. Accuracy between launch samples, ascent coverage and real-world propagation uncertainty require separate validation.
 

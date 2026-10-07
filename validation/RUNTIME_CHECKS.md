@@ -4,11 +4,13 @@ The application now reports what it checked during each window request and
 audits every returned span. Use this guide when testing
 `fix/refine-close-approaches`; the [report evidence index](EVIDENCE.md) identifies
 the earlier research measurements separately.
+For reproducible catalogue capture, input downloads, offline replay and the
+new performance measurements, see [profiling and preset validation](PERFORMANCE.md).
 
 ## Testing in the app
 
 1. Start the backend and frontend as described in the repository README. The
-   backend logs its native-math mode, process count, model checking policy and
+   backend logs its SGP4 acceleration, optional helper availability, worker limit, model checking policy and
    each incoming request. Database connection failures are logged explicitly.
 2. Select a mission and choose **1 hour (quick test)** for an initial request.
    Window searches are available without first receiving an alert. The UI also
@@ -99,7 +101,7 @@ The archived reproduction and regression/replay results are recorded in
 | Valid predictions | Failed/non-finite satellite predictions or closest-approach refinement cannot count as clear. A window search uses strict error handling and refuses completion. |
 | Complete detector output | Every requested launch needs exactly one boolean result. Missing, extra or invalid results reject the search. |
 | Initial candidate refinement | Candidate regions are checked at exact 10-second launch offsets using interval encounter refinement during the modeled flight. |
-| Additional launch validation | All qualifying spans are checked at 5-second spacing before choosing the five longest. Previously checked timestamps are reused; new midpoints require detector calls. New obstructions split spans, and spans under 15 minutes are dropped. This pass does not extrapolate beyond the original candidate endpoints. |
+| Additional launch validation | Qualifying and near-qualifying discovery spans are checked at 5-second spacing, including their immediate discovery-grid fringes, before choosing the five longest. Previously checked timestamps are reused; new points require detector calls. New obstructions split spans, and spans under 15 minutes are dropped. Endpoints are checked explicitly and clipped to the requested horizon. |
 | Returned-span audit | Both endpoints are clear; duration is at least 900 seconds; endpoints lie within the requested horizon; every required launch sample is present; no checked obstruction lies inside; maximum sampled gap is at most five seconds. |
 | Browser acceptance | The frontend requires a completed response, consistent launch counts and a passing audit for each window. An error, truncated stream, missing audit or inconsistent duration/coverage prevents window selection. |
 | Current orbital elements | The satellite cache matches both TLE lines. A changed second line rebuilds the propagator instead of reusing an older orbit. |
@@ -145,13 +147,14 @@ window coverage audits and TLE cache updates. Frontend tests cover fragmented
 streams, truncated/error responses and acceptance guards, alongside the existing
 exact UTC timestamp tests.
 
-Recorded checks for this change are in [runtime_diagnostics](results/runtime_diagnostics/).
+Recorded checks for the earlier diagnostics revision are in [runtime_diagnostics](results/runtime_diagnostics/).
 The archived pair replay is a detector comparison with existing independent
 research minima, not a fresh full-catalogue five-second window reference. The
-full six-hour numerical benchmark documented in the research report was not
-repeated for this revision. Its counts and timings retain their earlier versions.
+full six-hour numerical benchmark was not repeated at that earlier stage.
+The later [performance validation](PERFORMANCE.md) repeats ISS, Starlink and SSO
+searches and checks the full five-second launch horizon independently.
 
 Final five-second checking adds work when qualifying spans exist; it adds no
-launch checks when none qualify after ten-second refinement. Diagnostic
+launch checks when no qualifying or near-qualifying span reaches that pass. Diagnostic
 collection, batching, streaming and stricter error handling can also change
 runtime. The earlier 18.44-minute timing is not a latency claim for this revision.

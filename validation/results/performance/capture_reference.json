@@ -1,0 +1,4366 @@
+{
+  "status": "complete",
+  "phase": "dense",
+  "preset": "captured",
+  "snapshot_sha256": "58b9761918f4f02e791ff1918abe407344f8175330b8f2eba293035285b5f2ba",
+  "t0": "2026-10-06T20:00:34.989630+00:00",
+  "parameters": {
+    "lat": 28.573,
+    "lon": -80.649,
+    "alt_km": 400.0,
+    "inclination": 51.6,
+    "hours": 1.0
+  },
+  "candidate_count": 1,
+  "launch_count": 721,
+  "workers": 1,
+  "launch_step_seconds": 5,
+  "dense_flight_step_s": 0.9999738676250303,
+  "flight_start_seconds": 600.6926353979193,
+  "flight_end_seconds": 5544.855095980793,
+  "prefilter_stride": 30,
+  "scope": "Whole horizon at exact launch grid; nominal post-ascent model. Recorded distances concern dense-checked pairs; distant pairs excluded by measured displacement bounds.",
+  "source_sha256": {
+    "validation/reference_presets.py": "7f06a03fa12f8d878cfbaa7d7bf2bc13627d2be5cef290ff09b0570d4d500e48",
+    "validation/verify_iss_windows.py": "12ed265367b9fdc30bdcd2983c62caf0794cb7864975fc9721fe91df0338a842",
+    "backend/orbital.py": "2b899ef6c5fcf717c2253df58ab14880d3869f1a18f88201d5357e1b9bf3d9ba",
+    "backend/proximity.py": "d94ba443edb8b5682982b8062623ebf53cb3d15f5c3b93d92f63f2cf13fb397a"
+  },
+  "request_id": "eb4d553b1385",
+  "completed_objects": 1,
+  "obstructed_so_far": 0,
+  "elapsed_seconds_so_far": 0.5187432160000753,
+  "launches": [
+    {
+      "offset_s": 0.0,
+      "launch_time": "2026-10-06T20:00:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 5.0,
+      "launch_time": "2026-10-06T20:00:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 10.0,
+      "launch_time": "2026-10-06T20:00:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 15.0,
+      "launch_time": "2026-10-06T20:00:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 20.0,
+      "launch_time": "2026-10-06T20:00:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 25.0,
+      "launch_time": "2026-10-06T20:00:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 30.0,
+      "launch_time": "2026-10-06T20:01:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 35.0,
+      "launch_time": "2026-10-06T20:01:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 40.0,
+      "launch_time": "2026-10-06T20:01:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 45.0,
+      "launch_time": "2026-10-06T20:01:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 50.0,
+      "launch_time": "2026-10-06T20:01:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 55.0,
+      "launch_time": "2026-10-06T20:01:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 60.0,
+      "launch_time": "2026-10-06T20:01:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 65.0,
+      "launch_time": "2026-10-06T20:01:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 70.0,
+      "launch_time": "2026-10-06T20:01:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 75.0,
+      "launch_time": "2026-10-06T20:01:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 80.0,
+      "launch_time": "2026-10-06T20:01:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 85.0,
+      "launch_time": "2026-10-06T20:01:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 90.0,
+      "launch_time": "2026-10-06T20:02:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 95.0,
+      "launch_time": "2026-10-06T20:02:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 100.0,
+      "launch_time": "2026-10-06T20:02:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 105.0,
+      "launch_time": "2026-10-06T20:02:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 110.0,
+      "launch_time": "2026-10-06T20:02:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 115.0,
+      "launch_time": "2026-10-06T20:02:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 120.0,
+      "launch_time": "2026-10-06T20:02:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 125.0,
+      "launch_time": "2026-10-06T20:02:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 130.0,
+      "launch_time": "2026-10-06T20:02:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 135.0,
+      "launch_time": "2026-10-06T20:02:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 140.0,
+      "launch_time": "2026-10-06T20:02:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 145.0,
+      "launch_time": "2026-10-06T20:02:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 150.0,
+      "launch_time": "2026-10-06T20:03:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 155.0,
+      "launch_time": "2026-10-06T20:03:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 160.0,
+      "launch_time": "2026-10-06T20:03:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 165.0,
+      "launch_time": "2026-10-06T20:03:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 170.0,
+      "launch_time": "2026-10-06T20:03:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 175.0,
+      "launch_time": "2026-10-06T20:03:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 180.0,
+      "launch_time": "2026-10-06T20:03:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 185.0,
+      "launch_time": "2026-10-06T20:03:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 190.0,
+      "launch_time": "2026-10-06T20:03:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 195.0,
+      "launch_time": "2026-10-06T20:03:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 200.0,
+      "launch_time": "2026-10-06T20:03:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 205.0,
+      "launch_time": "2026-10-06T20:03:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 210.0,
+      "launch_time": "2026-10-06T20:04:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 215.0,
+      "launch_time": "2026-10-06T20:04:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 220.0,
+      "launch_time": "2026-10-06T20:04:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 225.0,
+      "launch_time": "2026-10-06T20:04:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 230.0,
+      "launch_time": "2026-10-06T20:04:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 235.0,
+      "launch_time": "2026-10-06T20:04:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 240.0,
+      "launch_time": "2026-10-06T20:04:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 245.0,
+      "launch_time": "2026-10-06T20:04:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 250.0,
+      "launch_time": "2026-10-06T20:04:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 255.0,
+      "launch_time": "2026-10-06T20:04:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 260.0,
+      "launch_time": "2026-10-06T20:04:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 265.0,
+      "launch_time": "2026-10-06T20:04:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 270.0,
+      "launch_time": "2026-10-06T20:05:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 275.0,
+      "launch_time": "2026-10-06T20:05:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 280.0,
+      "launch_time": "2026-10-06T20:05:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 285.0,
+      "launch_time": "2026-10-06T20:05:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 290.0,
+      "launch_time": "2026-10-06T20:05:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 295.0,
+      "launch_time": "2026-10-06T20:05:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 300.0,
+      "launch_time": "2026-10-06T20:05:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 305.0,
+      "launch_time": "2026-10-06T20:05:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 310.0,
+      "launch_time": "2026-10-06T20:05:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 315.0,
+      "launch_time": "2026-10-06T20:05:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 320.0,
+      "launch_time": "2026-10-06T20:05:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 325.0,
+      "launch_time": "2026-10-06T20:05:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 330.0,
+      "launch_time": "2026-10-06T20:06:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 335.0,
+      "launch_time": "2026-10-06T20:06:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 340.0,
+      "launch_time": "2026-10-06T20:06:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 345.0,
+      "launch_time": "2026-10-06T20:06:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 350.0,
+      "launch_time": "2026-10-06T20:06:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 355.0,
+      "launch_time": "2026-10-06T20:06:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 360.0,
+      "launch_time": "2026-10-06T20:06:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 365.0,
+      "launch_time": "2026-10-06T20:06:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 370.0,
+      "launch_time": "2026-10-06T20:06:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 375.0,
+      "launch_time": "2026-10-06T20:06:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 380.0,
+      "launch_time": "2026-10-06T20:06:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 385.0,
+      "launch_time": "2026-10-06T20:06:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 390.0,
+      "launch_time": "2026-10-06T20:07:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 395.0,
+      "launch_time": "2026-10-06T20:07:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 400.0,
+      "launch_time": "2026-10-06T20:07:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 405.0,
+      "launch_time": "2026-10-06T20:07:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 410.0,
+      "launch_time": "2026-10-06T20:07:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 415.0,
+      "launch_time": "2026-10-06T20:07:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 420.0,
+      "launch_time": "2026-10-06T20:07:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 425.0,
+      "launch_time": "2026-10-06T20:07:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 430.0,
+      "launch_time": "2026-10-06T20:07:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 435.0,
+      "launch_time": "2026-10-06T20:07:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 440.0,
+      "launch_time": "2026-10-06T20:07:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 445.0,
+      "launch_time": "2026-10-06T20:07:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 450.0,
+      "launch_time": "2026-10-06T20:08:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 455.0,
+      "launch_time": "2026-10-06T20:08:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 460.0,
+      "launch_time": "2026-10-06T20:08:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 465.0,
+      "launch_time": "2026-10-06T20:08:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 470.0,
+      "launch_time": "2026-10-06T20:08:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 475.0,
+      "launch_time": "2026-10-06T20:08:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 480.0,
+      "launch_time": "2026-10-06T20:08:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 485.0,
+      "launch_time": "2026-10-06T20:08:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 490.0,
+      "launch_time": "2026-10-06T20:08:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 495.0,
+      "launch_time": "2026-10-06T20:08:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 500.0,
+      "launch_time": "2026-10-06T20:08:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 505.0,
+      "launch_time": "2026-10-06T20:08:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 510.0,
+      "launch_time": "2026-10-06T20:09:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 515.0,
+      "launch_time": "2026-10-06T20:09:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 520.0,
+      "launch_time": "2026-10-06T20:09:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 525.0,
+      "launch_time": "2026-10-06T20:09:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 530.0,
+      "launch_time": "2026-10-06T20:09:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 535.0,
+      "launch_time": "2026-10-06T20:09:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 540.0,
+      "launch_time": "2026-10-06T20:09:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 545.0,
+      "launch_time": "2026-10-06T20:09:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 550.0,
+      "launch_time": "2026-10-06T20:09:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 555.0,
+      "launch_time": "2026-10-06T20:09:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 560.0,
+      "launch_time": "2026-10-06T20:09:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 565.0,
+      "launch_time": "2026-10-06T20:09:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 570.0,
+      "launch_time": "2026-10-06T20:10:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 575.0,
+      "launch_time": "2026-10-06T20:10:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 580.0,
+      "launch_time": "2026-10-06T20:10:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 585.0,
+      "launch_time": "2026-10-06T20:10:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 590.0,
+      "launch_time": "2026-10-06T20:10:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 595.0,
+      "launch_time": "2026-10-06T20:10:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 600.0,
+      "launch_time": "2026-10-06T20:10:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 605.0,
+      "launch_time": "2026-10-06T20:10:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 610.0,
+      "launch_time": "2026-10-06T20:10:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 615.0,
+      "launch_time": "2026-10-06T20:10:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 620.0,
+      "launch_time": "2026-10-06T20:10:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 625.0,
+      "launch_time": "2026-10-06T20:10:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 630.0,
+      "launch_time": "2026-10-06T20:11:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 635.0,
+      "launch_time": "2026-10-06T20:11:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 640.0,
+      "launch_time": "2026-10-06T20:11:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 645.0,
+      "launch_time": "2026-10-06T20:11:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 650.0,
+      "launch_time": "2026-10-06T20:11:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 655.0,
+      "launch_time": "2026-10-06T20:11:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 660.0,
+      "launch_time": "2026-10-06T20:11:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 665.0,
+      "launch_time": "2026-10-06T20:11:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 670.0,
+      "launch_time": "2026-10-06T20:11:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 675.0,
+      "launch_time": "2026-10-06T20:11:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 680.0,
+      "launch_time": "2026-10-06T20:11:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 685.0,
+      "launch_time": "2026-10-06T20:11:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 690.0,
+      "launch_time": "2026-10-06T20:12:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 695.0,
+      "launch_time": "2026-10-06T20:12:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 700.0,
+      "launch_time": "2026-10-06T20:12:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 705.0,
+      "launch_time": "2026-10-06T20:12:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 710.0,
+      "launch_time": "2026-10-06T20:12:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 715.0,
+      "launch_time": "2026-10-06T20:12:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 720.0,
+      "launch_time": "2026-10-06T20:12:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 725.0,
+      "launch_time": "2026-10-06T20:12:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 730.0,
+      "launch_time": "2026-10-06T20:12:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 735.0,
+      "launch_time": "2026-10-06T20:12:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 740.0,
+      "launch_time": "2026-10-06T20:12:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 745.0,
+      "launch_time": "2026-10-06T20:12:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 750.0,
+      "launch_time": "2026-10-06T20:13:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 755.0,
+      "launch_time": "2026-10-06T20:13:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 760.0,
+      "launch_time": "2026-10-06T20:13:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 765.0,
+      "launch_time": "2026-10-06T20:13:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 770.0,
+      "launch_time": "2026-10-06T20:13:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 775.0,
+      "launch_time": "2026-10-06T20:13:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 780.0,
+      "launch_time": "2026-10-06T20:13:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 785.0,
+      "launch_time": "2026-10-06T20:13:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 790.0,
+      "launch_time": "2026-10-06T20:13:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 795.0,
+      "launch_time": "2026-10-06T20:13:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 800.0,
+      "launch_time": "2026-10-06T20:13:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 805.0,
+      "launch_time": "2026-10-06T20:13:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 810.0,
+      "launch_time": "2026-10-06T20:14:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 815.0,
+      "launch_time": "2026-10-06T20:14:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 820.0,
+      "launch_time": "2026-10-06T20:14:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 825.0,
+      "launch_time": "2026-10-06T20:14:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 830.0,
+      "launch_time": "2026-10-06T20:14:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 835.0,
+      "launch_time": "2026-10-06T20:14:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 840.0,
+      "launch_time": "2026-10-06T20:14:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 845.0,
+      "launch_time": "2026-10-06T20:14:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 850.0,
+      "launch_time": "2026-10-06T20:14:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 855.0,
+      "launch_time": "2026-10-06T20:14:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 860.0,
+      "launch_time": "2026-10-06T20:14:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 865.0,
+      "launch_time": "2026-10-06T20:14:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 870.0,
+      "launch_time": "2026-10-06T20:15:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 875.0,
+      "launch_time": "2026-10-06T20:15:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 880.0,
+      "launch_time": "2026-10-06T20:15:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 885.0,
+      "launch_time": "2026-10-06T20:15:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 890.0,
+      "launch_time": "2026-10-06T20:15:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 895.0,
+      "launch_time": "2026-10-06T20:15:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 900.0,
+      "launch_time": "2026-10-06T20:15:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 905.0,
+      "launch_time": "2026-10-06T20:15:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 910.0,
+      "launch_time": "2026-10-06T20:15:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 915.0,
+      "launch_time": "2026-10-06T20:15:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 920.0,
+      "launch_time": "2026-10-06T20:15:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 925.0,
+      "launch_time": "2026-10-06T20:15:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 930.0,
+      "launch_time": "2026-10-06T20:16:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 935.0,
+      "launch_time": "2026-10-06T20:16:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 940.0,
+      "launch_time": "2026-10-06T20:16:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 945.0,
+      "launch_time": "2026-10-06T20:16:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 950.0,
+      "launch_time": "2026-10-06T20:16:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 955.0,
+      "launch_time": "2026-10-06T20:16:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 960.0,
+      "launch_time": "2026-10-06T20:16:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 965.0,
+      "launch_time": "2026-10-06T20:16:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 970.0,
+      "launch_time": "2026-10-06T20:16:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 975.0,
+      "launch_time": "2026-10-06T20:16:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 980.0,
+      "launch_time": "2026-10-06T20:16:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 985.0,
+      "launch_time": "2026-10-06T20:16:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 990.0,
+      "launch_time": "2026-10-06T20:17:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 995.0,
+      "launch_time": "2026-10-06T20:17:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1000.0,
+      "launch_time": "2026-10-06T20:17:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1005.0,
+      "launch_time": "2026-10-06T20:17:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1010.0,
+      "launch_time": "2026-10-06T20:17:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1015.0,
+      "launch_time": "2026-10-06T20:17:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1020.0,
+      "launch_time": "2026-10-06T20:17:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1025.0,
+      "launch_time": "2026-10-06T20:17:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1030.0,
+      "launch_time": "2026-10-06T20:17:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1035.0,
+      "launch_time": "2026-10-06T20:17:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1040.0,
+      "launch_time": "2026-10-06T20:17:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1045.0,
+      "launch_time": "2026-10-06T20:17:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1050.0,
+      "launch_time": "2026-10-06T20:18:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1055.0,
+      "launch_time": "2026-10-06T20:18:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1060.0,
+      "launch_time": "2026-10-06T20:18:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1065.0,
+      "launch_time": "2026-10-06T20:18:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1070.0,
+      "launch_time": "2026-10-06T20:18:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1075.0,
+      "launch_time": "2026-10-06T20:18:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1080.0,
+      "launch_time": "2026-10-06T20:18:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1085.0,
+      "launch_time": "2026-10-06T20:18:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1090.0,
+      "launch_time": "2026-10-06T20:18:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1095.0,
+      "launch_time": "2026-10-06T20:18:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1100.0,
+      "launch_time": "2026-10-06T20:18:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1105.0,
+      "launch_time": "2026-10-06T20:18:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1110.0,
+      "launch_time": "2026-10-06T20:19:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1115.0,
+      "launch_time": "2026-10-06T20:19:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1120.0,
+      "launch_time": "2026-10-06T20:19:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1125.0,
+      "launch_time": "2026-10-06T20:19:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1130.0,
+      "launch_time": "2026-10-06T20:19:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1135.0,
+      "launch_time": "2026-10-06T20:19:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1140.0,
+      "launch_time": "2026-10-06T20:19:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1145.0,
+      "launch_time": "2026-10-06T20:19:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1150.0,
+      "launch_time": "2026-10-06T20:19:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1155.0,
+      "launch_time": "2026-10-06T20:19:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1160.0,
+      "launch_time": "2026-10-06T20:19:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1165.0,
+      "launch_time": "2026-10-06T20:19:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1170.0,
+      "launch_time": "2026-10-06T20:20:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1175.0,
+      "launch_time": "2026-10-06T20:20:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1180.0,
+      "launch_time": "2026-10-06T20:20:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1185.0,
+      "launch_time": "2026-10-06T20:20:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1190.0,
+      "launch_time": "2026-10-06T20:20:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1195.0,
+      "launch_time": "2026-10-06T20:20:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1200.0,
+      "launch_time": "2026-10-06T20:20:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1205.0,
+      "launch_time": "2026-10-06T20:20:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1210.0,
+      "launch_time": "2026-10-06T20:20:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1215.0,
+      "launch_time": "2026-10-06T20:20:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1220.0,
+      "launch_time": "2026-10-06T20:20:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1225.0,
+      "launch_time": "2026-10-06T20:20:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1230.0,
+      "launch_time": "2026-10-06T20:21:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1235.0,
+      "launch_time": "2026-10-06T20:21:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1240.0,
+      "launch_time": "2026-10-06T20:21:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1245.0,
+      "launch_time": "2026-10-06T20:21:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1250.0,
+      "launch_time": "2026-10-06T20:21:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1255.0,
+      "launch_time": "2026-10-06T20:21:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1260.0,
+      "launch_time": "2026-10-06T20:21:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1265.0,
+      "launch_time": "2026-10-06T20:21:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1270.0,
+      "launch_time": "2026-10-06T20:21:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1275.0,
+      "launch_time": "2026-10-06T20:21:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1280.0,
+      "launch_time": "2026-10-06T20:21:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1285.0,
+      "launch_time": "2026-10-06T20:21:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1290.0,
+      "launch_time": "2026-10-06T20:22:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1295.0,
+      "launch_time": "2026-10-06T20:22:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1300.0,
+      "launch_time": "2026-10-06T20:22:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1305.0,
+      "launch_time": "2026-10-06T20:22:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1310.0,
+      "launch_time": "2026-10-06T20:22:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1315.0,
+      "launch_time": "2026-10-06T20:22:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1320.0,
+      "launch_time": "2026-10-06T20:22:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1325.0,
+      "launch_time": "2026-10-06T20:22:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1330.0,
+      "launch_time": "2026-10-06T20:22:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1335.0,
+      "launch_time": "2026-10-06T20:22:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1340.0,
+      "launch_time": "2026-10-06T20:22:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1345.0,
+      "launch_time": "2026-10-06T20:22:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1350.0,
+      "launch_time": "2026-10-06T20:23:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1355.0,
+      "launch_time": "2026-10-06T20:23:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1360.0,
+      "launch_time": "2026-10-06T20:23:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1365.0,
+      "launch_time": "2026-10-06T20:23:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1370.0,
+      "launch_time": "2026-10-06T20:23:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1375.0,
+      "launch_time": "2026-10-06T20:23:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1380.0,
+      "launch_time": "2026-10-06T20:23:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1385.0,
+      "launch_time": "2026-10-06T20:23:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1390.0,
+      "launch_time": "2026-10-06T20:23:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1395.0,
+      "launch_time": "2026-10-06T20:23:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1400.0,
+      "launch_time": "2026-10-06T20:23:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1405.0,
+      "launch_time": "2026-10-06T20:23:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1410.0,
+      "launch_time": "2026-10-06T20:24:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1415.0,
+      "launch_time": "2026-10-06T20:24:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1420.0,
+      "launch_time": "2026-10-06T20:24:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1425.0,
+      "launch_time": "2026-10-06T20:24:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1430.0,
+      "launch_time": "2026-10-06T20:24:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1435.0,
+      "launch_time": "2026-10-06T20:24:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1440.0,
+      "launch_time": "2026-10-06T20:24:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1445.0,
+      "launch_time": "2026-10-06T20:24:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1450.0,
+      "launch_time": "2026-10-06T20:24:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1455.0,
+      "launch_time": "2026-10-06T20:24:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1460.0,
+      "launch_time": "2026-10-06T20:24:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1465.0,
+      "launch_time": "2026-10-06T20:24:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1470.0,
+      "launch_time": "2026-10-06T20:25:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1475.0,
+      "launch_time": "2026-10-06T20:25:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1480.0,
+      "launch_time": "2026-10-06T20:25:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1485.0,
+      "launch_time": "2026-10-06T20:25:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1490.0,
+      "launch_time": "2026-10-06T20:25:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1495.0,
+      "launch_time": "2026-10-06T20:25:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1500.0,
+      "launch_time": "2026-10-06T20:25:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1505.0,
+      "launch_time": "2026-10-06T20:25:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1510.0,
+      "launch_time": "2026-10-06T20:25:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1515.0,
+      "launch_time": "2026-10-06T20:25:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1520.0,
+      "launch_time": "2026-10-06T20:25:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1525.0,
+      "launch_time": "2026-10-06T20:25:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1530.0,
+      "launch_time": "2026-10-06T20:26:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1535.0,
+      "launch_time": "2026-10-06T20:26:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1540.0,
+      "launch_time": "2026-10-06T20:26:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1545.0,
+      "launch_time": "2026-10-06T20:26:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1550.0,
+      "launch_time": "2026-10-06T20:26:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1555.0,
+      "launch_time": "2026-10-06T20:26:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1560.0,
+      "launch_time": "2026-10-06T20:26:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1565.0,
+      "launch_time": "2026-10-06T20:26:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1570.0,
+      "launch_time": "2026-10-06T20:26:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1575.0,
+      "launch_time": "2026-10-06T20:26:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1580.0,
+      "launch_time": "2026-10-06T20:26:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1585.0,
+      "launch_time": "2026-10-06T20:26:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1590.0,
+      "launch_time": "2026-10-06T20:27:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1595.0,
+      "launch_time": "2026-10-06T20:27:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1600.0,
+      "launch_time": "2026-10-06T20:27:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1605.0,
+      "launch_time": "2026-10-06T20:27:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1610.0,
+      "launch_time": "2026-10-06T20:27:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1615.0,
+      "launch_time": "2026-10-06T20:27:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1620.0,
+      "launch_time": "2026-10-06T20:27:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1625.0,
+      "launch_time": "2026-10-06T20:27:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1630.0,
+      "launch_time": "2026-10-06T20:27:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1635.0,
+      "launch_time": "2026-10-06T20:27:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1640.0,
+      "launch_time": "2026-10-06T20:27:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1645.0,
+      "launch_time": "2026-10-06T20:27:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1650.0,
+      "launch_time": "2026-10-06T20:28:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1655.0,
+      "launch_time": "2026-10-06T20:28:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1660.0,
+      "launch_time": "2026-10-06T20:28:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1665.0,
+      "launch_time": "2026-10-06T20:28:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1670.0,
+      "launch_time": "2026-10-06T20:28:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1675.0,
+      "launch_time": "2026-10-06T20:28:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1680.0,
+      "launch_time": "2026-10-06T20:28:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1685.0,
+      "launch_time": "2026-10-06T20:28:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1690.0,
+      "launch_time": "2026-10-06T20:28:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1695.0,
+      "launch_time": "2026-10-06T20:28:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1700.0,
+      "launch_time": "2026-10-06T20:28:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1705.0,
+      "launch_time": "2026-10-06T20:28:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1710.0,
+      "launch_time": "2026-10-06T20:29:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1715.0,
+      "launch_time": "2026-10-06T20:29:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1720.0,
+      "launch_time": "2026-10-06T20:29:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1725.0,
+      "launch_time": "2026-10-06T20:29:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1730.0,
+      "launch_time": "2026-10-06T20:29:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1735.0,
+      "launch_time": "2026-10-06T20:29:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1740.0,
+      "launch_time": "2026-10-06T20:29:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1745.0,
+      "launch_time": "2026-10-06T20:29:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1750.0,
+      "launch_time": "2026-10-06T20:29:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1755.0,
+      "launch_time": "2026-10-06T20:29:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1760.0,
+      "launch_time": "2026-10-06T20:29:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1765.0,
+      "launch_time": "2026-10-06T20:29:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1770.0,
+      "launch_time": "2026-10-06T20:30:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1775.0,
+      "launch_time": "2026-10-06T20:30:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1780.0,
+      "launch_time": "2026-10-06T20:30:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1785.0,
+      "launch_time": "2026-10-06T20:30:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1790.0,
+      "launch_time": "2026-10-06T20:30:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1795.0,
+      "launch_time": "2026-10-06T20:30:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1800.0,
+      "launch_time": "2026-10-06T20:30:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1805.0,
+      "launch_time": "2026-10-06T20:30:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1810.0,
+      "launch_time": "2026-10-06T20:30:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1815.0,
+      "launch_time": "2026-10-06T20:30:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1820.0,
+      "launch_time": "2026-10-06T20:30:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1825.0,
+      "launch_time": "2026-10-06T20:30:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1830.0,
+      "launch_time": "2026-10-06T20:31:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1835.0,
+      "launch_time": "2026-10-06T20:31:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1840.0,
+      "launch_time": "2026-10-06T20:31:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1845.0,
+      "launch_time": "2026-10-06T20:31:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1850.0,
+      "launch_time": "2026-10-06T20:31:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1855.0,
+      "launch_time": "2026-10-06T20:31:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1860.0,
+      "launch_time": "2026-10-06T20:31:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1865.0,
+      "launch_time": "2026-10-06T20:31:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1870.0,
+      "launch_time": "2026-10-06T20:31:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1875.0,
+      "launch_time": "2026-10-06T20:31:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1880.0,
+      "launch_time": "2026-10-06T20:31:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1885.0,
+      "launch_time": "2026-10-06T20:31:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1890.0,
+      "launch_time": "2026-10-06T20:32:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1895.0,
+      "launch_time": "2026-10-06T20:32:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1900.0,
+      "launch_time": "2026-10-06T20:32:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1905.0,
+      "launch_time": "2026-10-06T20:32:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1910.0,
+      "launch_time": "2026-10-06T20:32:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1915.0,
+      "launch_time": "2026-10-06T20:32:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1920.0,
+      "launch_time": "2026-10-06T20:32:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1925.0,
+      "launch_time": "2026-10-06T20:32:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1930.0,
+      "launch_time": "2026-10-06T20:32:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1935.0,
+      "launch_time": "2026-10-06T20:32:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1940.0,
+      "launch_time": "2026-10-06T20:32:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1945.0,
+      "launch_time": "2026-10-06T20:32:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1950.0,
+      "launch_time": "2026-10-06T20:33:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1955.0,
+      "launch_time": "2026-10-06T20:33:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1960.0,
+      "launch_time": "2026-10-06T20:33:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1965.0,
+      "launch_time": "2026-10-06T20:33:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1970.0,
+      "launch_time": "2026-10-06T20:33:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1975.0,
+      "launch_time": "2026-10-06T20:33:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1980.0,
+      "launch_time": "2026-10-06T20:33:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1985.0,
+      "launch_time": "2026-10-06T20:33:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1990.0,
+      "launch_time": "2026-10-06T20:33:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 1995.0,
+      "launch_time": "2026-10-06T20:33:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2000.0,
+      "launch_time": "2026-10-06T20:33:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2005.0,
+      "launch_time": "2026-10-06T20:33:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2010.0,
+      "launch_time": "2026-10-06T20:34:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2015.0,
+      "launch_time": "2026-10-06T20:34:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2020.0,
+      "launch_time": "2026-10-06T20:34:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2025.0,
+      "launch_time": "2026-10-06T20:34:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2030.0,
+      "launch_time": "2026-10-06T20:34:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2035.0,
+      "launch_time": "2026-10-06T20:34:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2040.0,
+      "launch_time": "2026-10-06T20:34:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2045.0,
+      "launch_time": "2026-10-06T20:34:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2050.0,
+      "launch_time": "2026-10-06T20:34:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2055.0,
+      "launch_time": "2026-10-06T20:34:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2060.0,
+      "launch_time": "2026-10-06T20:34:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2065.0,
+      "launch_time": "2026-10-06T20:34:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2070.0,
+      "launch_time": "2026-10-06T20:35:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2075.0,
+      "launch_time": "2026-10-06T20:35:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2080.0,
+      "launch_time": "2026-10-06T20:35:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2085.0,
+      "launch_time": "2026-10-06T20:35:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2090.0,
+      "launch_time": "2026-10-06T20:35:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2095.0,
+      "launch_time": "2026-10-06T20:35:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2100.0,
+      "launch_time": "2026-10-06T20:35:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2105.0,
+      "launch_time": "2026-10-06T20:35:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2110.0,
+      "launch_time": "2026-10-06T20:35:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2115.0,
+      "launch_time": "2026-10-06T20:35:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2120.0,
+      "launch_time": "2026-10-06T20:35:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2125.0,
+      "launch_time": "2026-10-06T20:35:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2130.0,
+      "launch_time": "2026-10-06T20:36:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2135.0,
+      "launch_time": "2026-10-06T20:36:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2140.0,
+      "launch_time": "2026-10-06T20:36:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2145.0,
+      "launch_time": "2026-10-06T20:36:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2150.0,
+      "launch_time": "2026-10-06T20:36:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2155.0,
+      "launch_time": "2026-10-06T20:36:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2160.0,
+      "launch_time": "2026-10-06T20:36:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2165.0,
+      "launch_time": "2026-10-06T20:36:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2170.0,
+      "launch_time": "2026-10-06T20:36:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2175.0,
+      "launch_time": "2026-10-06T20:36:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2180.0,
+      "launch_time": "2026-10-06T20:36:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2185.0,
+      "launch_time": "2026-10-06T20:36:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2190.0,
+      "launch_time": "2026-10-06T20:37:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2195.0,
+      "launch_time": "2026-10-06T20:37:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2200.0,
+      "launch_time": "2026-10-06T20:37:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2205.0,
+      "launch_time": "2026-10-06T20:37:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2210.0,
+      "launch_time": "2026-10-06T20:37:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2215.0,
+      "launch_time": "2026-10-06T20:37:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2220.0,
+      "launch_time": "2026-10-06T20:37:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2225.0,
+      "launch_time": "2026-10-06T20:37:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2230.0,
+      "launch_time": "2026-10-06T20:37:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2235.0,
+      "launch_time": "2026-10-06T20:37:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2240.0,
+      "launch_time": "2026-10-06T20:37:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2245.0,
+      "launch_time": "2026-10-06T20:37:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2250.0,
+      "launch_time": "2026-10-06T20:38:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2255.0,
+      "launch_time": "2026-10-06T20:38:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2260.0,
+      "launch_time": "2026-10-06T20:38:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2265.0,
+      "launch_time": "2026-10-06T20:38:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2270.0,
+      "launch_time": "2026-10-06T20:38:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2275.0,
+      "launch_time": "2026-10-06T20:38:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2280.0,
+      "launch_time": "2026-10-06T20:38:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2285.0,
+      "launch_time": "2026-10-06T20:38:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2290.0,
+      "launch_time": "2026-10-06T20:38:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2295.0,
+      "launch_time": "2026-10-06T20:38:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2300.0,
+      "launch_time": "2026-10-06T20:38:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2305.0,
+      "launch_time": "2026-10-06T20:38:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2310.0,
+      "launch_time": "2026-10-06T20:39:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2315.0,
+      "launch_time": "2026-10-06T20:39:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2320.0,
+      "launch_time": "2026-10-06T20:39:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2325.0,
+      "launch_time": "2026-10-06T20:39:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2330.0,
+      "launch_time": "2026-10-06T20:39:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2335.0,
+      "launch_time": "2026-10-06T20:39:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2340.0,
+      "launch_time": "2026-10-06T20:39:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2345.0,
+      "launch_time": "2026-10-06T20:39:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2350.0,
+      "launch_time": "2026-10-06T20:39:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2355.0,
+      "launch_time": "2026-10-06T20:39:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2360.0,
+      "launch_time": "2026-10-06T20:39:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2365.0,
+      "launch_time": "2026-10-06T20:39:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2370.0,
+      "launch_time": "2026-10-06T20:40:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2375.0,
+      "launch_time": "2026-10-06T20:40:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2380.0,
+      "launch_time": "2026-10-06T20:40:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2385.0,
+      "launch_time": "2026-10-06T20:40:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2390.0,
+      "launch_time": "2026-10-06T20:40:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2395.0,
+      "launch_time": "2026-10-06T20:40:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2400.0,
+      "launch_time": "2026-10-06T20:40:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2405.0,
+      "launch_time": "2026-10-06T20:40:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2410.0,
+      "launch_time": "2026-10-06T20:40:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2415.0,
+      "launch_time": "2026-10-06T20:40:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2420.0,
+      "launch_time": "2026-10-06T20:40:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2425.0,
+      "launch_time": "2026-10-06T20:40:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2430.0,
+      "launch_time": "2026-10-06T20:41:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2435.0,
+      "launch_time": "2026-10-06T20:41:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2440.0,
+      "launch_time": "2026-10-06T20:41:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2445.0,
+      "launch_time": "2026-10-06T20:41:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2450.0,
+      "launch_time": "2026-10-06T20:41:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2455.0,
+      "launch_time": "2026-10-06T20:41:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2460.0,
+      "launch_time": "2026-10-06T20:41:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2465.0,
+      "launch_time": "2026-10-06T20:41:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2470.0,
+      "launch_time": "2026-10-06T20:41:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2475.0,
+      "launch_time": "2026-10-06T20:41:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2480.0,
+      "launch_time": "2026-10-06T20:41:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2485.0,
+      "launch_time": "2026-10-06T20:41:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2490.0,
+      "launch_time": "2026-10-06T20:42:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2495.0,
+      "launch_time": "2026-10-06T20:42:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2500.0,
+      "launch_time": "2026-10-06T20:42:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2505.0,
+      "launch_time": "2026-10-06T20:42:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2510.0,
+      "launch_time": "2026-10-06T20:42:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2515.0,
+      "launch_time": "2026-10-06T20:42:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2520.0,
+      "launch_time": "2026-10-06T20:42:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2525.0,
+      "launch_time": "2026-10-06T20:42:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2530.0,
+      "launch_time": "2026-10-06T20:42:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2535.0,
+      "launch_time": "2026-10-06T20:42:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2540.0,
+      "launch_time": "2026-10-06T20:42:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2545.0,
+      "launch_time": "2026-10-06T20:42:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2550.0,
+      "launch_time": "2026-10-06T20:43:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2555.0,
+      "launch_time": "2026-10-06T20:43:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2560.0,
+      "launch_time": "2026-10-06T20:43:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2565.0,
+      "launch_time": "2026-10-06T20:43:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2570.0,
+      "launch_time": "2026-10-06T20:43:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2575.0,
+      "launch_time": "2026-10-06T20:43:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2580.0,
+      "launch_time": "2026-10-06T20:43:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2585.0,
+      "launch_time": "2026-10-06T20:43:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2590.0,
+      "launch_time": "2026-10-06T20:43:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2595.0,
+      "launch_time": "2026-10-06T20:43:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2600.0,
+      "launch_time": "2026-10-06T20:43:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2605.0,
+      "launch_time": "2026-10-06T20:43:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2610.0,
+      "launch_time": "2026-10-06T20:44:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2615.0,
+      "launch_time": "2026-10-06T20:44:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2620.0,
+      "launch_time": "2026-10-06T20:44:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2625.0,
+      "launch_time": "2026-10-06T20:44:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2630.0,
+      "launch_time": "2026-10-06T20:44:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2635.0,
+      "launch_time": "2026-10-06T20:44:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2640.0,
+      "launch_time": "2026-10-06T20:44:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2645.0,
+      "launch_time": "2026-10-06T20:44:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2650.0,
+      "launch_time": "2026-10-06T20:44:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2655.0,
+      "launch_time": "2026-10-06T20:44:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2660.0,
+      "launch_time": "2026-10-06T20:44:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2665.0,
+      "launch_time": "2026-10-06T20:44:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2670.0,
+      "launch_time": "2026-10-06T20:45:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2675.0,
+      "launch_time": "2026-10-06T20:45:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2680.0,
+      "launch_time": "2026-10-06T20:45:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2685.0,
+      "launch_time": "2026-10-06T20:45:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2690.0,
+      "launch_time": "2026-10-06T20:45:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2695.0,
+      "launch_time": "2026-10-06T20:45:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2700.0,
+      "launch_time": "2026-10-06T20:45:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2705.0,
+      "launch_time": "2026-10-06T20:45:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2710.0,
+      "launch_time": "2026-10-06T20:45:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2715.0,
+      "launch_time": "2026-10-06T20:45:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2720.0,
+      "launch_time": "2026-10-06T20:45:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2725.0,
+      "launch_time": "2026-10-06T20:45:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2730.0,
+      "launch_time": "2026-10-06T20:46:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2735.0,
+      "launch_time": "2026-10-06T20:46:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2740.0,
+      "launch_time": "2026-10-06T20:46:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2745.0,
+      "launch_time": "2026-10-06T20:46:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2750.0,
+      "launch_time": "2026-10-06T20:46:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2755.0,
+      "launch_time": "2026-10-06T20:46:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2760.0,
+      "launch_time": "2026-10-06T20:46:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2765.0,
+      "launch_time": "2026-10-06T20:46:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2770.0,
+      "launch_time": "2026-10-06T20:46:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2775.0,
+      "launch_time": "2026-10-06T20:46:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2780.0,
+      "launch_time": "2026-10-06T20:46:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2785.0,
+      "launch_time": "2026-10-06T20:46:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2790.0,
+      "launch_time": "2026-10-06T20:47:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2795.0,
+      "launch_time": "2026-10-06T20:47:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2800.0,
+      "launch_time": "2026-10-06T20:47:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2805.0,
+      "launch_time": "2026-10-06T20:47:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2810.0,
+      "launch_time": "2026-10-06T20:47:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2815.0,
+      "launch_time": "2026-10-06T20:47:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2820.0,
+      "launch_time": "2026-10-06T20:47:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2825.0,
+      "launch_time": "2026-10-06T20:47:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2830.0,
+      "launch_time": "2026-10-06T20:47:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2835.0,
+      "launch_time": "2026-10-06T20:47:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2840.0,
+      "launch_time": "2026-10-06T20:47:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2845.0,
+      "launch_time": "2026-10-06T20:47:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2850.0,
+      "launch_time": "2026-10-06T20:48:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2855.0,
+      "launch_time": "2026-10-06T20:48:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2860.0,
+      "launch_time": "2026-10-06T20:48:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2865.0,
+      "launch_time": "2026-10-06T20:48:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2870.0,
+      "launch_time": "2026-10-06T20:48:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2875.0,
+      "launch_time": "2026-10-06T20:48:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2880.0,
+      "launch_time": "2026-10-06T20:48:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2885.0,
+      "launch_time": "2026-10-06T20:48:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2890.0,
+      "launch_time": "2026-10-06T20:48:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2895.0,
+      "launch_time": "2026-10-06T20:48:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2900.0,
+      "launch_time": "2026-10-06T20:48:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2905.0,
+      "launch_time": "2026-10-06T20:48:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2910.0,
+      "launch_time": "2026-10-06T20:49:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2915.0,
+      "launch_time": "2026-10-06T20:49:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2920.0,
+      "launch_time": "2026-10-06T20:49:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2925.0,
+      "launch_time": "2026-10-06T20:49:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2930.0,
+      "launch_time": "2026-10-06T20:49:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2935.0,
+      "launch_time": "2026-10-06T20:49:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2940.0,
+      "launch_time": "2026-10-06T20:49:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2945.0,
+      "launch_time": "2026-10-06T20:49:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2950.0,
+      "launch_time": "2026-10-06T20:49:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2955.0,
+      "launch_time": "2026-10-06T20:49:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2960.0,
+      "launch_time": "2026-10-06T20:49:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2965.0,
+      "launch_time": "2026-10-06T20:49:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2970.0,
+      "launch_time": "2026-10-06T20:50:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2975.0,
+      "launch_time": "2026-10-06T20:50:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2980.0,
+      "launch_time": "2026-10-06T20:50:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2985.0,
+      "launch_time": "2026-10-06T20:50:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2990.0,
+      "launch_time": "2026-10-06T20:50:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 2995.0,
+      "launch_time": "2026-10-06T20:50:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3000.0,
+      "launch_time": "2026-10-06T20:50:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3005.0,
+      "launch_time": "2026-10-06T20:50:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3010.0,
+      "launch_time": "2026-10-06T20:50:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3015.0,
+      "launch_time": "2026-10-06T20:50:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3020.0,
+      "launch_time": "2026-10-06T20:50:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3025.0,
+      "launch_time": "2026-10-06T20:50:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3030.0,
+      "launch_time": "2026-10-06T20:51:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3035.0,
+      "launch_time": "2026-10-06T20:51:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3040.0,
+      "launch_time": "2026-10-06T20:51:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3045.0,
+      "launch_time": "2026-10-06T20:51:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3050.0,
+      "launch_time": "2026-10-06T20:51:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3055.0,
+      "launch_time": "2026-10-06T20:51:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3060.0,
+      "launch_time": "2026-10-06T20:51:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3065.0,
+      "launch_time": "2026-10-06T20:51:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3070.0,
+      "launch_time": "2026-10-06T20:51:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3075.0,
+      "launch_time": "2026-10-06T20:51:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3080.0,
+      "launch_time": "2026-10-06T20:51:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3085.0,
+      "launch_time": "2026-10-06T20:51:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3090.0,
+      "launch_time": "2026-10-06T20:52:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3095.0,
+      "launch_time": "2026-10-06T20:52:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3100.0,
+      "launch_time": "2026-10-06T20:52:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3105.0,
+      "launch_time": "2026-10-06T20:52:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3110.0,
+      "launch_time": "2026-10-06T20:52:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3115.0,
+      "launch_time": "2026-10-06T20:52:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3120.0,
+      "launch_time": "2026-10-06T20:52:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3125.0,
+      "launch_time": "2026-10-06T20:52:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3130.0,
+      "launch_time": "2026-10-06T20:52:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3135.0,
+      "launch_time": "2026-10-06T20:52:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3140.0,
+      "launch_time": "2026-10-06T20:52:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3145.0,
+      "launch_time": "2026-10-06T20:52:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3150.0,
+      "launch_time": "2026-10-06T20:53:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3155.0,
+      "launch_time": "2026-10-06T20:53:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3160.0,
+      "launch_time": "2026-10-06T20:53:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3165.0,
+      "launch_time": "2026-10-06T20:53:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3170.0,
+      "launch_time": "2026-10-06T20:53:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3175.0,
+      "launch_time": "2026-10-06T20:53:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3180.0,
+      "launch_time": "2026-10-06T20:53:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3185.0,
+      "launch_time": "2026-10-06T20:53:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3190.0,
+      "launch_time": "2026-10-06T20:53:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3195.0,
+      "launch_time": "2026-10-06T20:53:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3200.0,
+      "launch_time": "2026-10-06T20:53:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3205.0,
+      "launch_time": "2026-10-06T20:53:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3210.0,
+      "launch_time": "2026-10-06T20:54:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3215.0,
+      "launch_time": "2026-10-06T20:54:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3220.0,
+      "launch_time": "2026-10-06T20:54:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3225.0,
+      "launch_time": "2026-10-06T20:54:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3230.0,
+      "launch_time": "2026-10-06T20:54:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3235.0,
+      "launch_time": "2026-10-06T20:54:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3240.0,
+      "launch_time": "2026-10-06T20:54:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3245.0,
+      "launch_time": "2026-10-06T20:54:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3250.0,
+      "launch_time": "2026-10-06T20:54:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3255.0,
+      "launch_time": "2026-10-06T20:54:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3260.0,
+      "launch_time": "2026-10-06T20:54:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3265.0,
+      "launch_time": "2026-10-06T20:54:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3270.0,
+      "launch_time": "2026-10-06T20:55:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3275.0,
+      "launch_time": "2026-10-06T20:55:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3280.0,
+      "launch_time": "2026-10-06T20:55:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3285.0,
+      "launch_time": "2026-10-06T20:55:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3290.0,
+      "launch_time": "2026-10-06T20:55:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3295.0,
+      "launch_time": "2026-10-06T20:55:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3300.0,
+      "launch_time": "2026-10-06T20:55:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3305.0,
+      "launch_time": "2026-10-06T20:55:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3310.0,
+      "launch_time": "2026-10-06T20:55:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3315.0,
+      "launch_time": "2026-10-06T20:55:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3320.0,
+      "launch_time": "2026-10-06T20:55:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3325.0,
+      "launch_time": "2026-10-06T20:55:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3330.0,
+      "launch_time": "2026-10-06T20:56:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3335.0,
+      "launch_time": "2026-10-06T20:56:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3340.0,
+      "launch_time": "2026-10-06T20:56:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3345.0,
+      "launch_time": "2026-10-06T20:56:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3350.0,
+      "launch_time": "2026-10-06T20:56:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3355.0,
+      "launch_time": "2026-10-06T20:56:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3360.0,
+      "launch_time": "2026-10-06T20:56:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3365.0,
+      "launch_time": "2026-10-06T20:56:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3370.0,
+      "launch_time": "2026-10-06T20:56:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3375.0,
+      "launch_time": "2026-10-06T20:56:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3380.0,
+      "launch_time": "2026-10-06T20:56:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3385.0,
+      "launch_time": "2026-10-06T20:56:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3390.0,
+      "launch_time": "2026-10-06T20:57:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3395.0,
+      "launch_time": "2026-10-06T20:57:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3400.0,
+      "launch_time": "2026-10-06T20:57:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3405.0,
+      "launch_time": "2026-10-06T20:57:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3410.0,
+      "launch_time": "2026-10-06T20:57:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3415.0,
+      "launch_time": "2026-10-06T20:57:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3420.0,
+      "launch_time": "2026-10-06T20:57:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3425.0,
+      "launch_time": "2026-10-06T20:57:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3430.0,
+      "launch_time": "2026-10-06T20:57:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3435.0,
+      "launch_time": "2026-10-06T20:57:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3440.0,
+      "launch_time": "2026-10-06T20:57:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3445.0,
+      "launch_time": "2026-10-06T20:57:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3450.0,
+      "launch_time": "2026-10-06T20:58:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3455.0,
+      "launch_time": "2026-10-06T20:58:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3460.0,
+      "launch_time": "2026-10-06T20:58:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3465.0,
+      "launch_time": "2026-10-06T20:58:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3470.0,
+      "launch_time": "2026-10-06T20:58:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3475.0,
+      "launch_time": "2026-10-06T20:58:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3480.0,
+      "launch_time": "2026-10-06T20:58:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3485.0,
+      "launch_time": "2026-10-06T20:58:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3490.0,
+      "launch_time": "2026-10-06T20:58:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3495.0,
+      "launch_time": "2026-10-06T20:58:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3500.0,
+      "launch_time": "2026-10-06T20:58:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3505.0,
+      "launch_time": "2026-10-06T20:58:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3510.0,
+      "launch_time": "2026-10-06T20:59:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3515.0,
+      "launch_time": "2026-10-06T20:59:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3520.0,
+      "launch_time": "2026-10-06T20:59:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3525.0,
+      "launch_time": "2026-10-06T20:59:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3530.0,
+      "launch_time": "2026-10-06T20:59:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3535.0,
+      "launch_time": "2026-10-06T20:59:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3540.0,
+      "launch_time": "2026-10-06T20:59:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3545.0,
+      "launch_time": "2026-10-06T20:59:39.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3550.0,
+      "launch_time": "2026-10-06T20:59:44.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3555.0,
+      "launch_time": "2026-10-06T20:59:49.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3560.0,
+      "launch_time": "2026-10-06T20:59:54.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3565.0,
+      "launch_time": "2026-10-06T20:59:59.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3570.0,
+      "launch_time": "2026-10-06T21:00:04.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3575.0,
+      "launch_time": "2026-10-06T21:00:09.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3580.0,
+      "launch_time": "2026-10-06T21:00:14.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3585.0,
+      "launch_time": "2026-10-06T21:00:19.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3590.0,
+      "launch_time": "2026-10-06T21:00:24.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3595.0,
+      "launch_time": "2026-10-06T21:00:29.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    },
+    {
+      "offset_s": 3600.0,
+      "launch_time": "2026-10-06T21:00:34.989630+00:00",
+      "obstructed": false,
+      "clearance_margin_lower_bound_km": 4330.827127353973
+    }
+  ],
+  "elapsed_seconds": 0.5197215320004034,
+  "dense_pairs": 0,
+  "direct_near_threshold_pairs": 0,
+  "clear": 721,
+  "obstructed": 0
+}

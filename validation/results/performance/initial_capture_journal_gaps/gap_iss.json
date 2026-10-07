@@ -1,0 +1,23 @@
+{
+  "preset": "iss",
+  "recorded_journal_checks": 688,
+  "benchmark_checks": 691,
+  "missing_checks": [
+    {
+      "offset_s": 12910.0,
+      "launch_time": "2026-09-21T12:28:04.811735+00:00",
+      "obstructed": false
+    },
+    {
+      "offset_s": 12920.0,
+      "launch_time": "2026-09-21T12:28:14.811735+00:00",
+      "obstructed": false
+    },
+    {
+      "offset_s": 12930.0,
+      "launch_time": "2026-09-21T12:28:24.811735+00:00",
+      "obstructed": true
+    }
+  ],
+  "note": "Original files preserved unchanged. Cause of the missing append records was not established; final atomic journals and count audits were added. New captures rerun separately."
+}

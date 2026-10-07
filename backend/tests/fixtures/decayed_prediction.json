@@ -1,0 +1,18 @@
+{
+  "object": {
+    "altitude_km": 310.46,
+    "location": {
+      "coordinates": [
+        -129.0976,
+        -37.5737
+      ],
+      "type": "Point"
+    },
+    "name": "COSMOS 2251 DEB",
+    "norad_id": 34861,
+    "tle_line1": "1 34861U 93036ACF 26262.53145178  .01303171  00000-0  52520-2 0  9997",
+    "tle_line2": "2 34861  73.9829 175.6315 0023175 181.7363 351.9968 15.83300486923752"
+  },
+  "launch_utc": "2026-10-06T17:32:17+00:00",
+  "provenance": "research-branch frozen catalogue c13469e0cee49549504c9de7e45388c926e32ebe5c3b3ec6ccb81855838b1fa8; archived reproduction, not the unavailable live TLE"
+}

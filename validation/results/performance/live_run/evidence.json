@@ -1,0 +1,41 @@
+{
+  "request_id": "3812000cee87",
+  "evidence_status": "partial",
+  "screenshot_metrics": {
+    "elapsed_seconds": 2436,
+    "candidate_objects": 11672,
+    "launch_checks": 957,
+    "clear": 849,
+    "obstructed": 108,
+    "candidate_spans": 6,
+    "extra_five_second_checks": 0,
+    "new_obstructions": 0,
+    "returned_windows": 0,
+    "horizon_hours": 6
+  },
+  "inputs_missing": [
+    "completed check-details JSON",
+    "exact catalogue used by request",
+    "exact search start timestamp and frozen radii"
+  ],
+  "mission_from_conversation": {
+    "lat": 28.573,
+    "lon": -80.649,
+    "alt_km": 400,
+    "inclination": 51.6
+  },
+  "independent_accuracy_verified": false,
+  "attachments": [
+    {
+      "filename": "01-image.png",
+      "bytes": 32577,
+      "sha256": "32536d72050bdfad5831ae35d61a9c88a851a1f52aae54aaa9d6029ae056320f"
+    },
+    {
+      "filename": "02-Pasted-text.txt",
+      "bytes": 67428,
+      "sha256": "1ac825b4d4c03298374433ef2b5bbb2838d12f9f26d0519e5e8da006f364c66c"
+    }
+  ],
+  "note": "The screenshot establishes completion and counters. The partial log has no complete event. The older request 43b4db87afbc is not this run. Exact Windows bottleneck is not profiled."
+}

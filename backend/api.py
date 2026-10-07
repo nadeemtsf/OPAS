@@ -5,19 +5,22 @@ import logging
 import asyncio
 import hashlib
 import json
+import re
 from math import pi, sqrt
 from threading import Event
 from uuid import uuid4
 from datetime import datetime, timezone, timedelta
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import StreamingResponse
+from fastapi.responses import StreamingResponse, FileResponse
 
 from db import collection, make_skyfield_time, ts
 from orbital import EARTH_R, generate_trajectory
 from proximity import HAS_NATIVE_MATH
 from scanner import full_check, scan_windows, safe_window_proximity_km, WindowVerificationError
 from diagnostics import SearchDiagnostics
+from evidence import RunEvidence, evidence_root
+from sgp4.api import accelerated as SGP4_ACCELERATED
 
 logging.basicConfig(level=getattr(logging, os.getenv('OPAS_LOG_LEVEL', 'INFO').upper(), logging.INFO),
                     format="%(asctime)s | %(levelname)s | %(message)s")
@@ -37,8 +40,11 @@ app.add_middleware(
 )
 
 log.info("CORS origins: %s", ALLOWED_ORIGINS)
-log.info("Native C++ math (opas_math): %s", "ACTIVE" if HAS_NATIVE_MATH else "FALLBACK to Python")
-log.info("Python %s | Workers: %d", sys.version.split()[0], os.cpu_count() or 4)
+log.info("Optional opas_math helpers: %s | Window propagation (SGP4 arrays): %s",
+         "AVAILABLE" if HAS_NATIVE_MATH else "UNAVAILABLE",
+         "C++" if SGP4_ACCELERATED else "Python")
+log.info("Python %s | CPUs: %d | Window workers: %d", sys.version.split()[0],
+         os.cpu_count() or 4, min(os.cpu_count() or 4, 4))
 log.info('Safe-window checks: post-ascent interval detector, 10s discovery refinement, '
          '5s final validation and endpoint/coverage/duration/horizon audits. '
          'OPAS_LOG_LEVEL=DEBUG logs each launch classification.')
@@ -160,18 +166,64 @@ def _run_window_search(target_lat, target_lon, target_alt, inclination, search_h
                    'scope': 'Sampled launches in the nominal post-ascent model. '
                             'Intervening launch times, ascent and physical uncertainty are not certified.'}
     trace.update({'phase': 'preparing_orbital_data', **diagnostics})
-    windows = scan_windows(
-        candidates, trajectory, target_lat, target_lon, target_alt,
-        now, end, safe_window_proximity_km(target_alt), verification_step_seconds=5,
-        progress=trace.update, diagnostics=diagnostics,
-    )
-    trace.update({'phase': 'complete', **diagnostics, 'status': 'complete'})
-    return {
-        "search_hours": search_hours,
-        "candidates_checked": len(candidates),
-        "windows": windows,
-        "diagnostics": dict(trace.data),
-    }
+    capture = None
+    if os.getenv('OPAS_CAPTURE_RUNS', '1') != '0':
+        capture = RunEvidence(trace.data['request_id'], {
+            'catalogue': candidates, 'trajectory': trajectory,
+            'parameters': dict(target_lat=target_lat, target_lon=target_lon,
+                               target_alt=target_alt, inclination=inclination,
+                               search_hours=search_hours),
+            'search_start_utc': now.isoformat(), 'search_end_utc': end.isoformat(),
+            'proximity_km': safe_window_proximity_km(target_alt),
+            'launch_step_seconds': 10, 'verification_step_seconds': 5,
+            'catalogue_sha256': diagnostics['catalogue_sha256']})
+    def prepared(items):
+        if capture:
+            capture.prepared(items)
+            diagnostics['evidence'] = capture.links()
+            trace.update({'evidence': capture.links()})
+    try:
+        if capture:
+            trace.update({'evidence': capture.links()})
+        windows = scan_windows(
+            candidates, trajectory, target_lat, target_lon, target_alt,
+            now, end, safe_window_proximity_km(target_alt), verification_step_seconds=5,
+            progress=trace.update, diagnostics=diagnostics,
+            record_check=capture.record if capture else None,
+            on_prepared=prepared if capture else None,
+        )
+        if capture:
+            diagnostics['evidence'] = capture.links()
+        trace.update({'phase': 'complete', **diagnostics, 'status': 'complete'})
+        result = {
+            "search_hours": search_hours,
+            "candidates_checked": len(candidates),
+            "windows": windows,
+            "diagnostics": dict(trace.data),
+        }
+        if capture:
+            capture.finish(result)
+        return result
+    except Exception as error:
+        if capture:
+            capture.finish({'status': 'incomplete', 'detail': str(error),
+                            'diagnostics': {**trace.data, 'status': 'incomplete'},
+                            'evidence': capture.links()})
+        raise
+
+
+@app.get('/safe-windows/evidence/{request_id}/{part}')
+def download_window_evidence(request_id: str, part: str):
+    names = {'inputs': 'inputs.json.gz', 'checks': 'launches.jsonl',
+             'result': 'result.json', 'manifest': 'manifest.json'}
+    if not re.fullmatch(r'[a-f0-9]{12}', request_id) or part not in names:
+        raise HTTPException(404, 'Evidence not found.')
+    path = evidence_root()/request_id/names[part]
+    if not path.is_file():
+        raise HTTPException(404, 'Evidence not found.')
+    media_type = 'application/gzip' if part == 'inputs' else (
+                 'application/x-ndjson' if part == 'checks' else 'application/json')
+    return FileResponse(path, filename=f'opas-{request_id}-{names[part]}', media_type=media_type)
 
 
 @app.get('/safe-windows')

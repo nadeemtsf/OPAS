@@ -112,69 +112,40 @@ def count_threats(candidates, trajectory, target_lat, target_lon, target_alt, t,
 
 
 def count_threats_fast(scan_items, trajectory, target_alt, t, proximity_km,
-                       stop_after_first=False, strict=False):
-    count = 0
-    steps = len(trajectory) - 1
-    if steps < 1:
+                       stop_after_first=False, strict=False, prepared=None):
+    from scan_plan import ScanPlan
+    if len(trajectory) < 2:
         if strict:
             raise WindowVerificationError('The flight trajectory has no intervals to verify.')
         return 0
-    r = EARTH_R + target_alt
-    period_sec = 2 * pi * sqrt(r ** 3 / 398600.4418)
-    step_sec = period_sec / steps
-    ascent_steps = min(steps, max(1, round(600 / step_sec)))
-    stride = 1  # evaluate every waypoint for dense coverage
-    sample_indices = list(range(ascent_steps, steps + 1, stride))
-    if not sample_indices:
-        sample_indices = [steps]
-    sample_wps = [trajectory[idx] for idx in sample_indices]
-    sample_ecef = [geodetic_to_ecef(wp["lat"], wp["lon"], wp["alt"]) for wp in sample_wps]
-    sample_ecef = np.asarray(sample_ecef)
-    t_samples = ts.tt_jd([t.tt + period_sec * idx / (steps * 86400.0)
-                          for idx in sample_indices])
-
-    for item in scan_items:
-        sat, doc = item[0], item[1]
-        radius = item[2] if len(item) > 2 else screening_radius_km(
-            proximity_km, tle_epoch_age_days(doc["tle_line1"]) if doc.get("tle_line1") else None)
+    if prepared is None:
+        items = [(item[0], item[1], item[2] if len(item) > 2 else screening_radius_km(
+            proximity_km, tle_epoch_age_days(item[1]['tle_line1'])
+            if item[1].get('tle_line1') else None)) for item in scan_items]
+        prepared = ScanPlan(items, trajectory, target_alt)
+    count = 0
+    for index, xyz, error, potential, samples in prepared.predictions(t, ts):
+        sat, doc, radius = prepared.items[index]
         if not np.isfinite(radius) or radius <= 0:
             raise WindowVerificationError('An object has an invalid screening radius.')
-
-        if sat is not None:
-            try:
-                xyz = satellite_positions(sat, t_samples)
-            except Exception as error:
-                if strict:
-                    raise WindowVerificationError(
-                        _prediction_failure(doc, t, error)) from error
-                # A failed prediction cannot establish a clear launch time.
-                count += 1
-                if stop_after_first:
-                    return count
-                continue
-        else:
-            if doc.get("tle_line1") or doc.get("tle_line2"):
-                if strict:
-                    raise WindowVerificationError('An orbital propagator is unavailable.')
-                # A missing propagator is not evidence of a stationary object.
-                count += 1
-                if stop_after_first:
-                    return count
-                continue
-            coords = doc["location"]["coordinates"]
-            position = geodetic_to_ecef(coords[1], coords[0], doc["altitude_km"])
-            xyz = np.broadcast_to(position, sample_ecef.shape)
+        if error is not None:
+            if strict:
+                raise WindowVerificationError(_prediction_failure(doc, t, error)) from error
+            count += 1
+            if stop_after_first:
+                return count
+            continue
+        if not potential:
+            continue
         try:
-            obstructed = has_close_approach(sat, xyz, sample_ecef, t_samples.tt, radius, ts,
-                                            strict=strict)
+            obstructed = has_close_approach(sat, xyz, prepared.vehicle, samples.tt,
+                                            radius, ts, strict=strict)
         except ValueError as error:
-            raise WindowVerificationError(
-                _prediction_failure(doc, t, error)) from error
+            raise WindowVerificationError(_prediction_failure(doc, t, error)) from error
         if obstructed:
             count += 1
             if stop_after_first:
                 return count
-
     return count
 
 
@@ -367,20 +338,27 @@ def _prepare_window_worker(documents, trajectory, target_alt, proximity_km):
              for doc, radius, has_sat in documents]
     failed = any(has_sat and item[0] is None
                  for item, (_, _, has_sat) in zip(items, documents))
-    _window_worker_state = items, trajectory, target_alt, proximity_km, failed
+    from scan_plan import ScanPlan
+    _window_worker_state = items, trajectory, target_alt, proximity_km, failed, ScanPlan(items, trajectory, target_alt)
 
 
 def _window_launch_obstructed(launch_dt):
-    items, trajectory, alt, proximity, failed = _window_worker_state
+    items, trajectory, alt, proximity, failed, prepared = _window_worker_state
     if failed:
         raise WindowVerificationError("The window search could not load an orbital object. Refresh the catalogue and retry.")
     return count_threats_fast(items, trajectory, alt, ts.from_datetime(launch_dt),
-                             proximity, stop_after_first=True, strict=True) > 0
+                             proximity, stop_after_first=True, strict=True, prepared=prepared) > 0
+
+
+def _window_launch_measured(launch_dt):
+    started = time.perf_counter()
+    return _window_launch_obstructed(launch_dt), time.perf_counter()-started
 
 
 def scan_windows(candidates, trajectory, target_lat, target_lon, target_alt,
                  start_dt, end_dt, proximity_km, launch_step_seconds=LAUNCH_STEP_SECONDS,
-                 workers=None, verification_step_seconds=None, progress=None, diagnostics=None):
+                 workers=None, verification_step_seconds=None, progress=None, diagnostics=None,
+                 record_check=None, on_prepared=None, frozen_radii=None):
     t_total = time.perf_counter()
     traj_lons = [wp["lon"] for wp in trajectory]
     lon_min, lon_max = min(traj_lons), max(traj_lons)
@@ -392,14 +370,15 @@ def scan_windows(candidates, trajectory, target_lat, target_lon, target_alt,
     tle_count = 0
     geo_skipped = 0
     ages = []
-    for doc in candidates:
+    for doc_index, doc in enumerate(candidates):
         sat = get_sat(doc)
         if sat is not None:
             tle_count += 1
             tle_age = tle_epoch_age_days(doc["tle_line1"])
             if tle_age is not None:
                 ages.append(tle_age)
-            radius = screening_radius_km(proximity_km, tle_age)
+            radius = (frozen_radii[doc_index] if frozen_radii is not None else
+                      screening_radius_km(proximity_km, tle_age))
             scan_items.append((sat, doc, radius))
         else:
             if doc.get("tle_line1") or doc.get("tle_line2"):
@@ -410,7 +389,7 @@ def scan_windows(candidates, trajectory, target_lat, target_lon, target_alt,
                 if d_lon < lon_min - lon_pad or d_lon > lon_max + lon_pad:
                     geo_skipped += 1
                     continue
-            scan_items.append((None, doc, proximity_km))
+            scan_items.append((None, doc, frozen_radii[doc_index] if frozen_radii is not None else proximity_km))
     log.info("safe-windows | sat build: %.2fs — %d TLE, %d static, %d geo-skipped, %d scan items (cache: %d)",
              time.perf_counter() - t0, tle_count,
              len(scan_items) - tle_count, geo_skipped, len(scan_items), len(_sat_cache))
@@ -422,15 +401,38 @@ def scan_windows(candidates, trajectory, target_lat, target_lon, target_alt,
                            oldest_tle_age_days=round(max(ages), 3) if ages else None,
                            future_epoch_objects=sum(age < 0 for age in ages))
 
+    from scan_plan import ScanPlan
+    prepared = ScanPlan(scan_items, trajectory, target_alt)
+    if on_prepared:
+        on_prepared(scan_items)
+
+    compute_seconds = 0.0
+    measured_launches = 0
+    def measured(state, elapsed):
+        nonlocal compute_seconds, measured_launches
+        compute_seconds += elapsed
+        measured_launches += 1
+        if diagnostics is not None:
+            diagnostics.update(detector_compute_seconds=round(compute_seconds, 3),
+                               detector_mean_seconds=round(compute_seconds/measured_launches, 3))
+        return state
+
     def is_obstructed(launch_dt):
+        started = time.perf_counter()
         t = ts.from_datetime(launch_dt)
-        return count_threats_fast(scan_items, trajectory, target_alt, t, proximity_km,
-                                  stop_after_first=True, strict=True) > 0
+        state = count_threats_fast(scan_items, trajectory, target_alt, t, proximity_km,
+                                  stop_after_first=True, strict=True, prepared=prepared) > 0
+        return measured(state, time.perf_counter()-started)
+
+    def report_progress(event):
+        if progress:
+            progress({**(diagnostics or {}), **event})
 
     workers = min(os.cpu_count() or 4, 4) if workers is None else workers
     options = dict(launch_step_seconds=launch_step_seconds,
                    verification_step_seconds=verification_step_seconds,
-                   progress=progress, diagnostics=diagnostics)
+                   progress=report_progress if progress else None,
+                   diagnostics=diagnostics, record_check=record_check)
     if diagnostics is not None:
         diagnostics['workers'] = workers
     if progress:
@@ -446,7 +448,8 @@ def scan_windows(candidates, trajectory, target_lat, target_lon, target_alt,
                                  initargs=(documents, trajectory, target_alt, proximity_km)) as executor:
             windows = find_windows(is_obstructed, start_dt, end_dt, workers=1,
                                    **options,
-                                   check_many=lambda points: executor.map(_window_launch_obstructed, points))
+                                   check_many=lambda points: (measured(state, elapsed) for state, elapsed in
+                                               executor.map(_window_launch_measured, points)))
     log.info("safe-windows | TOTAL: %.2fs — returning %d windows",
              time.perf_counter() - t_total, len(windows))
     return windows

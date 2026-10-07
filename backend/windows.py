@@ -54,7 +54,7 @@ def launch_grid(start_dt, end_dt, step_seconds):
 
 def find_windows(is_obstructed, start_dt, end_dt, workers=4,
                  launch_step_seconds=LAUNCH_STEP_SECONDS, check_many=None,
-                 verification_step_seconds=None, progress=None, diagnostics=None):
+                 verification_step_seconds=None, progress=None, diagnostics=None, record_check=None):
     """Return the five longest >=15-minute spans of checked clear launches.
 
     A minute-grid discovery pass checks regions around every clear 10-minute
@@ -63,7 +63,8 @@ def find_windows(is_obstructed, start_dt, end_dt, workers=4,
     five. Unsafe samples split runs; endpoints are checked clear launches, with
     no extrapolation into the gap preceding an unsafe or unchecked launch.
 
-    An optional finer final pass splits qualifying spans at new obstructions.
+    An optional finer final pass checks qualifying and near-qualifying spans,
+    including endpoint fringes, and splits runs at new obstructions.
     Every returned span then passes a coverage audit. These checks use the same
     detector, not an independent reference, and do not certify continuous time.
     """
@@ -119,6 +120,8 @@ def find_windows(is_obstructed, start_dt, end_dt, workers=4,
                     if type(state) is not bool:
                         raise WindowVerificationError('The detector returned an invalid launch classification.')
                     checked[point] = state
+                    if record_check:
+                        record_check(point, state, phase)
                     metrics['checked_launch_samples'] += 1
                     metrics['obstructed_launch_samples' if state else 'clear_launch_samples'] += 1
                     if phase == 'window_validation':
@@ -174,36 +177,44 @@ def find_windows(is_obstructed, start_dt, end_dt, workers=4,
         minute_checks = len(checked)
         report('fine_verification', candidate_spans=len(candidates))
 
-        def finish(first, last_clear, destination):
+        def finish(first, last_clear, destination, minimum):
             seconds = (last_clear - first).total_seconds()
-            if seconds >= MIN_WINDOW_SECONDS:
+            if seconds >= minimum:
                 destination.append((seconds, {'start': first, 'end': last_clear}))
 
-        def split_runs(points, destination):
+        def split_runs(points, destination, minimum=MIN_WINDOW_SECONDS):
             run_start = last_clear = None
             for point in points:
                 if checked[point]:
                     if run_start is not None:
-                        finish(run_start, last_clear, destination)
+                        finish(run_start, last_clear, destination, minimum)
                         run_start = last_clear = None
                 else:
                     if run_start is None:
                         run_start = point
                     last_clear = point
             if run_start is not None:
-                finish(run_start, last_clear, destination)
+                finish(run_start, last_clear, destination, minimum)
 
         for first, end in candidates:
             points = launch_grid(first, end, launch_step_seconds)
             check_all(points, 'fine_verification')
-            split_runs(points, windows)
+            # A 15-minute run on the final grid can look shorter on the
+            # discovery grid because both endpoints round inward. Keep those
+            # near-qualifying runs until the finer pass checks their fringes.
+            minimum = (MIN_WINDOW_SECONDS-2*launch_step_seconds
+                       if verification_step_seconds is not None else MIN_WINDOW_SECONDS)
+            split_runs(points, windows, minimum)
 
         fine_checks = len(checked) - minute_checks
         if verification_step_seconds is not None:
             verified = []
-            report('window_validation', qualifying_spans=len(windows))
+            report('window_validation', qualifying_spans=sum(s >= MIN_WINDOW_SECONDS for s, _ in windows),
+                   near_qualifying_spans=sum(s < MIN_WINDOW_SECONDS for s, _ in windows))
             for _, window in windows:
-                points = launch_grid(window['start'], window['end'], verification_step_seconds)
+                first = max(start_dt, window['start']-timedelta(seconds=launch_step_seconds))
+                last = min(end_dt, window['end']+timedelta(seconds=launch_step_seconds))
+                points = launch_grid(first, last, verification_step_seconds)
                 check_all(points, 'window_validation')
                 split_runs(points, verified)
             windows = verified

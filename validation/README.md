@@ -4,6 +4,8 @@ Looking for the files behind a report result? Start with the
 [report evidence index](EVIDENCE.md), which maps each table and supplementary
 check to its exact records. The commands below reproduce the follow-up checks;
 the index also links the historical research and corrected duration recount.
+The [performance guide](PERFORMANCE.md) covers exact-input capture, offline
+replay and controlled before/after ISS, Starlink and SSO comparisons.
 
 For live application diagnostics, request logs and the finer final validation
 pass, see [runtime checks](RUNTIME_CHECKS.md). The research benchmark commands

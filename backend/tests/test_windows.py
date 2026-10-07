@@ -199,6 +199,16 @@ class WindowTests(unittest.TestCase):
         expected.sort(key=lambda w:(-(datetime.fromisoformat(w['end'])-datetime.fromisoformat(w['start'])).total_seconds(),w['start']))
         self.assertEqual(find_windows(obstructed,self.start,end,verification_step_seconds=5),expected[:5])
 
+    def test_final_grid_recovers_fifteen_minutes_with_both_endpoints_between_discovery_samples(self):
+        def obstructed(point):
+            seconds = (point-self.start).total_seconds()
+            return not 5 <= seconds <= 905
+        end = self.start+timedelta(minutes=30)
+        self.assertEqual(find_windows(obstructed,self.start,end), [])
+        verified = find_windows(obstructed,self.start,end,verification_step_seconds=5)
+        self.assertEqual(self.offsets(verified),[(5/60,905/60)])
+        self.assertEqual(verified[0]['duration_minutes'],15)
+
     def test_launch_debug_logs_identify_their_request(self):
         with self.assertLogs('opas',level='DEBUG') as captured:
             find_windows(lambda point:False,self.start,self.start+timedelta(minutes=15),

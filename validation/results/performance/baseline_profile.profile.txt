@@ -1,0 +1,53 @@
+         6435465 function calls (6411348 primitive calls) in 21.237 seconds
+
+   Ordered by: cumulative time
+   List reduced from 287 to 45 due to restriction <45>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+    35447    0.468    0.000   17.690    0.000 prediction.py:6(satellite_positions)
+    35447    0.049    0.000   14.528    0.000 vectorlib.py:73(at)
+    35447    0.241    0.000   14.350    0.000 sgp4lib.py:204(_at)
+    35447    0.973    0.000   10.529    0.000 sgp4lib.py:169(_position_and_velocity_TEME_km)
+    35447    0.102    0.000    9.304    0.000 wrapper.py:8(sgp4_array)
+    35447    9.166    0.000    9.166    0.000 {method '_sgp4' of 'sgp4.vallado_cpp.Satrec' objects}
+      4/1    0.169    0.042    6.969    6.969 scanner.py:114(count_threats_fast)
+    35447    0.151    0.000    2.562    0.000 sgp4lib.py:315(rotation_at)
+   319018    0.093    0.000    2.242    0.000 einsumfunc.py:1057(einsum)
+   319018    2.149    0.000    2.149    0.000 {built-in method numpy._core._multiarray_umath.c_einsum}
+    35447    0.048    0.000    1.447    0.000 positionlib.py:433(frame_xyz)
+    70894    0.976    0.000    1.267    0.000 functions.py:146(rot_z)
+    35447    1.249    0.000    1.249    0.000 sgp4lib.py:325(theta_GMST1982)
+    35447    0.159    0.000    1.192    0.000 framelib.py:133(rotation_at)
+35444/11449    1.426    0.000    1.116    0.000 encounters.py:33(has_close_approach)
+   106341    0.122    0.000    1.050    0.000 functions.py:36(mxv)
+   212704    1.027    0.000    1.027    0.000 {built-in method numpy.asarray}
+    70894    0.100    0.000    0.867    0.000 functions.py:40(mxm)
+    70890    0.300    0.000    0.343    0.000 _function_base_impl.py:1391(diff)
+   141780    0.057    0.000    0.332    0.000 {method 'all' of 'numpy.ndarray' objects}
+   106375    0.314    0.000    0.314    0.000 {built-in method numpy.array}
+   177226    0.289    0.000    0.289    0.000 {method 'reduce' of 'numpy.ufunc' objects}
+   141780    0.038    0.000    0.275    0.000 _methods.py:66(_all)
+    35447    0.020    0.000    0.243    0.000 timelib.py:704(_leap_seconds)
+    35464    0.040    0.000    0.223    0.000 _compatibility.py:9(interp)
+    70893    0.036    0.000    0.190    0.000 fromnumeric.py:51(_wrapfunc)
+    35443    0.037    0.000    0.177    0.000 fromnumeric.py:2241(clip)
+    35443    0.047    0.000    0.173    0.000 numeric.py:680(flatnonzero)
+    35464    0.043    0.000    0.156    0.000 _function_base_impl.py:1527(interp)
+  1595097    0.146    0.000    0.146    0.000 einsumfunc.py:1049(_einsum_dispatcher)
+    35447    0.028    0.000    0.146    0.000 functions.py:32(T)
+    35446    0.032    0.000    0.146    0.000 fromnumeric.py:2477(any)
+    35447    0.027    0.000    0.125    0.000 positionlib.py:24(build_position)
+    35447    0.066    0.000    0.114    0.000 numeric.py:1329(rollaxis)
+    35443    0.089    0.000    0.114    0.000 numeric.py:98(zeros_like)
+    35446    0.054    0.000    0.114    0.000 fromnumeric.py:89(_wrapreduction_any_all)
+    35443    0.018    0.000    0.111    0.000 {method 'clip' of 'numpy.ndarray' objects}
+    35447    0.037    0.000    0.098    0.000 positionlib.py:95(__init__)
+    35443    0.093    0.000    0.093    0.000 _methods.py:98(_clip)
+    35464    0.081    0.000    0.081    0.000 {built-in method numpy._core._multiarray_umath.interp}
+    35447    0.072    0.000    0.076    0.000 units.py:74(__get__)
+    35450    0.014    0.000    0.064    0.000 fromnumeric.py:2018(nonzero)
+    70894    0.029    0.000    0.064    0.000 units.py:100(__init__)
+    70/35    0.000    0.000    0.057    0.002 descriptorlib.py:9(__get__)
+    35443    0.027    0.000    0.055    0.000 fromnumeric.py:1904(ravel)
+
+

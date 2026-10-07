@@ -1,0 +1,51 @@
+{
+  "status": "complete",
+  "preset": "iss",
+  "parameters": {
+    "lat": 28.573,
+    "lon": -80.649,
+    "alt_km": 420,
+    "inclination": 51.6,
+    "hours": 6
+  },
+  "t0": "2026-09-21T08:52:54.811735+00:00",
+  "snapshot_sha256": "c13469e0cee49549504c9de7e45388c926e32ebe5c3b3ec6ccb81855838b1fa8",
+  "candidate_count": 11997,
+  "workers": 4,
+  "python": "3.12.14",
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+  "cpu_count": 9,
+  "threads": {
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1"
+  },
+  "source_sha256": {
+    "scanner.py": "24ccf91fb22b0b5ad9ea6bc91a5d932b054817f9e02c32c2eff53600ed83c32a",
+    "encounters.py": "ad5de627baf89488d4055e6650f5a5ac90e6c8d1c120faa5adbac585c5216040",
+    "prediction.py": "70356d60684ff9cb5f99dc45cd22628f7a924abf7b4d4744575d75670ba44f80",
+    "windows.py": "7faa3e20726bd38c4caab1875b24aa56971f8e7f003eddab077cee0d28485f63",
+    "orbital.py": "2b899ef6c5fcf717c2253df58ab14880d3869f1a18f88201d5357e1b9bf3d9ba"
+  },
+  "harness_sha256": "be42d49f7cb6f36ff68df196dd42c3feec4087ec680e79e78dd93f8cf651fe52",
+  "launches": [
+    {
+      "offset_s": 0,
+      "obstructed": true,
+      "seconds": 7.057988463000584
+    },
+    {
+      "offset_s": 60,
+      "obstructed": false,
+      "seconds": 7.023212048999994
+    },
+    {
+      "offset_s": 120,
+      "obstructed": false,
+      "seconds": 7.155755964000491
+    }
+  ],
+  "elapsed_seconds": 21.4396865359995,
+  "launch_count": 3,
+  "clear": 2,
+  "obstructed": 1
+}
